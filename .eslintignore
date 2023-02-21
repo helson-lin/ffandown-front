@@ -1,0 +1,6 @@
+node_modules
+dist
+/public/*
+!/public/config.js
+robot
+!/public/index.html

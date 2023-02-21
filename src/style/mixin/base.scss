@@ -1,0 +1,44 @@
+/* 设置背景图全铺满 */
+@mixin set-back($imgUrl) {
+    background-image: url($imgUrl);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+/* 定位水平垂直居中 */
+@mixin center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* 实现flex 水平垂直居中 */
+@mixin flex-cc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 文字超出省略(单行文字) */
+@mixin word-mission {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@mixin word-line-mission($lineNumber) {
+    display: box;
+    overflow: hidden;
+
+    // text-overflow: ellipsis;
+    // word-break: break-all;
+
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $lineNumber; /* 这里是超出几行省略 */
+}
+
+@mixin wd($width, $height) {
+    width: $width;
+    height: $height;
+}
