@@ -16,6 +16,9 @@ export default defineConfig({
             },
         }),
     ],
+    build: {
+        sourcemap: true, // 打开sourceMap 定位问题
+    },
     server: {
         host: true,
     },

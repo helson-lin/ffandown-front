@@ -31,7 +31,7 @@ module.exports = {
         quotes: ['error', 'single'],
         'comma-dangle': ['error', 'always-multiline'],
         'object-curly-spacing': ['error', 'always'],
-        'max-len': ['error', 120],
+        'max-len': 'off',
         'no-new': 'off',
         'linebreak-style': 'off',
         'import/extensions': 'off',

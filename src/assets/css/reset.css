@@ -1,64 +1,3 @@
-@font-face {
-    font-family: DINPro-Black;
-    src: url("../fonts/DINPro-Black.otf");
-}
-
-@font-face {
-    font-family: DINPro-Bold;
-    src: url("../fonts/DINPro-Bold.otf");
-}
-
-@font-face {
-    font-family: DINPro-Light;
-    src: url("../fonts/DINPro-Medium.otf");
-}
-
-@font-face {
-    font-family: DINPro-Medium;
-    src: url("../fonts/DINPro-Medium.otf");
-}
-
-@font-face {
-    font-family: DINPro-Regular;
-    src: url("../fonts/DINPro-Medium.otf");
-}
-
-/* ======================================================== */
-
-@font-face {
-    font-family: SourceHanSansCN-Normal;
-    src: url("../fonts/SourceHanSansCN-Normal-2.otf");
-}
-
-@font-face {
-    font-family: SourceHanSansCN-Regular;
-    src: url("../fonts/SourceHanSansCN-Regular-2.otf");
-}
-
-@font-face {
-    font-family: SourceHanSansCN-Bold;
-    src: url("../fonts/SourceHanSansCN-Bold-2.otf");
-}
-
-@font-face {
-    font-family: SourceHanSansCN-ExtraLight;
-    src: url("../fonts/SourceHanSansCN-ExtraLight-2.otf");
-}
-
-@font-face {
-    font-family: SourceHanSansCN-Heavy;
-    src: url("../fonts/SourceHanSansCN-Heavy-2.otf");
-}
-
-@font-face {
-    font-family: SourceHanSansCN-Light;
-    src: url("../fonts/SourceHanSansCN-Light-2.otf");
-}
-
-@font-face {
-    font-family: SourceHanSansCN-Medium;
-    src: url("../fonts/SourceHanSansCN-Medium-2.otf");
-}
 
 /* 清除内外边距 */
 body,
@@ -199,4 +138,24 @@ input,
 textarea {
     border: none;
     outline: none;
+}
+
+
+#app {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    background-color: #efefef;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+.jce {
+    justify-content: flex-end;
+}
+.mr2 {
+    margin-right: 20px;
 }
