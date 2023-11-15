@@ -89,3 +89,13 @@ export const UIDGenerator = {
     asciiToChart: (ascii) => String.fromCharCode(ascii),
     generate(length = 7) { return new Array(length).fill('').map(i => this.getRandomString()).join('') },
 }
+
+export const copyToClipboard = (text) => {
+    const input = document.createElement('textarea')
+    document.body.appendChild(input)
+    input.value = text
+    input.focus()
+    input.select()
+    document.execCommand('copy')
+    document.body.removeChild(input)
+}

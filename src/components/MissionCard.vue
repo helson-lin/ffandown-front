@@ -4,18 +4,42 @@
         <div class="mission-card-top">
             <div class="mission-name">{{ mission.name }}</div>
             <div class="btns">
-                <n-button
-                    circle
-                    ghost
-                    size="tiny"
+                <n-tooltip
+                    :show-arrow="false"
+                    placement="top"
+                    trigger="hover"
                     class="m20"
                 >
-                    <n-icon :component="Close"></n-icon>
-                </n-button>
-                <n-button circle ghost size="tiny">
-                    <n-icon :component="LinkTwo">
-                    </n-icon>
-                </n-button>
+                    <template #trigger>
+                        <n-button
+                            circle
+                            ghost
+                            size="tiny"
+                        >
+                            <n-icon :component="Close"></n-icon>
+                        </n-button>
+                    </template>
+                    <span>删除</span>
+                </n-tooltip>
+                <n-tooltip
+                    :show-arrow="false"
+                    placement="top"
+                    trigger="hover"
+                    class="m20"
+                >
+                    <template #trigger>
+                        <n-button
+                            circle
+                            ghost
+                            size="tiny"
+                            @click="copyLink(mission.url)"
+                        >
+                            <n-icon :component="LinkTwo">
+                            </n-icon>
+                        </n-button>
+                    </template>
+                    <span>复制链接</span>
+                </n-tooltip>
             </div>
         </div>
         <!-- bottom -->
@@ -25,7 +49,7 @@
                 type="line"
                 :color="themeVars.primaryColor"
                 :rail-color="changeColor(themeVars.primaryColor, { alpha: 0.2 })"
-                :percentage="20"
+                :percentage="mission.percent"
                 :indicator-text-color="themeVars.textColorBase"
             />
         </div>
@@ -33,11 +57,13 @@
 </template>
 <script>
 import { defineComponent } from 'vue'
-import { useThemeVars } from 'naive-ui'
+import { useThemeVars, useMessage, NTooltip } from 'naive-ui'
 import { changeColor } from 'seemly'
 import { Close, LinkTwo } from '@icon-park/vue-next'
+import { copyToClipboard } from '@/utils/index.js'
 
 export default defineComponent({
+    components: { NTooltip },
     props: {
         mission: {
             type: Object,
@@ -47,11 +73,17 @@ export default defineComponent({
         },
     },
     setup() {
+        const message = useMessage()
+        const copyLink = (url) => {
+            copyToClipboard(url)
+            message.success('copyed link')
+        }
         return {
             changeColor,
             themeVars: useThemeVars(),
             Close,
             LinkTwo,
+            copyLink,
         }
     },
 })
@@ -60,6 +92,7 @@ export default defineComponent({
 .mission-card {
     box-sizing: border-box;
     padding: 20px;
+    margin-bottom: 20px;
     border: 1px solid #e2e2e3;
     border-radius: 5px;
 

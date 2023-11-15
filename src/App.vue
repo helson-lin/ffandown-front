@@ -1,10 +1,12 @@
 <template>
     <n-config-provider :theme-overrides="themeOverrides">
-        <router-view></router-view>
+        <n-message-provider>
+            <router-view></router-view>
+        </n-message-provider>
     </n-config-provider>
 </template>
 <script setup>
-import { NConfigProvider } from 'naive-ui'
+import { NConfigProvider, NMessageProvider } from 'naive-ui'
 
 const themeOverrides = {
     common: {

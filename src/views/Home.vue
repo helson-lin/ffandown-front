@@ -1,16 +1,6 @@
 <template>
     <div class="controller-panel">
         <div class="panel-left">
-            <div class="quick-actions">
-                <div class="action">
-                    <add
-                        theme="outline"
-                        size="24"
-                        fill="#eee"
-                        @click="showNewMission = !showNewMission"
-                    />
-                </div>
-            </div>
             <div class="mission">
                 <h2>任务列表</h2>
                 <div class="status-list">
@@ -33,20 +23,24 @@
             </div>
         </div>
         <div class="panel-right">
+            <Quick />
+            <!-- 快捷工具 -->
             <!--- 没有数据 -->
-            <MissionCard />
+            <MissionList />
+            <Blank />
         </div>
         <NewMission :show="showNewMission" @update:show="showNewMission = $event" @confirm="confirmMission" />
     </div>
 </template>
 <script>
 import { defineComponent } from 'vue'
-import { PlayOne, PauseOne, Box, Add } from '@icon-park/vue-next'
-import NewMission from '../components/NewMission.vue'
-import MissionCard from '../components/MissionCard.vue'
+import { PlayOne, PauseOne, Box } from '@icon-park/vue-next'
+import MissionList from '../components/MissionList.vue'
+import Blank from '../components/Blank.vue'
+import Quick from '../components/Quick.vue'
 
 export default defineComponent({
-    components: { Add, NewMission, MissionCard },
+    components: { MissionList, Blank, Quick },
     setup() {
         const statusList = [{
             name: '下载中',
@@ -65,17 +59,11 @@ export default defineComponent({
         }]
         const activeStatusKey = ref('downloading')
         const changeStatusTab = (key) => { activeStatusKey.value = key }
-        const showNewMission = ref(false)
-        const confirmMission = (data) => {
-            // 直接发起任务请求
-            console.log(data)
-        }
+
         return {
-            confirmMission,
             changeStatusTab,
             statusList,
             activeStatusKey,
-            showNewMission,
         }
     },
 })
@@ -95,7 +83,6 @@ export default defineComponent({
 
     .panel {
         &-left {
-
             // padding: 0 20px;
             box-sizing: border-box;
             display: flex;
