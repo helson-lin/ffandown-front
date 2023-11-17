@@ -89,7 +89,7 @@ export default defineComponent({
                 name: [
                     {
                         trigger: ['blur'],
-                        required: true,
+                        required: false,
                         message: '请输入文件名称',
                     },
                 ],

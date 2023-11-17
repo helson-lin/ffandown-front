@@ -165,6 +165,7 @@ export default defineComponent({
             flex: 1;
             height: 100%;
             padding: $pd;
+            overflow: hidden;
         }
     }
 }
