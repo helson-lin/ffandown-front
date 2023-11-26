@@ -29,7 +29,7 @@
                 <n-input
                     v-model:value="model.name"
                     type="text"
-                    placeholder="文件名称（不填默认随机）"
+                    placeholder="文件名称（不填默认随机, 批量下载时会自动命名）"
                     @keydown.enter.prevent
                 >
                 </n-input>
@@ -37,8 +37,8 @@
             <n-form-item path="preset" label="视频质量" label-width="90px">
                 <n-select v-model:value="model.preset" :options="persetOptions" />
             </n-form-item>
-            <n-form-item path="videoFormat" label="视频格式" label-width="90px">
-                <n-select v-model:value="model.videoFormat" :options="videoFormatOptions" />
+            <n-form-item path="outputformat" label="视频格式" label-width="90px">
+                <n-select v-model:value="model.outputformat" :options="videoFormatOptions" />
             </n-form-item>
             <n-form-item path="downloadDir" label="目录" label-width="90px">
                 <n-input
@@ -50,6 +50,18 @@
                 >
                     <template #prefix>
                         <n-icon :component="FolderClose" />
+                    </template>
+                </n-input>
+            </n-form-item>
+            <n-form-item path="useragent" label="用户代理" label-width="90px">
+                <n-input
+                    v-model:value="model.useragent"
+                    type="text"
+                    placeholder="不填写采用默认值"
+                    @keydown.enter.prevent
+                >
+                    <template #prefix>
+                        <n-icon :component="UserPositioning" />
                     </template>
                 </n-input>
             </n-form-item>
@@ -65,9 +77,11 @@
     </n-modal>
 </template>
 <script>
-import { FolderClose } from '@icon-park/vue-next'
-import { defineComponent, reactive, getCurrentInstance } from 'vue'
-
+import { FolderClose, UserPositioning } from '@icon-park/vue-next'
+import { defineComponent, reactive } from 'vue'
+import { useMessage } from 'naive-ui'
+import { createMission } from '../api'
+// Mozilla/5.0 (Macintosh; Intel Mac OS X 11_1_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36
 export default defineComponent({
     props: {
         show: {
@@ -77,6 +91,8 @@ export default defineComponent({
     },
     emits: ['show', 'confirm'],
     setup(_, ctx) {
+        const formRef = ref(null)
+        const message = useMessage()
         const formInfo = reactive({
             rules: {
                 url: [
@@ -100,7 +116,7 @@ export default defineComponent({
                         message: '请输入目录',
                     },
                 ],
-                videoFormat: [
+                outputformat: [
                     {
                         trigger: ['blur', 'change'],
                         required: true,
@@ -114,23 +130,44 @@ export default defineComponent({
                         message: '请选择视频质量',
                     },
                 ],
+                useragent: [
+                    {
+                        tigger: ['blur', 'change'],
+                        required: false,
+                        message: '请输入useragent',
+                    },
+                ],
             },
             model: {
-                url: 'https://pic.kblue.site/vsco.png',
+                url: '',
                 downloadDir: '/Download',
                 preset: 'medium',
-                videoFormat: 'mp4',
+                outputformat: 'mp4',
+                useragent: '',
             },
         })
         const arrToOptions = (arr) => arr.map(i => ({ value: i, label: i }))
-        const videoFormatOptions = arrToOptions(['mp4', 'mov', 'flv', 'mpeg'])
+        const videoFormatOptions = arrToOptions(['mp4', 'mov', 'flv', 'avi'])
         const persetOptions = arrToOptions(['ultrafast', 'superfast', 'veryfast', 'faster', 'fast', 'medium', 'slow', 'slower', 'veryslow'])
 
         const bodyStyle = {
             width: '550px',
         }
-        const confirmModal = () => {
-            ctx.emit('confirm', formInfo.model)
+        const createDownloadMission = async () => {
+            const res = await createMission(formInfo.model)
+            if (res.code === 0) {
+                message.success('创建任务成功')
+                formInfo.model = {
+                    url: '',
+                    downloadDir: '/Download',
+                    preset: 'medium',
+                    outputformat: 'mp4',
+                    useragent: '',
+                }
+            }
+        }
+        const confirmModal = async () => {
+            await createDownloadMission()
             ctx.emit('update:show', false)
         }
         const closeModal = () => {
@@ -139,7 +176,9 @@ export default defineComponent({
         return {
             videoFormatOptions,
             bodyStyle,
+            formRef,
             FolderClose,
+            UserPositioning,
             persetOptions,
             ...toRefs(formInfo),
             confirmModal,

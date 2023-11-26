@@ -1,9 +1,9 @@
 import axios from 'axios'
 
-// const baseURL = window.CONFIG.baseUrl || '';
+const baseURL = window.CONFIG.BASEURL || ''
 
 const instance = axios.create({
-    // baseURL,
+    baseURL,
     // timeout: 30000,
     headers: {
         post: {

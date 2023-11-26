@@ -40,7 +40,8 @@ import NewMission from './NewMission.vue'
 export default defineComponent({
     name: 'Blank',
     components: { NewMission, Add },
-    setup() {
+    emits: ['refresh', 'clear'],
+    setup(_, ctx) {
         const activeStatusKey = ref(null)
         const showNewMission = ref(false)
         const actions = [
@@ -49,7 +50,7 @@ export default defineComponent({
                 key: 'redo',
                 icon: Redo,
                 onClick: () => {
-                    window.location.reload()
+                    ctx.emit('refresh')
                 },
             },
             {
@@ -57,6 +58,7 @@ export default defineComponent({
                 key: 'clear',
                 icon: Clear,
                 onClick: () => {
+                    ctx.emit('clear')
                 },
             },
         ]

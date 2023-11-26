@@ -1,9 +1,71 @@
 <template>
-    <div class="mission-card">
+    <div :class="{'mission-card': true}">
         <!-- top -->
         <div class="mission-card-top">
-            <div class="mission-name">{{ mission.name }}</div>
+            <div class="mission-name">
+                {{ mission.name }}
+            </div>
             <div class="btns">
+                <div class="tags">
+                    <n-popconfirm v-if="mission.status === '4'" v-model:show="showError">
+                        <template #trigger>
+                            <n-tag
+                                v-if="mission.status === '4'"
+                                :bordered="false"
+                                type="error"
+                                size="small"
+                                round
+                            >
+                                下载失败
+                            </n-tag>
+                        </template>
+                        <div class="msg">
+                            {{ mission.message }}
+                        </div>
+                        <template #action>
+                            <n-button size="small" @click="showError = false">
+                                ok
+                            </n-button>
+                        </template>
+                    </n-popconfirm>
+                    <n-tag
+                        v-if="['1', '3'].includes(mission.status)"
+                        :bordered="false"
+                        type="success"
+                        size="small"
+                        round
+                    >
+                        <template #avatar>
+                            <n-avatar
+                                src="https://file.helson-lin.cn/picgo-icons8-hdd-96.png"
+                            />
+                        </template>
+                        {{ mission.size }}
+                    </n-tag>
+
+                    <n-tag
+                        v-if="mission.status === '1'"
+                        :bordered="false"
+                        type="success"
+                        size="small"
+                        round
+                    >
+                        <template #avatar>
+                            <n-avatar
+                                src="https://file.helson-lin.cn/picgo-icons8-fan-speed-96.png"
+                            />
+                        </template>
+                        {{ mission.speed }}
+                    </n-tag>
+                    <n-tag
+                        v-if="mission.status === '0'"
+                        :bordered="false"
+                        size="small"
+                        round
+                    >
+                        初始化
+                    </n-tag>
+                </div>
                 <n-tooltip
                     :show-arrow="false"
                     placement="top"
@@ -15,11 +77,50 @@
                             circle
                             ghost
                             size="tiny"
+                            @click="delMission(mission)"
                         >
                             <n-icon :component="Close"></n-icon>
                         </n-button>
                     </template>
                     <span>删除</span>
+                </n-tooltip>
+                <n-tooltip
+                    v-if="mission.status === '2'"
+                    :show-arrow="false"
+                    placement="top"
+                    trigger="hover"
+                    class="m20"
+                >
+                    <template #trigger>
+                        <n-button
+                            circle
+                            ghost
+                            size="tiny"
+                            @click="resume(mission)"
+                        >
+                            <n-icon :component="ShuffleOne"></n-icon>
+                        </n-button>
+                    </template>
+                    <span>恢复下载</span>
+                </n-tooltip>
+                <n-tooltip
+                    v-if="mission.status === '1'"
+                    :show-arrow="false"
+                    placement="top"
+                    trigger="hover"
+                    class="m20"
+                >
+                    <template #trigger>
+                        <n-button
+                            circle
+                            ghost
+                            size="tiny"
+                            @click="resume(mission)"
+                        >
+                            <n-icon :component="Pause"></n-icon>
+                        </n-button>
+                    </template>
+                    <span>暂停下载</span>
                 </n-tooltip>
                 <n-tooltip
                     :show-arrow="false"
@@ -56,34 +157,45 @@
     </div>
 </template>
 <script>
-import { defineComponent } from 'vue'
-import { useThemeVars, useMessage, NTooltip } from 'naive-ui'
+import { defineComponent, ref } from 'vue'
+import { useThemeVars, useMessage, NTooltip, NPopconfirm } from 'naive-ui'
 import { changeColor } from 'seemly'
-import { Close, LinkTwo } from '@icon-park/vue-next'
+import { Close, LinkTwo, ShuffleOne, Pause } from '@icon-park/vue-next'
 import { copyToClipboard } from '@/utils/index.js'
 
 export default defineComponent({
-    components: { NTooltip },
+    components: { NTooltip, NPopconfirm },
     props: {
         mission: {
             type: Object,
-            default: () => ({
-                name: 'Jenkinsside 71477 Shemar Unions,Jenkinsside 71477 Shemar Unions,Jenkinsside 71477 Shemar Unions,Jenkinsside 71477 Shemar Unions,Jenkinsside 71477 Shemar UnionsJenkinsside 71477 Shemar UnionsJenkinsside 71477 Shemar UnionsJenkinsside 71477 Shemar UnionsJenkinsside 71477 Shemar Unions',
-            }),
+            default: () => ({}),
         },
     },
-    setup() {
+    emits: ['delMission', 'resume'],
+    setup(_, ctx) {
         const message = useMessage()
         const copyLink = (url) => {
             copyToClipboard(url)
             message.success('copyed link')
         }
+        const delMission = (mission) => {
+            ctx.emit('delMission', mission)
+        }
+        const resume = (mission) => {
+            ctx.emit('resume', mission)
+        }
+        const showError = ref(false)
         return {
             changeColor,
             themeVars: useThemeVars(),
             Close,
             LinkTwo,
+            ShuffleOne,
+            Pause,
             copyLink,
+            delMission,
+            showError,
+            resume,
         }
     },
 })
@@ -95,6 +207,10 @@ export default defineComponent({
     margin-bottom: 20px;
     border: 1px solid #e2e2e3;
     border-radius: 5px;
+
+    &.error {
+        box-shadow: inset 0 0 7px 1px #ffbf0098;
+    }
 
     &-top {
         display: flex;
@@ -109,8 +225,20 @@ export default defineComponent({
             white-space: wrap;
         }
 
+        .tags {
+
+            ::v-deep .n-tag { margin-right: 10px; }
+        }
+
+        .msg {
+            width: 200px;
+            white-space: wrap;
+        }
+
         .btns {
             box-sizing: border-box;
+            display: flex;
+            align-items: center;
             width: max-content;
             padding: 0 10px;
 

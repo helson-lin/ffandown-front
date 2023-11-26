@@ -23,17 +23,17 @@
             </div>
         </div>
         <div class="panel-right">
-            <Quick />
+            <Quick @refresh="refresh" @clear="clearAllMission" />
             <!-- 快捷工具 -->
             <!--- 没有数据 -->
-            <MissionList />
-            <Blank />
+            <MissionList ref="mission" :status="activeStatusKey" />
+            <!-- <Blank /> -->
         </div>
-        <NewMission :show="showNewMission" @update:show="showNewMission = $event" @confirm="confirmMission" />
+        <NewMission :show="showNewMission" @update:show="showNewMission = $event" />
     </div>
 </template>
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { PlayOne, PauseOne, Box } from '@icon-park/vue-next'
 import MissionList from '../components/MissionList.vue'
 import Blank from '../components/Blank.vue'
@@ -42,28 +42,38 @@ import Quick from '../components/Quick.vue'
 export default defineComponent({
     components: { MissionList, Blank, Quick },
     setup() {
+        const mission = ref(null)
         const statusList = [{
             name: '下载中',
             icon: PlayOne,
-            key: 'downloading',
+            key: '1/0',
         },
         {
             name: '已完成',
             icon: Box,
-            key: 'finished',
+            key: '3',
         },
         {
             name: '已停止',
             icon: PauseOne,
-            key: 'stopped',
+            key: '2/4',
         }]
-        const activeStatusKey = ref('downloading')
+        const activeStatusKey = ref('1/0')
         const changeStatusTab = (key) => { activeStatusKey.value = key }
-
+        // refresh mission list
+        const refresh = () => {
+            mission.value?.getMissionList()
+        }
+        const clearAllMission = () => {
+            mission.value?.clearAllMission()
+        }
         return {
             changeStatusTab,
+            refresh,
+            clearAllMission,
             statusList,
             activeStatusKey,
+            mission,
         }
     },
 })

@@ -1,10 +1,14 @@
 import axiosAPI from '../axios'
 
-// 获取状态
-export const getStat = () => axiosAPI.rpc('aria2.getGlobalStat', [])
+// get download mission list
+export const getDownloadList = () => axiosAPI.get('/list')
 
-// 发送下载任务
-export const sendDownload = (params) => axiosAPI.rpc('aria2.addUri', params)
+// delete mission
+export const deleteMission = (uid) => axiosAPI.delete('/del', { uid })
 
-// 发送下载magnet
-export const sendDownloadByMagnet = (params) => axiosAPI.rpc('aria2.addTorrent', params)
+// create download mission
+export const createMission = (data) => axiosAPI.post('/down', data)
+
+export const resumeMission = (uid) => axiosAPI.get('/resume', { uid })
+
+export const pauseMission = (uid) => axiosAPI.get('/pause', { uid })

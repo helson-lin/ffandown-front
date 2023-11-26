@@ -21,6 +21,12 @@ export default defineConfig({
     },
     server: {
         host: true,
+        proxy: {
+            '/api': {
+                target: 'http://localhost:8081',
+                rewrite: (path) => path.replace(/^\/api/, ''),
+            },
+        },
     },
     resolve: {
         alias: {

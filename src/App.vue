@@ -1,12 +1,14 @@
 <template>
     <n-config-provider :theme-overrides="themeOverrides">
         <n-message-provider>
-            <router-view></router-view>
+            <n-dialog-provider>
+                <router-view></router-view>
+            </n-dialog-provider>
         </n-message-provider>
     </n-config-provider>
 </template>
 <script setup>
-import { NConfigProvider, NMessageProvider } from 'naive-ui'
+import { NConfigProvider, NMessageProvider, NDialogProvider } from 'naive-ui'
 
 const themeOverrides = {
     common: {
@@ -14,9 +16,10 @@ const themeOverrides = {
         primaryColorHover: '#5C5B84', 
     },
     Button: {
+        backgroundColor: '#B78AFF',
+        textCOlor: '#B78AFF',
     },
     Select: {},
-    // ...
 }
 </script>
 <style lang='scss'>

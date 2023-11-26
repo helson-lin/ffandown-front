@@ -14,6 +14,17 @@ const axiosAPI = {
             })
         })
     },
+    delete(url, param) {
+        return new Promise((resolve) => {
+            axios({
+                method: 'delete',
+                url,
+                params: param,
+            }).then((res) => {
+                resolve(res)
+            })
+        })
+    },
     // post请求
     post(url, param) {
         return new Promise((resolve) => {
