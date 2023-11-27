@@ -1,7 +1,29 @@
-# Vue 3 + Vite
+# FFandown frontend
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+This is the frontend for FFandown.
 
-## Recommended IDE Setup
+## How to run
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+```bash
+npm install
+npm run dev
+```
+
+## Project structure
+
+`/src/api/index.js`: all the API calls are defined here.
+
+`/src/api/ws.js`: this is the websocket Class for webscoket connection.
+
+`/src/components/`: all the components are defined here.
+
+`/src/pages/`: all the pages are defined here.
+
+`/src/router/index.js`: all the routes are defined here.
+
+`/src/store/index.js`: all the store modules are defined here.
+
+`/src/utils/`: all the utils are defined here.
+
+`/src/style/`: all the common style are defined here.
+
