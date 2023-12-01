@@ -16,7 +16,7 @@
                                 size="small"
                                 round
                             >
-                                下载失败
+                                {{ $t('downlod_failed') }}
                             </n-tag>
                         </template>
                         <div class="msg">
@@ -63,7 +63,7 @@
                         size="small"
                         round
                     >
-                        初始化
+                        {{ $t('initial') }}
                     </n-tag>
                 </div>
                 <n-tooltip
@@ -82,7 +82,7 @@
                             <n-icon :component="Close"></n-icon>
                         </n-button>
                     </template>
-                    <span>删除</span>
+                    <span>  {{ $t('delete') }}</span>
                 </n-tooltip>
                 <n-tooltip
                     v-if="mission.status === '2'"
@@ -101,7 +101,7 @@
                             <n-icon :component="ShuffleOne"></n-icon>
                         </n-button>
                     </template>
-                    <span>恢复下载</span>
+                    <span>{{ $t('resume_download') }}</span>
                 </n-tooltip>
                 <n-tooltip
                     v-if="mission.status === '1'"
@@ -120,7 +120,7 @@
                             <n-icon :component="Pause"></n-icon>
                         </n-button>
                     </template>
-                    <span>暂停下载</span>
+                    <span>{{ $t('pause_download') }}</span>
                 </n-tooltip>
                 <n-tooltip
                     :show-arrow="false"
@@ -139,7 +139,7 @@
                             </n-icon>
                         </n-button>
                     </template>
-                    <span>复制链接</span>
+                    <span>{{ $t('copy_link') }}</span>
                 </n-tooltip>
             </div>
         </div>

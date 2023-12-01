@@ -1,5 +1,5 @@
 <template>
-    <n-config-provider :theme-overrides="themeOverrides">
+    <n-config-provider :theme-overrides="themeOverrides" :locale="localLocale" :date-locale="dataLocale">
         <n-message-provider>
             <n-dialog-provider>
                 <router-view></router-view>
@@ -8,7 +8,7 @@
     </n-config-provider>
 </template>
 <script setup>
-import { NConfigProvider, NMessageProvider, NDialogProvider } from 'naive-ui'
+import { NConfigProvider, NMessageProvider, NDialogProvider, zhCN, dateZhCN, enUS, dateEnUS } from 'naive-ui'
 
 const themeOverrides = {
     common: {
@@ -21,6 +21,10 @@ const themeOverrides = {
     },
     Select: {},
 }
+
+const language = navigator.language
+const localLocale = computed(() => (language === 'zh-CN' ? zhCN : enUS))
+const dataLocale = computed(() => (language === 'zh-CN' ? dateZhCN : dateEnUS))
 </script>
 <style lang='scss'>
 @import "./assets/css/reset.css";

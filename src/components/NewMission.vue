@@ -3,7 +3,7 @@
         class="new-mission"
         :show="show"
         preset="card"
-        title="任务"
+        :title="$t('mission')"
         :style="bodyStyle"
         :close-on-esc="true"
         @negative-click="closeModal"
@@ -16,48 +16,35 @@
             label-align="left"
             label-placement="left"
         >
-            <n-form-item path="url" label="链接" label-width="90px">
+            <n-form-item path="url" :label="$t('url')" label-width="90px">
                 <n-input
                     v-model:value="model.url"
                     type="textarea"
-                    placeholder="请输入链接"
+                    :placeholder="$t('please_enter_url')"
                     @keydown.enter.prevent
                 >
                 </n-input>
             </n-form-item>
-            <n-form-item path="name" label="文件名称" label-width="90px">
+            <n-form-item path="name" :label="$t('mission_filename')" label-width="90px">
                 <n-input
                     v-model:value="model.name"
                     type="text"
-                    placeholder="文件名称（不填默认随机, 批量下载时会自动命名）"
+                    :placeholder="$t('filename_placeholder')"
                     @keydown.enter.prevent
                 >
                 </n-input>
             </n-form-item>
-            <n-form-item path="preset" label="视频质量" label-width="90px">
+            <n-form-item path="preset" :label="$t('preset')" label-width="90px">
                 <n-select v-model:value="model.preset" :options="persetOptions" />
             </n-form-item>
-            <n-form-item path="outputformat" label="视频格式" label-width="90px">
+            <n-form-item path="outputformat" :label="$t('outputformat')" label-width="90px">
                 <n-select v-model:value="model.outputformat" :options="videoFormatOptions" />
             </n-form-item>
-            <n-form-item path="downloadDir" label="目录" label-width="90px">
-                <n-input
-                    v-model:value="model.downloadDir"
-                    type="text"
-                    placeholder="下载目录位置"
-                    disabled="true"
-                    @keydown.enter.prevent
-                >
-                    <template #prefix>
-                        <n-icon :component="FolderClose" />
-                    </template>
-                </n-input>
-            </n-form-item>
-            <n-form-item path="useragent" label="用户代理" label-width="90px">
+            <n-form-item path="useragent" :label="$t('useragent')" label-width="90px">
                 <n-input
                     v-model:value="model.useragent"
                     type="text"
-                    placeholder="不填写采用默认值"
+                    :placeholder="$t('useragent_placeholder')"
                     @keydown.enter.prevent
                 >
                     <template #prefix>
@@ -70,8 +57,8 @@
         </n-form>
         <template #footer>
             <div class="flex jce footer-color">
-                <n-button class="mr2" @click="closeModal">取消</n-button>
-                <n-button type="primary" @click="confirmModal">确定</n-button>
+                <n-button class="mr2" @click="closeModal">{{ $t('cancel') }}</n-button>
+                <n-button type="primary" @click="confirmModal">{{ $t('confirm') }}</n-button>
             </div>
         </template>
     </n-modal>
@@ -81,7 +68,8 @@ import { FolderClose, UserPositioning } from '@icon-park/vue-next'
 import { defineComponent, reactive } from 'vue'
 import { useMessage } from 'naive-ui'
 import { createMission } from '../api'
-// Mozilla/5.0 (Macintosh; Intel Mac OS X 11_1_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36
+import i18n from '@/lang'
+
 export default defineComponent({
     props: {
         show: {
@@ -89,7 +77,7 @@ export default defineComponent({
             default: false,
         },
     },
-    emits: ['show', 'confirm'],
+    emits: ['update:show', 'confirm'],
     setup(_, ctx) {
         const formRef = ref(null)
         const message = useMessage()
@@ -99,48 +87,40 @@ export default defineComponent({
                     {
                         trigger: ['blur'],
                         required: true,
-                        message: '请输入网址',
+                        message: i18n.global.t('please_enter_url'),
                     },
                 ],
                 name: [
                     {
                         trigger: ['blur'],
                         required: false,
-                        message: '请输入文件名称',
-                    },
-                ],
-                downloadDir: [
-                    {
-                        trigger: ['blur'],
-                        required: true,
-                        message: '请输入目录',
+                        message: i18n.global.t('please_enter_filename'),
                     },
                 ],
                 outputformat: [
                     {
                         trigger: ['blur', 'change'],
                         required: true,
-                        message: '请选择输出格式',
+                        message: i18n.global.t('please_select_outputformat'),
                     },
                 ],
                 preset: [
                     {
                         trigger: ['blur', 'change'],
                         required: true,
-                        message: '请选择视频质量',
+                        message: i18n.global.t('please_select_perset'),
                     },
                 ],
                 useragent: [
                     {
                         tigger: ['blur', 'change'],
                         required: false,
-                        message: '请输入useragent',
+                        message: i18n.global.t('please_enter_useragent'),
                     },
                 ],
             },
             model: {
                 url: '',
-                downloadDir: '/Download',
                 preset: 'medium',
                 outputformat: 'mp4',
                 useragent: '',

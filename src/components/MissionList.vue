@@ -17,6 +17,7 @@ import { deleteMission, pauseMission, resumeMission } from '../api/index'
 import { useMessage, useDialog } from 'naive-ui'
 import Websocket from '../api/ws'
 import Blank from './Blank.vue'
+import i18n from '@/lang'
 
 export default defineComponent({
     components: { MissionCard, Blank },
@@ -49,7 +50,7 @@ export default defineComponent({
         const delMission = async ({ uid }) => {
             const res = await deleteMission(uid)
             if (res.code === 0) {
-                message.success('删除成功')
+                message.success(i18n.global.t('delete_success'))
                 ws.send('list')
                 // await getMissionList()
             }
@@ -69,10 +70,10 @@ export default defineComponent({
         // clear all mission
         const clearAllMission = () => {
             dialog.warning({
-                title: '警告',
-                content: '清空所有任务？',
-                positiveText: '确定',
-                negativeText: '取消',
+                title: i18n.global.t('warn'),
+                content: i18n.global.t('clear_all_mission'),
+                positiveText: i18n.global.t('confirm'),
+                negativeText: i18n.global.t('cancel'),
                 onPositiveClick: () => {
                     delAllMission()
                 },

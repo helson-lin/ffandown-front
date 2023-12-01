@@ -2,12 +2,12 @@
     <div class="controller-panel">
         <div class="panel-left">
             <div class="mission">
-                <h2>任务列表</h2>
+                <h2>{{ $t('mission_list') }}</h2>
                 <div class="status-list">
                     <div
                         v-for="status in statusList"
                         :key="status.name"
-                        :class="{'status': true, 'status-active': activeStatusKey === status.key }"
+                        :class="{ 'status': true, 'status-active': activeStatusKey === status.key }"
                         @click="changeStatusTab(status.key)"
                     >
                         <component
@@ -16,7 +16,7 @@
                             theme="filled"
                             size="24"
                             :fill="activeStatusKey === status.key ? '#B78AFF' : '#333'"
-                        ></component>  
+                        ></component>
                         <div class="status-name">{{ status.name }}</div>
                     </div>
                 </div>
@@ -29,35 +29,48 @@
             <MissionList ref="mission" :status="activeStatusKey" />
             <!-- <Blank /> -->
         </div>
+        <div class="system">
+            <n-button circle type="primary" @click="showSetting = true">
+                <template #icon>
+                    <n-icon>
+                        <SettingConfig size="24" />
+                    </n-icon>
+                </template>
+            </n-button>
+        </div>
         <NewMission :show="showNewMission" @update:show="showNewMission = $event" />
+        <Setting :show="showSetting" @update:show="showSetting = $event" />
     </div>
 </template>
 <script>
 import { defineComponent, ref } from 'vue'
-import { PlayOne, PauseOne, Box } from '@icon-park/vue-next'
+import { PlayOne, PauseOne, Box, SettingConfig } from '@icon-park/vue-next'
 import MissionList from '../components/MissionList.vue'
 import Blank from '../components/Blank.vue'
 import Quick from '../components/Quick.vue'
-
+import Setting from '../components/Setting.vue'
+import i18n from '@/lang'
+// 引入i8n实例
 export default defineComponent({
-    components: { MissionList, Blank, Quick },
+    components: { MissionList, Blank, Quick, Setting, SettingConfig },
     setup() {
         const mission = ref(null)
         const statusList = [{
-            name: '下载中',
+            name: i18n.global.t('downloading'),
             icon: PlayOne,
             key: '1/0',
         },
         {
-            name: '已完成',
+            name: i18n.global.t('finish'),
             icon: Box,
             key: '3',
         },
         {
-            name: '已停止',
+            name: i18n.global.t('stoped'),
             icon: PauseOne,
             key: '2/4',
         }]
+        const showSetting = ref(false)
         const activeStatusKey = ref('1/0')
         const changeStatusTab = (key) => { activeStatusKey.value = key }
         // refresh mission list
@@ -71,6 +84,8 @@ export default defineComponent({
             changeStatusTab,
             refresh,
             clearAllMission,
+            SettingConfig,
+            showSetting,
             statusList,
             activeStatusKey,
             mission,
@@ -85,22 +100,30 @@ export default defineComponent({
     width: 100%;
     height: 100%;
     background-color: #fff;
-
-    // box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
     border-radius: 10px;
 
     @include center;
 
+    .system {
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
     .panel {
         &-left {
-            // padding: 0 20px;
+            position: relative;
             box-sizing: border-box;
             display: flex;
             width: 220px;
             height: 100%;
+            // padding: 0 20px;
+            padding-bottom: 40px;
             border-right: 1px solid #eee;
-
-            // background: #f4f5f755;
             backdrop-filter: blur(20px);
 
             &::after {

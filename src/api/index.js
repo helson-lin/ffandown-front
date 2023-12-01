@@ -12,3 +12,7 @@ export const createMission = (data) => axiosAPI.post('/down', data)
 export const resumeMission = (uid) => axiosAPI.get('/resume', { uid })
 
 export const pauseMission = (uid) => axiosAPI.get('/pause', { uid })
+
+export const getSystemConfig = () => axiosAPI.get('/config')
+
+export const updateSytemConfig = (data) => axiosAPI.post('/config', data)

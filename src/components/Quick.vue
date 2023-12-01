@@ -30,12 +30,13 @@
                 </n-tooltip>
             </div>
         </div>
-        <NewMission :show="showNewMission" @update:show="showNewMission = $event" @confirm="confirmMission" />   <NewMission :show="showNewMission" @update:show="showNewMission = $event" @confirm="confirmMission" />
+        <NewMission :show="showNewMission" @update:show="showNewMission = $event" />  
     </div>
 </template>
 <script>
 import { Redo, Clear, Add } from '@icon-park/vue-next'
 import NewMission from './NewMission.vue'
+import i18n from '@/lang'
 
 export default defineComponent({
     name: 'Blank',
@@ -46,7 +47,7 @@ export default defineComponent({
         const showNewMission = ref(false)
         const actions = [
             {
-                name: '刷新',
+                name: i18n.global.t('refresh'),
                 key: 'redo',
                 icon: Redo,
                 onClick: () => {
@@ -54,7 +55,7 @@ export default defineComponent({
                 },
             },
             {
-                name: '清空',
+                name: i18n.global.t('clear'),
                 key: 'clear',
                 icon: Clear,
                 onClick: () => {
@@ -62,12 +63,7 @@ export default defineComponent({
                 },
             },
         ]
-        const confirmMission = (data) => {
-            // 直接发起任务请求
-            console.log(data)
-        }
         return {
-            confirmMission,
             showNewMission,
             actions,
             activeStatusKey,
