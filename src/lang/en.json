@@ -43,5 +43,9 @@
     "please_enter_webhookType": "please enter webhookType",
     "please_select_perset": "please select transfrom preset",
     "please_select_outputformat": "please select outputformat",
-    "update_setting_success": "success update"
+    "update_setting_success": "success update",
+    "upgrade": "upgrade",
+    "upgrading": "updating",
+    "notification": "Notification",
+    "upgrade_success": "upgrade success, please refresh"
 }

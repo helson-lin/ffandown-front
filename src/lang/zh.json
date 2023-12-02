@@ -43,5 +43,9 @@
     "please_enter_webhookType": "请选择通知方式",
     "please_select_perset": "请选择视频质量",
     "please_select_outputformat": "请选择视频输出格式",
-    "update_setting_success": "更新成功"
+    "update_setting_success": "更新成功",
+    "upgrade": "更新",
+    "upgrading": "正在更新中",
+    "notification": "通知",
+    "upgrade_success": "更新成功,请刷新页面"
 }

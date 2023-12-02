@@ -13,7 +13,7 @@ import { NConfigProvider, NMessageProvider, NDialogProvider, zhCN, dateZhCN, enU
 const themeOverrides = {
     common: {
         primaryColor: '#B78AFF',
-        primaryColorHover: '#5C5B84', 
+        primaryColorHover: '#a8a4ff', 
     },
     Button: {
         backgroundColor: '#B78AFF',

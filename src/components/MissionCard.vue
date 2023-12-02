@@ -14,6 +14,7 @@
                                 :bordered="false"
                                 type="error"
                                 size="small"
+                                class="hover"
                                 round
                             >
                                 {{ $t('downlod_failed') }}
@@ -207,6 +208,14 @@ export default defineComponent({
     margin-bottom: 20px;
     border: 1px solid #e2e2e3;
     border-radius: 5px;
+
+    &:hover {
+        border: 1px solid $primary-color;
+    }
+
+    .hover {
+        cursor: pointer;
+    }
 
     &.error {
         box-shadow: inset 0 0 7px 1px #ffbf0098;

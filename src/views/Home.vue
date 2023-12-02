@@ -30,31 +30,63 @@
             <!-- <Blank /> -->
         </div>
         <div class="system">
-            <n-button circle type="primary" @click="showSetting = true">
-                <template #icon>
-                    <n-icon>
-                        <SettingConfig size="24" />
-                    </n-icon>
+            <n-tooltip
+                v-if="versionInfo.upgrade"
+                :show-arrow="false"
+                placement="left"
+                trigger="hover"
+            >
+                <template #trigger>
+                    <n-button circle type="primary" @click="upgrade">
+                        <template #icon>
+                            <n-icon>
+                                <Refresh size="24" />
+                            </n-icon>
+                        </template>
+                    </n-button>
                 </template>
-            </n-button>
+                <span>{{ $t('upgrade') }}</span>
+            </n-tooltip>
+            <n-tooltip
+                :show-arrow="false"
+                placement="left"
+                trigger="hover"
+            >
+                <template #trigger>
+                    <n-button circle type="primary" @click="showSetting = true">
+                        <template #icon>
+                            <n-icon>
+                                <SettingConfig size="24" />
+                            </n-icon>
+                        </template>
+                    </n-button>
+                </template>
+                <span>{{ $t('setting') }}</span>
+            </n-tooltip>
         </div>
         <NewMission :show="showNewMission" @update:show="showNewMission = $event" />
         <Setting :show="showSetting" @update:show="showSetting = $event" />
+        <Upgrade :show="upgradeVersion" @close="upgradeVersion = false" />
     </div>
 </template>
 <script>
-import { defineComponent, ref } from 'vue'
-import { PlayOne, PauseOne, Box, SettingConfig } from '@icon-park/vue-next'
+import { defineComponent, ref, onMounted } from 'vue'
+import { PlayOne, PauseOne, Box, SettingConfig, Refresh } from '@icon-park/vue-next'
+import { useDialog } from 'naive-ui'
 import MissionList from '../components/MissionList.vue'
 import Blank from '../components/Blank.vue'
 import Quick from '../components/Quick.vue'
 import Setting from '../components/Setting.vue'
+import Upgrade from '../components/Upgrade.vue'
 import i18n from '@/lang'
+import { getSystemVersion } from '@/api/index'
 // 引入i8n实例
 export default defineComponent({
-    components: { MissionList, Blank, Quick, Setting, SettingConfig },
+    components: { MissionList, Blank, Quick, Setting, SettingConfig, Refresh, Upgrade },
     setup() {
+        const dialog = useDialog()
         const mission = ref(null)
+        const upgradeVersion = ref(false)
         const statusList = [{
             name: i18n.global.t('downloading'),
             icon: PlayOne,
@@ -70,9 +102,29 @@ export default defineComponent({
             icon: PauseOne,
             key: '2/4',
         }]
+        const versionInfo = ref({
+            upgrade: false,
+        })
         const showSetting = ref(false)
         const activeStatusKey = ref('1/0')
         const changeStatusTab = (key) => { activeStatusKey.value = key }
+        const getVersionIno = async () => {
+            const res = await getSystemVersion()
+            if (res.code === 0) {
+                versionInfo.value = res.data
+            }
+        }
+        const upgrade = () => {
+            dialog.success({
+                title: i18n.global.t('notification'),
+                content: `Current Version: ${versionInfo.value.current}, Latest Version: ${versionInfo.value.version}`,
+                positiveText: i18n.global.t('upgrade'),
+                negativeText: i18n.global.t('cancel'),
+                onPositiveClick: async () => {
+                    upgradeVersion.value = !upgradeVersion.value
+                },
+            })
+        }
         // refresh mission list
         const refresh = () => {
             mission.value?.getMissionList()
@@ -80,6 +132,9 @@ export default defineComponent({
         const clearAllMission = () => {
             mission.value?.clearAllMission()
         }
+        onMounted(() => {
+            getVersionIno()
+        })
         return {
             changeStatusTab,
             refresh,
@@ -89,6 +144,9 @@ export default defineComponent({
             statusList,
             activeStatusKey,
             mission,
+            versionInfo,
+            upgrade,
+            upgradeVersion,
         }
     },
 })
@@ -110,8 +168,13 @@ export default defineComponent({
         bottom: 20px;
         box-sizing: border-box;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: flex-start;
+
+        .n-button {
+            margin-bottom: 10px;
+        }
     }
 
     .panel {
@@ -121,6 +184,7 @@ export default defineComponent({
             display: flex;
             width: 220px;
             height: 100%;
+
             // padding: 0 20px;
             padding-bottom: 40px;
             border-right: 1px solid #eee;

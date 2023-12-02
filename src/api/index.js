@@ -16,3 +16,7 @@ export const pauseMission = (uid) => axiosAPI.get('/pause', { uid })
 export const getSystemConfig = () => axiosAPI.get('/config')
 
 export const updateSytemConfig = (data) => axiosAPI.post('/config', data)
+
+export const getSystemVersion = () => axiosAPI.get('/version')
+
+export const upgradeVersion = () => axiosAPI.get('/upgrade')
