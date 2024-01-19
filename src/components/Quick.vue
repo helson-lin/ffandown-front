@@ -88,7 +88,7 @@ export default defineComponent({
         width: 100%;
         height: 0;
         content: "";
-        border-bottom: 2px solid #b6b2b271;
+        border-bottom: 1px solid #b6b2b271;
     }
 
     .quick-actions {

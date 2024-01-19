@@ -184,11 +184,8 @@ export default defineComponent({
             display: flex;
             width: 220px;
             height: 100%;
-
-            // padding: 0 20px;
             padding-bottom: 40px;
             border-right: 1px solid #eee;
-            backdrop-filter: blur(20px);
 
             &::after {
                 position: absolute;

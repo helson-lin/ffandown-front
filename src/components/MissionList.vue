@@ -99,3 +99,9 @@ export default defineComponent({
     },
 })
 </script>
+<style lang="scss" scoped>
+.mission-list {
+    height: calc(100% - 56px);
+    overflow-y: auto;
+}
+</style>
