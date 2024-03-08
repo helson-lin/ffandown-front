@@ -236,7 +236,7 @@ export default defineComponent({
 
         .tags {
 
-            ::v-deep .n-tag { margin-right: 10px; }
+            :deep .n-tag { margin-right: 10px; }
         }
 
         .msg {
@@ -254,7 +254,7 @@ export default defineComponent({
             // border: 1px solid #e3e3e3;
             border-radius: 999px;
 
-            ::v-deep button {
+            :deep button {
                 margin: 0 5px;
 
                 &:hover {
@@ -264,7 +264,7 @@ export default defineComponent({
                 }
             }
 
-            ::v-deep svg {
+            :deep svg {
                 font-weight: bolder;
             }
         }

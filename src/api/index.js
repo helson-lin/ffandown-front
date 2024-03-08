@@ -1,7 +1,7 @@
 import axiosAPI from '../axios'
 
 // get download mission list
-export const getDownloadList = () => axiosAPI.get('/list')
+export const getDownloadList = (params) => axiosAPI.get('/list', params)
 
 // delete mission
 export const deleteMission = (uid) => axiosAPI.delete('/del', { uid })

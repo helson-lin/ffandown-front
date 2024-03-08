@@ -1,4 +1,4 @@
-$primary-color: #B78AFF;
+$primary-color: rgb(73, 28, 188);
 $text-color: #000;
 $border-radius: 5px;
 $fz: 16px;
@@ -30,4 +30,8 @@ body {
     line-height: 100%;
     border-radius: $border-radius;
     color: $text-color;
+}
+
+.m20 {
+    margin-top: 20px;
 }

@@ -87,7 +87,7 @@ export const UIDGenerator = {
     getRandomIndex() { return Math.floor(Math.random() * this.nums.length) },
     getRandomString() { const randomIndex = this.getRandomIndex(); return randomIndex > 9 ? this.asciiToChart(this.nums[randomIndex]) : randomIndex },
     asciiToChart: (ascii) => String.fromCharCode(ascii),
-    generate(length = 7) { return new Array(length).fill('').map(i => this.getRandomString()).join('') },
+    generate(length = 7) { return new Array(length).fill('').map(() => this.getRandomString()).join('') },
 }
 
 export const copyToClipboard = (text) => {

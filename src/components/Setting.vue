@@ -36,17 +36,23 @@
                 <n-form-item path="webhooks" :label="$t('webhooks')" label-width="110px">
                     <n-input
                         v-model:value="model.webhooks"
-                        type="text"
+                        type="textarea"
                         :placeholder="$t('please_enter_webhooks')"
                         @keydown.enter.prevent
                     >
-                        <template #suffix>
-                            <n-icon :component="Message" />
-                        </template>
+                    </n-input>
+                </n-form-item>
+                <n-form-item path="maxDownloadNum" :label="$t('maxDownloadNum')" label-width="110px">
+                    <n-input
+                        v-model:value="model.maxDownloadNum"
+                        type="number"
+                        :placeholder="$t('please_enter_maxDownloadNum')"
+                        @keydown.enter.prevent
+                    >
                     </n-input>
                 </n-form-item>
                 <n-form-item path="downloadThread" :label="$t('thread')" label-width="110px">
-                    <n-switch v-model:value="model.downloadThread" />
+                    <n-switch v-model:value="model.thread" />
                 </n-form-item>
                 <n-form-item>
                     <div class="btns">
@@ -103,7 +109,8 @@ export default defineComponent({
                 downloadDir: '/media/',
                 webhookType: 'bark',
                 webhooks: '',
-                downloadThread: true,
+                thread: true,
+                maxDownloadNum: 5,
             },
         })
         const getData = async () => {

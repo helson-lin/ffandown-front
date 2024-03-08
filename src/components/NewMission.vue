@@ -6,7 +6,6 @@
         :title="$t('mission')"
         :style="bodyStyle"
         :close-on-esc="true"
-        @negative-click="closeModal"
     >
         <!-- 2: form -->
         <n-form
@@ -25,7 +24,12 @@
                 >
                 </n-input>
             </n-form-item>
-            <n-form-item path="name" :label="$t('mission_filename')" label-width="90px">
+            <n-form-item
+                path="name"
+                :label="$t('mission_filename')"
+                label-width="90px"
+                class="warp"
+            >
                 <n-input
                     v-model:value="model.name"
                     type="text"
@@ -33,6 +37,9 @@
                     @keydown.enter.prevent
                 >
                 </n-input>
+                <div v-if="false" class="notice">
+                    如果为m3u地址，那么自动采用m3u内的文件名称
+                </div>
             </n-form-item>
             <n-form-item path="preset" :label="$t('preset')" label-width="90px">
                 <n-select v-model:value="model.preset" :options="persetOptions" />
@@ -55,6 +62,7 @@
             <!--- 转码方式 fast -->
             <!--- 转换格式 mp4  -->
         </n-form>
+        <!-- file upload -->
         <template #footer>
             <div class="flex jce footer-color">
                 <n-button class="mr2" @click="closeModal">{{ $t('cancel') }}</n-button>
@@ -151,6 +159,7 @@ export default defineComponent({
             ctx.emit('update:show', false)
         }
         const closeModal = () => {
+            console.warn('closeModal')
             ctx.emit('update:show', false)
         }
         return {
@@ -167,3 +176,23 @@ export default defineComponent({
     },
 })
 </script>
+<style lang="scss" scoped>
+.new-mission {
+    .warp {
+        :deep .n-form-item-blank {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+}
+
+.notice {
+    // position: absolute;
+    // left: 0px;
+    // top: 100%;
+    font-size: 12px;
+    line-height: 26px;
+    color: #333333be;
+}
+</style>

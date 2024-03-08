@@ -38,8 +38,8 @@ class Websocket {
         this.callback = fun
     }
 
-    send(key, msg) {
-        this.websocket.send(JSON.stringify({ key, msg }))
+    send(key, body) {
+        this.websocket.send(JSON.stringify({ key, body }))
     }
 }
 
