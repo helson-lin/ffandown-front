@@ -15,7 +15,7 @@
     </div>
 </template>
 <script>
-import { defineComponent, toRefs, reactive, computed, watch } from 'vue'
+import { defineComponent, toRefs, reactive, computed, watch, onUnmounted, onMounted } from 'vue'
 import MissionCard from './MissionCard.vue'
 import { deleteMission, pauseMission, resumeMission, getDownloadList } from '../api/index'
 import { useMessage, useDialog, NPagination } from 'naive-ui'
@@ -57,7 +57,7 @@ export default defineComponent({
                 const { rows, count } = res.data
                 const list = rows.map(i => ({
                     ...i,
-                    percent: parseInt(i.percent),
+                    percent: !Number.isNaN(parseInt(i.percent)) ? 0 : parseInt(i.percent),
                 }))
                 page.value.count = Math.ceil(count / page.value.pageSize)
                 state.list = list
@@ -112,6 +112,9 @@ export default defineComponent({
 
         onMounted(() => {
             getMissionList()
+        })
+        onUnmounted(() => {
+            if (timer) clearInterval(timer)
         })
         return {
             delMission,

@@ -30,6 +30,12 @@
                         </template>
                     </n-input>
                 </n-form-item>
+                <n-form-item path="preset" :label="$t('preset')" label-width="110px">
+                    <n-select v-model:value="model.preset" :options="persetOptions" />
+                </n-form-item>
+                <n-form-item path="outputformat" :label="$t('preset')" label-width="110px">
+                    <n-select v-model:value="model.outputformat" :options="videoFormatOptions" />
+                </n-form-item>
                 <n-form-item path="webhookType" :label="$t('webhookType')" label-width="110px">
                     <n-select v-model:value="model.webhookType" :options="webHookOptions" />
                 </n-form-item>
@@ -53,6 +59,9 @@
                 </n-form-item>
                 <n-form-item path="downloadThread" :label="$t('thread')" label-width="110px">
                     <n-switch v-model:value="model.thread" />
+                </n-form-item>
+                <n-form-item path="enableTimeSuffix" :label="$t('enableTimeSuffix')" label-width="110px">
+                    <n-switch v-model:value="model.enableTimeSuffix" />
                 </n-form-item>
                 <n-form-item>
                     <div class="btns">
@@ -86,6 +95,8 @@ export default defineComponent({
     setup(props, ctx) {
         const message = useMessage()
         const arrToOptions = (arr) => arr.map(i => ({ value: i, label: i }))
+        const videoFormatOptions = arrToOptions(['mp4', 'mov', 'flv', 'avi'])
+        const persetOptions = arrToOptions(['ultrafast', 'superfast', 'veryfast', 'faster', 'fast', 'medium', 'slow', 'slower', 'veryslow'])
         const webHookOptions = arrToOptions(['bark', 'feishu', 'dingding'])
         const formInfo = reactive({
             rules: {
@@ -111,6 +122,9 @@ export default defineComponent({
                 webhooks: '',
                 thread: true,
                 maxDownloadNum: 5,
+                preset: 'medium',
+                outputformat: 'mp4',
+                enableTimeSuffix: false,
             },
         })
         const getData = async () => {
@@ -128,6 +142,7 @@ export default defineComponent({
         const update = (show) => { ctx.emit('update:show', show) }
         const confirmUpdate = async () => {
             await updateConfig()
+            // 将配置文件信息写入本地存储中
             update(false)
         }
         onMounted(() => getData())
@@ -135,6 +150,8 @@ export default defineComponent({
             ...toRefs(formInfo),
             FolderClose,
             Message,
+            videoFormatOptions,
+            persetOptions,
             update,
             confirmUpdate,
             webHookOptions,

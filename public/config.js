@@ -1,3 +1,3 @@
 window.CONFIG = {
-    BASEURL: '/',
+    BASEURL: '/api',
 }

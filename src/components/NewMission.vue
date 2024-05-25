@@ -4,8 +4,9 @@
         :show="show"
         preset="card"
         :title="$t('mission')"
-        :style="bodyStyle"
+        style="width: 500px;"
         :close-on-esc="true"
+        @on-close="closeModal"
     >
         <!-- 2: form -->
         <n-form
@@ -20,7 +21,6 @@
                     v-model:value="model.url"
                     type="textarea"
                     :placeholder="$t('please_enter_url')"
-                    @keydown.enter.prevent
                 >
                 </n-input>
             </n-form-item>
@@ -37,9 +37,7 @@
                     @keydown.enter.prevent
                 >
                 </n-input>
-                <div v-if="false" class="notice">
-                    如果为m3u地址，那么自动采用m3u内的文件名称
-                </div>
+                <div v-if="false" class="notice"></div>
             </n-form-item>
             <n-form-item path="preset" :label="$t('preset')" label-width="90px">
                 <n-select v-model:value="model.preset" :options="persetOptions" />
@@ -59,6 +57,9 @@
                     </template>
                 </n-input>
             </n-form-item>
+            <n-form-item path="dir" :label="$t('dir')" label-width="90px">
+                <n-auto-complete v-model:value="model.dir" :options="dirList" :cascade="true" />
+            </n-form-item>
             <!--- 转码方式 fast -->
             <!--- 转换格式 mp4  -->
         </n-form>
@@ -75,8 +76,9 @@
 import { FolderClose, UserPositioning } from '@icon-park/vue-next'
 import { defineComponent, reactive } from 'vue'
 import { useMessage } from 'naive-ui'
-import { createMission } from '../api'
+import { createMission, getSystemConfig } from '../api'
 import i18n from '@/lang'
+import axiosAPI from '../axios'
 
 export default defineComponent({
     props: {
@@ -132,45 +134,92 @@ export default defineComponent({
                 preset: 'medium',
                 outputformat: 'mp4',
                 useragent: '',
+                dir: '',
             },
         })
         const arrToOptions = (arr) => arr.map(i => ({ value: i, label: i }))
         const videoFormatOptions = arrToOptions(['mp4', 'mov', 'flv', 'avi'])
         const persetOptions = arrToOptions(['ultrafast', 'superfast', 'veryfast', 'faster', 'fast', 'medium', 'slow', 'slower', 'veryslow'])
-
-        const bodyStyle = {
-            width: '550px',
+        const dirList = ref([])
+        const getDirList = async () => {
+            const res = await axiosAPI.get('/dir')
+            if (res.code === 0) {
+                dirList.value = res.data
+            }
+        }
+        const getConfigOption = async () => {
+            const res = await getSystemConfig()
+            if (res.code === 0) {
+                const data = res.data
+                if (data?.preset) formInfo.model.preset = data.preset
+                if (data?.outputformat) formInfo.model.outputformat = data.outputformat
+            }
         }
         const createDownloadMission = async () => {
-            const res = await createMission(formInfo.model)
+            const postData = { ...formInfo.model }
+            postData.dir = postData.dir.replaceAll('/media', '')
+            const res = await createMission(postData)
             if (res.code === 0) {
-                message.success('创建任务成功')
+                message.success(i18n.global.t('mission_created'))
                 formInfo.model = {
                     url: '',
                     downloadDir: '/Download',
                     preset: 'medium',
                     outputformat: 'mp4',
                     useragent: '',
+                    dir: '',
                 }
             }
         }
+
+        const checkUrlisLegal = (url) => {
+            if (!url) return Promise.resolve(false)
+            const urlArray = url.split('\n')
+            const isUrl = (url) => {
+                try {
+                    new URL(url)
+                    return true
+                } catch {
+                    return false
+                }
+            }
+            return Promise.resolve(urlArray.every(i => isUrl(i)))
+        }
         const confirmModal = async () => {
-            await createDownloadMission()
-            ctx.emit('update:show', false)
+            // 校验表单
+            formRef.value?.validate(async (errors) => {
+                if (!errors) {
+                    // 进一步校验地址是否符合规范
+                    checkUrlisLegal(formInfo.model.url).then(async (validated) => {
+                        if (validated) {
+                            await createDownloadMission()
+                            ctx.emit('update:show', false)
+                        } else {
+                            message.warning(i18n.global.t('input_url_illegal'))
+                        }
+                    })
+                } else {
+                    // 提示信息
+                    message.warning(i18n.global.t('mission_validate_failed'))
+                }
+            })
         }
         const closeModal = () => {
-            console.warn('closeModal')
             ctx.emit('update:show', false)
         }
+        onMounted(() => {
+            getDirList()
+            getConfigOption()
+        })
         return {
             videoFormatOptions,
-            bodyStyle,
             formRef,
             FolderClose,
             UserPositioning,
             persetOptions,
             ...toRefs(formInfo),
             confirmModal,
+            dirList,
             closeModal,
         }
     },

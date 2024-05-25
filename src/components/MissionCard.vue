@@ -80,7 +80,7 @@
                             size="tiny"
                             @click="delMission(mission)"
                         >
-                            <n-icon :component="Close"></n-icon>
+                            <n-icon :component="Delete"></n-icon>
                         </n-button>
                     </template>
                     <span>  {{ $t('delete') }}</span>
@@ -124,6 +124,25 @@
                     <span>{{ $t('pause_download') }}</span>
                 </n-tooltip>
                 <n-tooltip
+                    v-if="mission.status === '1'"
+                    :show-arrow="false"
+                    placement="top"
+                    trigger="hover"
+                    class="m20"
+                >
+                    <template #trigger>
+                        <n-button
+                            circle
+                            ghost
+                            size="tiny"
+                            @click="stop(mission)"
+                        >
+                            <n-icon :component="Close"></n-icon>
+                        </n-button>
+                    </template>
+                    <span>{{ $t('stop_download') }}</span>
+                </n-tooltip>
+                <n-tooltip
                     :show-arrow="false"
                     placement="top"
                     trigger="hover"
@@ -161,8 +180,10 @@
 import { defineComponent, ref } from 'vue'
 import { useThemeVars, useMessage, NTooltip, NPopconfirm } from 'naive-ui'
 import { changeColor } from 'seemly'
-import { Close, LinkTwo, ShuffleOne, Pause } from '@icon-park/vue-next'
+import { Close, LinkTwo, ShuffleOne, Pause, Delete } from '@icon-park/vue-next'
 import { copyToClipboard } from '@/utils/index.js'
+import { stopMission } from '../api/index'
+import i18n from '@/lang'
 
 export default defineComponent({
     components: { NTooltip, NPopconfirm },
@@ -177,13 +198,20 @@ export default defineComponent({
         const message = useMessage()
         const copyLink = (url) => {
             copyToClipboard(url)
-            message.success('copyed link')
+            message.success(i18n.global.t('copy_success'))
         }
         const delMission = (mission) => {
             ctx.emit('delMission', mission)
         }
         const resume = (mission) => {
             ctx.emit('resume', mission)
+        }
+        const stop = async (mission) => {
+            // 中止下载任务
+            const res = await stopMission(mission.uid)
+            if (res.code === 0) {
+                message.success(i18n.global.t('stoped_mission'))
+            }
         }
         const showError = ref(false)
         return {
@@ -193,6 +221,8 @@ export default defineComponent({
             LinkTwo,
             ShuffleOne,
             Pause,
+            Delete,
+            stop,
             copyLink,
             delMission,
             showError,
