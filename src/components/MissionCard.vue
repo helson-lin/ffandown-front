@@ -34,10 +34,25 @@
                         :bordered="false"
                         type="success"
                         size="small"
-                        round
                     >
                         <template #avatar>
                             <n-avatar
+                                :bordered="false"
+                                src="https://file.helson-lin.cn/picgodate.png"
+                            />
+                        </template>
+                        {{ mission.crt_tm }}
+                    </n-tag>
+
+                    <n-tag
+                        v-if="['1', '3'].includes(mission.status)"
+                        :bordered="false"
+                        type="success"
+                        size="small"
+                    >
+                        <template #avatar>
+                            <n-avatar
+                                :bordered="false"
                                 src="https://file.helson-lin.cn/picgo-icons8-hdd-96.png"
                             />
                         </template>
@@ -49,10 +64,10 @@
                         :bordered="false"
                         type="success"
                         size="small"
-                        round
                     >
                         <template #avatar>
                             <n-avatar
+                                :bordered="false"
                                 src="https://file.helson-lin.cn/picgo-icons8-fan-speed-96.png"
                             />
                         </template>

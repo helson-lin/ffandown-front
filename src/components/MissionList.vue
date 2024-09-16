@@ -57,7 +57,7 @@ export default defineComponent({
                 const { rows, count } = res.data
                 const list = rows.map(i => ({
                     ...i,
-                    percent: parseInt(i.percent),
+                    percent: parseInt(Number(i.percent).toFixed(2)),
                 }))
                 page.value.count = Math.ceil(count / page.value.pageSize)
                 state.list = list
