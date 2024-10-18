@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import AutoImport from 'unplugin-auto-import/vite'
 import eslintPlugin from 'vite-plugin-eslint'
 import path from 'path'
@@ -14,6 +15,12 @@ export default defineConfig({
             eslintrc: {
                 enabled: true,
             },
+        }),
+        createSvgIconsPlugin({
+            // 指定需要缓存的图标文件夹
+            iconDirs: [path.resolve(process.cwd(), 'src/assets/svg/')],
+            // 指定symbolId格式
+            symbolId: 'icon-svg-[name]',
         }),
     ],
     build: {

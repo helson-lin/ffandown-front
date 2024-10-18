@@ -28,4 +28,9 @@ const dataLocale = computed(() => (language === 'zh-CN' ? dateZhCN : dateEnUS))
 </script>
 <style lang='scss'>
 @import "./assets/css/reset.css";
+
+.n-config-provider {
+    width: 100%;
+    height: 100%;
+}
 </style>
