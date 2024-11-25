@@ -10,7 +10,7 @@ const routes = [
     {
         path: '/mobile',
         name: 'mobileHome',
-        component: () => import('../views/MobileHome.vue'),
+        component: () => import('../views/Home.vue'),
     },
 ]
 
