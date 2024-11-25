@@ -82,6 +82,7 @@
                         {{ $t('initial') }}
                     </n-tag>
                 </div>
+                <!-- delete mission -->
                 <n-tooltip
                     :show-arrow="false"
                     placement="top"
@@ -100,6 +101,7 @@
                     </template>
                     <span>  {{ $t('delete') }}</span>
                 </n-tooltip>
+                <!-- resume mission -->
                 <n-tooltip
                     v-if="mission.status === '2'"
                     :show-arrow="false"
@@ -119,6 +121,7 @@
                     </template>
                     <span>{{ $t('resume_download') }}</span>
                 </n-tooltip>
+                <!-- pause mission -->
                 <n-tooltip
                     v-if="mission.status === '1'"
                     :show-arrow="false"
@@ -138,6 +141,26 @@
                     </template>
                     <span>{{ $t('pause_download') }}</span>
                 </n-tooltip>
+                <n-tooltip
+                    v-if="mission.status === '1'"
+                    :show-arrow="false"
+                    placement="top"
+                    trigger="hover"
+                    class="m20"
+                >
+                    <template #trigger>
+                        <n-button
+                            circle
+                            ghost
+                            size="tiny"
+                            @click="stop(mission)"
+                        >
+                            <n-icon :component="Forbid"></n-icon>
+                        </n-button>
+                    </template>
+                    <span>{{ $t('stop_download') }}</span>
+                </n-tooltip>
+                <!-- copy mission url -->
                 <n-tooltip
                     :show-arrow="false"
                     placement="top"
@@ -176,7 +199,7 @@
 import { defineComponent, ref } from 'vue'
 import { useThemeVars, useMessage, NTooltip, NPopconfirm } from 'naive-ui'
 import { changeColor } from 'seemly'
-import { Close, LinkTwo, ShuffleOne, Pause } from '@icon-park/vue-next'
+import { Close, LinkTwo, ShuffleOne, Pause, Forbid } from '@icon-park/vue-next'
 import { copyToClipboard } from '@/utils/index.js'
 
 export default defineComponent({
@@ -187,7 +210,7 @@ export default defineComponent({
             default: () => ({}),
         },
     },
-    emits: ['delMission', 'resume'],
+    emits: ['delMission', 'resume', 'stop'],
     setup(_, ctx) {
         const message = useMessage()
         const copyLink = (url) => {
@@ -200,6 +223,10 @@ export default defineComponent({
         const resume = (mission) => {
             ctx.emit('resume', mission)
         }
+        // stop mission
+        const stop = (mission) => {
+            ctx.emit('stop', mission)
+        }
         const showError = ref(false)
         return {
             changeColor,
@@ -208,10 +235,12 @@ export default defineComponent({
             LinkTwo,
             ShuffleOne,
             Pause,
+            Forbid,
             copyLink,
             delMission,
             showError,
             resume,
+            stop,
         }
     },
 })

@@ -6,6 +6,7 @@
             :mission="item"
             @delMission="delMission"
             @resume="resume"
+            @stop="stop"
         />
         <Blank v-if="missionList.length === 0" />
     </div>
@@ -17,7 +18,7 @@
 <script>
 import { defineComponent, toRefs, reactive, computed, watch } from 'vue'
 import MissionCard from './MissionCard.vue'
-import { deleteMission, pauseMission, resumeMission, getDownloadList } from '../api/index'
+import { deleteMission, pauseMission, resumeMission, stopMission, getDownloadList } from '../api/index'
 import { useMessage, useDialog, NPagination } from 'naive-ui'
 import Blank from './Blank.vue'
 import i18n from '@/lang'
@@ -48,6 +49,8 @@ export default defineComponent({
             if (res.code === 0) {
                 message.success(i18n.global.t('delete_success'))
                 getMissionList()
+            } else {
+                message.success(i18n.global.t('delete_failed'))
             }
         }
 
@@ -100,11 +103,31 @@ export default defineComponent({
 
         const resume = async ({ uid, status }) => {
             if (status === '2') {
-                await resumeMission(uid)
+                const res = await resumeMission(uid)
+                if (res.code === 0) {
+                    message.success(i18n.global.t('resume_success'))
+                } else {
+                    message.warning(i18n.global.t('resume_failed'))
+                }
             } else {
-                await pauseMission(uid)
+                const res = await pauseMission(uid)
+                if (res.code === 0) {
+                    message.success(i18n.global.t('pause_success'))
+                } else {
+                    message.warning(i18n.global.t('pause_failed'))
+                }
             }
         }
+        // stop mission 
+        const stop = ({ uid }) => {
+            // fixed: 后端的接口存在异常，为了让用户临时使用，这里不转同步，直接提示
+            stopMission(uid)
+            const timer = setTimeout(() => {
+                message.success(i18n.global.t('stop_success'))
+                clearTimeout(timer)
+            }, 1000)
+        }
+
         expose({
             getMissionList,
             clearAllMission,
@@ -116,6 +139,7 @@ export default defineComponent({
         return {
             delMission,
             resume,
+            stop,
             missionList,
             page,
             getData,

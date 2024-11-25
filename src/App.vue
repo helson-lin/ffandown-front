@@ -14,6 +14,10 @@ const themeOverrides = {
     common: {
         primaryColor: '#B78AFF',
         primaryColorHover: '#a8a4ff', 
+        warningColor: '#cd3f01',
+        warningColorHover: '#b41901',
+        warningColorPressed: '#cd1d01',
+        warningColorSuppl: '#b41901',
     },
     Button: {
         backgroundColor: '#B78AFF',
