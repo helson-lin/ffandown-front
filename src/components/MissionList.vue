@@ -160,6 +160,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .mission-list {
     height: calc(100% - 100px);
+    overflow-y: auto;
 }
 
 .pg-box {

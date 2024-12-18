@@ -1,6 +1,6 @@
 <template>
     <div :class="{'mission-card': true}">
-        <!-- <div v-show="Number.isNaN(mission.percent) || mission.percent === null" class="badge">{{ $t('live') }}</div> -->
+        <div v-show="mission.percent == 0 && mission.protocolType === 'live'" class="badge">{{ $t('live') }}</div>
         <!-- top -->
         <div class="mission-card-top">
             <div class="mission-name">
@@ -242,6 +242,10 @@ export default defineComponent({
         }
 
         .btns {
+            width: 100% !important;
+        }
+
+        .btns .tags {
             flex-wrap: wrap;
             width: 100% !important;
             padding: 0 !important;
