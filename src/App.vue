@@ -9,11 +9,15 @@
 </template>
 <script setup>
 import { NConfigProvider, NMessageProvider, NDialogProvider, zhCN, dateZhCN, enUS, dateEnUS } from 'naive-ui'
-
+/**
+   * js 文件下使用这个做类型提示
+   * @type import('naive-ui').GlobalThemeOverrides
+   */
 const themeOverrides = {
     common: {
         primaryColor: '#B78AFF',
         primaryColorHover: '#a8a4ff', 
+        pressedColor: '#a8a4ff',
         warningColor: '#cd3f01',
         warningColorHover: '#b41901',
         warningColorPressed: '#cd1d01',
@@ -22,6 +26,9 @@ const themeOverrides = {
     Button: {
         backgroundColor: '#B78AFF',
         textCOlor: '#B78AFF',
+        activeColor: '#B78AFF',
+        colorPressedPrimary: '#a8a4ff',
+        borderPressedPrimary: '#a8a4ff',
     },
     Select: {},
 }

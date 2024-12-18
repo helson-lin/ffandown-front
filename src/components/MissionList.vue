@@ -98,7 +98,14 @@ export default defineComponent({
         }
 
         watch(() => props.status, () => {
-            getMissionList()
+            if (props.status === '0,1,5') {
+                // reset page to 1
+                page.value.current = 1
+                getMissionList()
+            } else {
+                clearInterval(timer)
+                getData()
+            }
         })
 
         const resume = async ({ uid, status }) => {
@@ -119,17 +126,18 @@ export default defineComponent({
             }
         }
         // stop mission 
-        const stop = ({ uid }) => {
-            // fixed: 后端的接口存在异常，为了让用户临时使用，这里不转同步，直接提示
-            stopMission(uid)
-            const timer = setTimeout(() => {
+        const stop = async ({ uid }) => {
+            const res = await stopMission(uid)
+            if (res.code === 0) {
                 message.success(i18n.global.t('stop_success'))
-                clearTimeout(timer)
-            }, 1000)
+            } else {
+                message.warning(res.message)
+            }
         }
 
         expose({
             getMissionList,
+            getData,
             clearAllMission,
         })
 

@@ -54,10 +54,16 @@
     "please_select_perset": "please select transfrom preset",
     "please_select_outputformat": "please select outputformat",
     "please_enter_maxDownloadNum": "please set maximum mission",
-    "update_setting_success": "success update, please reboot serve",
+    "update_setting_success": "Upgrade was successful;, please reboot serve",
     "upgrade": "upgrade",
     "upgrade_message": "New versions can get updates",
     "upgrading": "updating",
     "notification": "Notification",
-    "upgrade_success": "upgrade success, please refresh"
+    "upgrade_success": "Upgrade was successful, please refresh.",
+    "copyed_link": "Copy link success",
+    "live": "live",
+    "test": "test webhook",
+    "test_webhook_success": "Test message sent.",
+    "upgrade_backend": "Please upgrade the backend version and then try the new features.",
+    "create_success": "Create mission success"
 }

@@ -139,8 +139,9 @@ export default defineComponent({
         }
         // refresh mission list
         const refresh = () => {
-            mission.value?.getMissionList()
+            mission.value?.getData()
         }
+
         const clearAllMission = () => {
             mission.value?.clearAllMission()
         }
@@ -166,6 +167,16 @@ export default defineComponent({
 })
 </script>
 <style lang="scss" scoped>
+@media screen and (max-width: 768px) {
+    .panel-left.min {
+        width: 0 !important;
+    }
+
+    .panel-left.max {
+        width: 130px !important;
+    }
+}
+
 .controller-panel {
     position: absolute;
     display: flex;
@@ -259,10 +270,13 @@ export default defineComponent({
                 box-sizing: border-box;
                 flex: 1;
                 padding: 0 10px;
-            }
+                overflow: hidden;
 
-            h2 {
-                padding: 20px 10px;
+                h2 {
+                    display: inline-block;
+                    padding: 20px 10px;
+                    transition: width 200ms ease-in-out;
+                }
             }
 
             .status-list {

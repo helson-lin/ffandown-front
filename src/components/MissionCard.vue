@@ -1,5 +1,6 @@
 <template>
     <div :class="{'mission-card': true}">
+        <!-- <div v-show="Number.isNaN(mission.percent) || mission.percent === null" class="badge">{{ $t('live') }}</div> -->
         <!-- top -->
         <div class="mission-card-top">
             <div class="mission-name">
@@ -30,56 +31,39 @@
                         </template>
                     </n-popconfirm>
                     <n-tag
-                        v-if="['1', '3'].includes(mission.status)"
-                        :bordered="false"
-                        type="success"
+                        v-if="mission.status === '1'"
                         size="small"
                     >
                         <template #avatar>
-                            <n-avatar
-                                :bordered="false"
-                                src="https://file.helson-lin.cn/picgodate.png"
-                            />
+                            <Icon name="speed" size="15" />
                         </template>
-                        {{ mission.crt_tm }}
+                        {{ mission.speed }}
                     </n-tag>
 
                     <n-tag
-                        v-if="['1', '3'].includes(mission.status)"
-                        :bordered="false"
-                        type="success"
+                        v-if="!['0', '5'].includes(mission.status)"
                         size="small"
                     >
                         <template #avatar>
-                            <n-avatar
-                                :bordered="false"
-                                src="https://file.helson-lin.cn/picgo-icons8-hdd-96.png"
-                            />
+                            <Icon name="fileSize" size="15" />
                         </template>
                         {{ mission.size }}
                     </n-tag>
 
                     <n-tag
-                        v-if="mission.status === '1'"
-                        :bordered="false"
-                        type="success"
+                        v-if="mission.status === '0'"
+                        size="small"
+                    >
+                        {{ $t('initial') }}
+                    </n-tag>
+
+                    <n-tag
                         size="small"
                     >
                         <template #avatar>
-                            <n-avatar
-                                :bordered="false"
-                                src="https://file.helson-lin.cn/picgo-icons8-fan-speed-96.png"
-                            />
+                            <Icon name="date" size="15" />
                         </template>
-                        {{ mission.speed }}
-                    </n-tag>
-                    <n-tag
-                        v-if="mission.status === '0'"
-                        :bordered="false"
-                        size="small"
-                        round
-                    >
-                        {{ $t('initial') }}
+                        {{ mission.crt_tm }}
                     </n-tag>
                 </div>
                 <!-- delete mission -->
@@ -102,7 +86,7 @@
                     <span>  {{ $t('delete') }}</span>
                 </n-tooltip>
                 <!-- resume mission -->
-                <n-tooltip
+                <!-- <n-tooltip
                     v-if="mission.status === '2'"
                     :show-arrow="false"
                     placement="top"
@@ -120,9 +104,9 @@
                         </n-button>
                     </template>
                     <span>{{ $t('resume_download') }}</span>
-                </n-tooltip>
+                </n-tooltip> -->
                 <!-- pause mission -->
-                <n-tooltip
+                <!-- <n-tooltip
                     v-if="mission.status === '1'"
                     :show-arrow="false"
                     placement="top"
@@ -140,7 +124,7 @@
                         </n-button>
                     </template>
                     <span>{{ $t('pause_download') }}</span>
-                </n-tooltip>
+                </n-tooltip> -->
                 <n-tooltip
                     v-if="mission.status === '1'"
                     :show-arrow="false"
@@ -187,7 +171,7 @@
             <!-- progress -->
             <n-progress
                 type="line"
-                :color="themeVars.primaryColor"
+                :color="changeColor(themeVars.primaryColor, 0.6)"
                 :rail-color="changeColor(themeVars.primaryColor, { alpha: 0.2 })"
                 :percentage="mission.percent"
                 :indicator-text-color="themeVars.textColorBase"
@@ -201,6 +185,7 @@ import { useThemeVars, useMessage, NTooltip, NPopconfirm } from 'naive-ui'
 import { changeColor } from 'seemly'
 import { Close, LinkTwo, ShuffleOne, Pause, Forbid } from '@icon-park/vue-next'
 import { copyToClipboard } from '@/utils/index.js'
+import i18n from '@/lang'
 
 export default defineComponent({
     components: { NTooltip, NPopconfirm },
@@ -215,7 +200,7 @@ export default defineComponent({
         const message = useMessage()
         const copyLink = (url) => {
             copyToClipboard(url)
-            message.success('copyed link')
+            message.success(i18n.global.t('copyed_link'))
         }
         const delMission = (mission) => {
             ctx.emit('delMission', mission)
@@ -246,12 +231,53 @@ export default defineComponent({
 })
 </script>
 <style lang="scss" scoped>
+@media screen and (max-width: 768px) {
+    .mission-card-top {
+        flex-direction: column;
+
+        .mission-name {
+            width: 100%;
+            overflow: hidden;
+            text-wrap: nowrap;
+        }
+
+        .btns {
+            flex-wrap: wrap;
+            width: 100% !important;
+            padding: 0 !important;
+        }
+
+        .btns .tags > * {
+            margin-top: 10px;
+        }
+    }
+}
+
 .mission-card {
+    position: relative;
     box-sizing: border-box;
     padding: 20px;
     margin-bottom: 20px;
+    overflow: hidden;
     border: 1px solid #e2e2e3;
     border-radius: 5px;
+
+    .badge {
+        position: absolute; /* 绝对定位 */
+        top: -25px; /* 控制垂直位置 */
+        right: -25px; /* 控制水平位置 */
+        box-sizing: border-box;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        padding-bottom: 5px;
+        font-size: 10px;
+        color: white;
+        background-color: #7f7f7f;
+        transform: rotate(45deg);
+    }
 
     &:hover {
         border: 1px solid $primary-color;
@@ -306,6 +332,11 @@ export default defineComponent({
                     background-color: $primary-color;
                     border: none;
                 }
+            }
+
+            .tags {
+                display: flex;
+                align-items: center;
             }
 
             :deep svg {

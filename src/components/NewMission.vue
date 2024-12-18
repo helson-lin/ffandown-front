@@ -1,11 +1,12 @@
 <template>
     <n-modal
         class="new-mission"
-        :show="show"
+        :show="showModel"
         preset="card"
+        :closable="false"
         :title="$t('mission')"
         :style="bodyStyle"
-        :close-on-esc="true"
+        @on-close="closeModal"
     >
         <!-- 2: form -->
         <n-form
@@ -86,7 +87,15 @@ export default defineComponent({
         },
     },
     emits: ['update:show', 'confirm'],
-    setup(_, ctx) {
+    setup(props, ctx) {
+        const showModel = computed({
+            get() {
+                return props.show
+            },
+            set(val) {
+                ctx.emit('update:show', val)
+            },
+        })
         const formRef = ref(null)
         const message = useMessage()
         const formInfo = reactive({
@@ -144,7 +153,7 @@ export default defineComponent({
         const createDownloadMission = async () => {
             const res = await createMission(formInfo.model)
             if (res.code === 0) {
-                message.success('创建任务成功')
+                message.success(i18n.global.t('create_success'))
                 formInfo.model = {
                     url: '',
                     downloadDir: '/Download',
@@ -155,11 +164,16 @@ export default defineComponent({
             }
         }
         const confirmModal = async () => {
-            await createDownloadMission()
-            ctx.emit('update:show', false)
+            formRef.value?.validate(async (errors) => {
+                if (!errors) {
+                    await createDownloadMission()
+                    ctx.emit('update:show', false)
+                }
+            })
+            // await createDownloadMission()
+            // ctx.emit('update:show', false)
         }
         const closeModal = () => {
-            console.warn('closeModal')
             ctx.emit('update:show', false)
         }
         return {
@@ -172,6 +186,7 @@ export default defineComponent({
             ...toRefs(formInfo),
             confirmModal,
             closeModal,
+            showModel,
         }
     },
 })

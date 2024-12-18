@@ -34,13 +34,16 @@
                     <n-select v-model:value="model.webhookType" :options="webHookOptions" />
                 </n-form-item>
                 <n-form-item path="webhooks" :label="$t('webhooks')" label-width="110px">
-                    <n-input
-                        v-model:value="model.webhooks"
-                        type="textarea"
-                        :placeholder="$t('please_enter_webhooks')"
-                        @keydown.enter.prevent
-                    >
-                    </n-input>
+                    <n-input-group>
+                        <n-input
+                            v-model:value="model.webhooks"
+                            type="textarea"
+                            :placeholder="$t('please_enter_webhooks')"
+                            @keydown.enter.prevent
+                        >
+                            <template #suffix><span class="test-webhook" @click="testWebhookUrl"><n-icon :component="Send"></n-icon></span></template>
+                        </n-input>
+                    </n-input-group>
                 </n-form-item>
                 <n-form-item path="maxDownloadNum" :label="$t('maxDownloadNum')" label-width="110px">
                     <n-input
@@ -69,9 +72,9 @@
     </n-drawer>
 </template>
 <script>
-import { getSystemConfig, updateSytemConfig } from '@/api/index'
+import { getSystemConfig, updateSytemConfig, testWebhook } from '@/api/index'
 import { defineComponent, reactive, toRefs, onMounted } from 'vue'
-import { FolderClose, Message } from '@icon-park/vue-next'
+import { FolderClose, Send } from '@icon-park/vue-next'
 import { useMessage } from 'naive-ui'
 import i18n from '@/lang'
 
@@ -123,6 +126,8 @@ export default defineComponent({
             const res = await updateSytemConfig(formInfo.model)
             if (res.code === 0) {
                 message.success(i18n.global.t('update_setting_success'))
+            } else {
+                message.warning(res.message)
             }
         }
         const update = (show) => { ctx.emit('update:show', show) }
@@ -130,18 +135,41 @@ export default defineComponent({
             await updateConfig()
             update(false)
         }
+
+        const testWebhookUrl = async () => {
+            const { webhooks, webhookType } = formInfo.model
+            const res = await testWebhook({
+                webhookType,
+                webhooks,
+            })
+            if (res.code === 0) {
+                message.success(i18n.global.t('test_webhook_success'))
+            } else if (res.message === '请求错误,未找到该资源' && res.status === 404) {
+                message.warning(i18n.global.t('upgrade_backend'))
+            } else {
+                message.warning(res.message)
+            }
+        }
         onMounted(() => getData())
         return {
             ...toRefs(formInfo),
             FolderClose,
-            Message,
+            Send,
             update,
             confirmUpdate,
+            testWebhookUrl,
             webHookOptions,
         }
     },
 })
 </script>
+<style>
+@media screen and (max-width: 768px) {
+    .n-drawer {
+        width: 100% !important;
+    }
+}
+</style>
 <style lang="scss" scoped>
 .btns {
     display: flex;
@@ -152,5 +180,9 @@ export default defineComponent({
     .n-button {
         margin-right: 10px;
     }
+}
+
+.test-webhook {
+    cursor: pointer;
 }
 </style>

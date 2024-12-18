@@ -22,3 +22,5 @@ export const updateSytemConfig = (data) => axiosAPI.post('/config', data)
 export const getSystemVersion = () => axiosAPI.get('/version')
 
 export const upgradeVersion = () => axiosAPI.get('/upgrade')
+
+export const testWebhook = (params) => axiosAPI.get('/testWebhook', params)
