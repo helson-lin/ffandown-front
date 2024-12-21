@@ -26,7 +26,7 @@
                         </div>
                         <template #action>
                             <n-button size="small" @click="showError = false">
-                                ok
+                                {{ $t('confirm') }}
                             </n-button>
                         </template>
                     </n-popconfirm>
@@ -35,7 +35,7 @@
                         size="small"
                     >
                         <template #avatar>
-                            <Icon name="speed" size="15" />
+                            <Icon name="speed" :size="15" />
                         </template>
                         {{ mission.speed }}
                     </n-tag>
@@ -45,7 +45,7 @@
                         size="small"
                     >
                         <template #avatar>
-                            <Icon name="fileSize" size="15" />
+                            <Icon name="fileSize" :size="15" />
                         </template>
                         {{ mission.size }}
                     </n-tag>
@@ -61,7 +61,7 @@
                         size="small"
                     >
                         <template #avatar>
-                            <Icon name="date" size="15" />
+                            <Icon name="date" :size="15" />
                         </template>
                         {{ mission.crt_tm }}
                     </n-tag>
@@ -230,8 +230,15 @@ export default defineComponent({
     },
 })
 </script>
+
 <style lang="scss" scoped>
 @media screen and (max-width: 768px) {
+    .msg {
+        max-width: 100%;
+        line-height: 22px;
+        white-space: wrap;
+    }
+
     .mission-card-top {
         flex-direction: column;
 
@@ -255,6 +262,12 @@ export default defineComponent({
             margin-top: 10px;
         }
     }
+}
+
+.msg {
+    max-width: 500px;
+    line-height: 22px;
+    white-space: wrap;
 }
 
 .mission-card {
@@ -311,11 +324,6 @@ export default defineComponent({
         .tags {
 
             :deep .n-tag { margin-right: 10px; }
-        }
-
-        .msg {
-            width: 200px;
-            white-space: wrap;
         }
 
         .btns {

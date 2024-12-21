@@ -9,14 +9,14 @@
                 label-placement="left"
             >
                 <n-form-item path="port" :label="$t('port')" label-width="110px">
-                    <n-input
+                    <n-input-number
                         v-model:value="model.port"
                         type="number"
                         :placeholder="$t('port')"
                         disabled
                         @keydown.enter.prevent
                     >
-                    </n-input>
+                    </n-input-number>
                 </n-form-item>
                 <n-form-item path="downloadDir" :label="$t('download_dir')" label-width="110px">
                     <n-input
@@ -46,13 +46,13 @@
                     </n-input-group>
                 </n-form-item>
                 <n-form-item path="maxDownloadNum" :label="$t('maxDownloadNum')" label-width="110px">
-                    <n-input
+                    <n-input-number
                         v-model:value="model.maxDownloadNum"
                         type="number"
                         :placeholder="$t('please_enter_maxDownloadNum')"
                         @keydown.enter.prevent
                     >
-                    </n-input>
+                    </n-input-number>
                 </n-form-item>
                 <n-form-item path="downloadThread" :label="$t('thread')" label-width="110px">
                     <n-switch v-model:value="model.thread" />

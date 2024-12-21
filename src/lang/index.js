@@ -14,6 +14,9 @@ const language = (navigator.language || 'en').toLocaleLowerCase()
 const i18n = createI18n({
     locale: localStorage.getItem('lang') || language, // 设置当前语言类型
     legacy: false,
+    fallbackLocale: 'en',
+    fallbackWarn: false,
+    missingWarn: false,
     globalInjection: true,
     messages,
 })

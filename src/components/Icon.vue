@@ -26,7 +26,7 @@ const size = computed(() => props.size)
 
 <style scoped>
     .n-icon {
-        ::v-deep path {
+        :deep(path) {
             fill: red;
             stroke: red;
         }

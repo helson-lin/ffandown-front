@@ -55,9 +55,6 @@
                     :placeholder="$t('useragent_placeholder')"
                     @keydown.enter.prevent
                 >
-                    <template #prefix>
-                        <n-icon :component="UserPositioning" />
-                    </template>
                 </n-input>
             </n-form-item>
             <!--- 转码方式 fast -->
@@ -86,7 +83,7 @@ export default defineComponent({
             default: false,
         },
     },
-    emits: ['update:show', 'confirm'],
+    emits: ['update:show', 'confirm', 'refresh'],
     setup(props, ctx) {
         const showModel = computed({
             get() {
@@ -161,13 +158,14 @@ export default defineComponent({
                     outputformat: 'mp4',
                     useragent: '',
                 }
+                ctx.emit('refresh')
+                ctx.emit('update:show', false)
             }
         }
         const confirmModal = async () => {
             formRef.value?.validate(async (errors) => {
                 if (!errors) {
                     await createDownloadMission()
-                    ctx.emit('update:show', false)
                 }
             })
             // await createDownloadMission()

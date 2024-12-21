@@ -130,6 +130,7 @@ export default defineComponent({
             const res = await stopMission(uid)
             if (res.code === 0) {
                 message.success(i18n.global.t('stop_success'))
+                getData()
             } else {
                 message.warning(res.message)
             }

@@ -14,7 +14,7 @@
                     :show-arrow="false"
                     placement="top"
                     trigger="hover"
-                    delay="1000"
+                    :delay="1000"
                 >
                     <template #trigger>
                         <n-button
@@ -30,7 +30,7 @@
                 </n-tooltip>
             </div>
         </div>
-        <NewMission :show="showNewMission" @update:show="showNewMission = $event" />  
+        <NewMission :show="showNewMission" @update:show="showNewMission = $event" @refresh="refresh" />  
     </div>
 </template>
 <script>
@@ -63,11 +63,13 @@ export default defineComponent({
                 },
             },
         ]
+        const refresh = () => ctx.emit('refresh')
         return {
             showNewMission,
             actions,
             activeStatusKey,
             Add,
+            refresh,
         }
     },
 })
