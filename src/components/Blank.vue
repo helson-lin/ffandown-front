@@ -21,7 +21,6 @@ export default defineComponent({
     width: 100%;
 
     .blank {
-
         // background-attachment: fixed;
         width: 480px;
         height: 480px;

@@ -4,37 +4,37 @@ import { getOption, UIDGenerator } from '../utils'
 const axiosAPI = {
     // get请求
     get(url, param) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             axios({
                 method: 'get',
                 url,
                 params: param,
             }).then((res) => {
                 resolve(res)
-            })
+            }).catch(e => reject(e))
         })
     },
     delete(url, param) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             axios({
                 method: 'delete',
                 url,
                 params: param,
             }).then((res) => {
                 resolve(res)
-            })
+            }).catch(e => reject(e))
         })
     },
     // post请求
     post(url, param) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             axios({
                 method: 'post',
                 url,
                 data: param,
             }).then((res) => {
                 resolve(res)
-            })
+            }).catch(e => reject(e))
         })
     },
     // rpc 请求

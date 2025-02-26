@@ -17,6 +17,7 @@ module.exports = {
         //     }
         // ],
         'number-leading-zero': 'never',
+        'selector-class-pattern': null
         // 'no-descending-specificity': null,
         // 'font-family-no-missing-generic-family-keyword': null,
         // 'selector-type-no-unknown': null,

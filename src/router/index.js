@@ -1,16 +1,27 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import { isMobile } from '../utils/index' // 导入设备识别工具
 
 const routes = [
     {
         path: '/',
         name: 'home',
         component: () => import('../views/Home.vue'),
+        children: [
+            {
+                path: '/',
+                name: 'Mission',
+                component: () => import('../views/pages/Mission.vue'),
+            },
+            {
+                path: '/plugins',
+                name: 'Plugin',
+                component: () => import('../views/pages/Plugin.vue'),
+            },
+        ],
     },
     {
-        path: '/mobile',
-        name: 'mobileHome',
-        component: () => import('../views/Home.vue'),
+        path: '/login',
+        name: 'Login',
+        component: () => import('../views/Login.vue'),
     },
 ]
 
@@ -21,10 +32,12 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    if (isMobile() && to.name !== 'mobileHome') {
-        next({ name: 'mobileHome' }) // 如果是手机端，跳转到手机端路由
+    if (to.path === '/login') {
+        const userInfo = localStorage.getItem('x-userinfo')
+        if (userInfo) next('/')
+        else next()
     } else {
-        next() // 否则继续
+        next()
     }
 })
 

@@ -2,25 +2,50 @@
     <div class="controller-panel">
         <div :class="['panel-left', isClosed ? 'min' : 'max']">
             <div class="mission">
+                <!-- 标题 --> 
                 <h2>{{ $t('mission_list') }}</h2>
-                <div class="status-list">
+                <!-- 任务状态列表 -->
+                <div class="status-list slider-block">
                     <div
                         v-for="status in statusList"
                         :key="status.name"
-                        :class="{ 'status': true, 'status-active': activeStatusKey === status.key }"
+                        class="slider-block-item status"
+                        :class="{ 'status-active': activeStatusKey === status.key }"
                         @click="changeStatusTab(status.key)"
                     >
                         <component
                             :is="status.icon"
-                            class="status-icon"
+                            class="status-icon slider-block-item-icon"
                             theme="filled"
                             size="24"
                             :fill="activeStatusKey === status.key ? '#B78AFF' : '#333'"
                         ></component>
-                        <div v-show="!isClosed" class="status-name">{{ status.name }}</div>
+                        <div v-show="!isClosed" class="status-name slider-block-item-name">{{ status.name }}</div>
+                    </div>
+                </div>
+                <!-- 增加插件设置 --> 
+                <h2 v-if="false">{{ $t("system_settings") }}</h2>
+                <div v-if="false" class="base-settings">
+                    <div class="settings-list slider-block">
+                        <div 
+                            v-for="setting in settingsList" 
+                            :key="setting.key" 
+                            class="slider-block-item" 
+                            @click="changeSystemSetting(setting)"
+                        >
+                            <component
+                                :is="setting.icon"
+                                class="slider-block-item-icon"
+                                theme="filled"
+                                size="24"
+                                :fill="activeStatusKey === setting.key ? '#B78AFF' : '#333'"
+                            ></component>
+                            <div class="slider-block-item-name">{{ setting.name }}</div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <!-- 侧边栏展开收起 -->
             <div class="arrow" @click="toggleSlider">
                 <n-icon size="13">
                     <ArrowLeft v-if="!isClosed" />
@@ -28,13 +53,11 @@
                 </n-icon>
             </div>
         </div>
+        <!-- 内容展示区域 -->
         <div class="panel-right">
-            <Quick @refresh="refresh" @clear="clearAllMission" />
-            <!-- 快捷工具 -->
-            <!--- 没有数据 -->
-            <MissionList ref="mission" :status="activeStatusKey" />
-            <!-- <Blank /> -->
+            <router-view class="main-container" />
         </div>
+        <!-- 系统升级 -->
         <div class="system">
             <n-tooltip
                 v-if="versionInfo.upgrade"
@@ -70,30 +93,38 @@
                 <span>{{ $t('setting') }}</span>
             </n-tooltip>
         </div>
+        <!-- 基础设置弹窗 --> 
         <Setting :show="showSetting" @update:show="showSetting = $event" />
+        <!-- 全局升级 loading -->
         <Upgrade :show="upgradeVersion" @close="upgradeVersion = false" />
     </div>
 </template>
 <script>
 import { defineComponent, ref, onMounted } from 'vue'
-import { PlayOne, PauseOne, Box, SettingConfig, Refresh, ArrowLeft, ArrowRight } from '@icon-park/vue-next'
+import { PlayOne, PauseOne, Box, SettingConfig, Refresh, ArrowLeft, ArrowRight, PlugOne } from '@icon-park/vue-next'
 import { useDialog, useMessage } from 'naive-ui'
 import MissionList from '../components/MissionList.vue'
 import Blank from '../components/Blank.vue'
 import Quick from '../components/Quick.vue'
 import Setting from '../components/Setting.vue'
 import Upgrade from '../components/Upgrade.vue'
+import Mission from './pages/Mission.vue'
 import i18n from '@/lang'
+import { useStore } from '../store'
 import { getSystemVersion } from '@/api/index'
+import { useRouter, useRoute } from 'vue-router'
 // 引入i8n实例
 export default defineComponent({
-    components: { MissionList, Blank, Quick, Setting, SettingConfig, Refresh, Upgrade, ArrowLeft, ArrowRight },
+    components: { MissionList, Blank, Quick, Setting, SettingConfig, Refresh, Mission, Upgrade, ArrowLeft, ArrowRight },
     setup() {
         const dialog = useDialog()
         const message = useMessage()
+        const store = useStore()
         const mission = ref(null)
         const upgradeVersion = ref(false)
         const isClosed = ref(false)
+        const router = useRouter()
+        const route = useRoute()
         const statusList = [{
             name: i18n.global.t('downloading'),
             icon: PlayOne,
@@ -109,12 +140,29 @@ export default defineComponent({
             icon: PauseOne,
             key: '2,4',
         }]
+        const settingsList = [{
+            name: i18n.global.t('plugin'),
+            icon: PlugOne,
+            key: 'plugin',
+            path: '/plugins',
+        }]
         const versionInfo = ref({
             upgrade: false,
         })
         const showSetting = ref(false)
-        const activeStatusKey = ref('0,1,5')
+        const activeStatusKey = computed({
+            get: () => store?.status,
+            set: (val) => {
+                // todo: 如果当前的路由不是/那么跳转
+                if (route.path !== '/') router.push({ path: '/' })
+                store.setStatus(val)
+            },
+        })
         const changeStatusTab = (key) => { activeStatusKey.value = key }
+        // 切换系统设置
+        const changeSystemSetting = ({ path }) => {
+            router.push({ path })
+        }
         const getVersionInfo = async () => {
             const res = await getSystemVersion()
             if (res.code === 0) {
@@ -126,7 +174,7 @@ export default defineComponent({
         const upgrade = () => {
             dialog.success({
                 title: i18n.global.t('notification'),
-                content: `Current Version: ${versionInfo.value.current}, Latest Version: ${versionInfo.value.version}`,
+                content: `${i18n.global.t('current_version')}: ${versionInfo.value.current}, ${i18n.global.t('latest_version')}: ${versionInfo.value.version}`,
                 positiveText: i18n.global.t('upgrade'),
                 negativeText: i18n.global.t('cancel'),
                 onPositiveClick: async () => {
@@ -137,23 +185,16 @@ export default defineComponent({
         const toggleSlider = () => {
             isClosed.value = !isClosed.value
         }
-        // refresh mission list
-        const refresh = () => {
-            mission.value?.getData()
-        }
 
-        const clearAllMission = () => {
-            mission.value?.clearAllMission()
-        }
         onMounted(() => {
             getVersionInfo()
         })
         return {
             changeStatusTab,
-            refresh,
-            clearAllMission,
+            changeSystemSetting,
             SettingConfig,
             showSetting,
+            settingsList,
             statusList,
             activeStatusKey,
             mission,
@@ -177,6 +218,13 @@ export default defineComponent({
     }
 }
 
+::v-deep .n-dialog .n-dialog__icon {
+    --n-icon-color: #b78aff !important;
+
+    color: #b78aff !important;
+    background-color: #000;
+}
+
 .controller-panel {
     position: absolute;
     display: flex;
@@ -186,6 +234,13 @@ export default defineComponent({
     border-radius: 10px;
 
     @include center;
+
+    .n-modal-body-wrapper .n-dialog {
+        --n-icon-color: #b78aff !important;
+        --n-color: #b78aff !important;
+
+        background-color: #000;
+    }
 
     .system {
         position: absolute;
@@ -279,12 +334,14 @@ export default defineComponent({
                 }
             }
 
-            .status-list {
+            .status-list,
+            .slider-block {
                 display: flex;
                 flex-direction: column;
                 width: 100%;
 
-                .status {
+                .status,
+                .slider-block-item {
                     box-sizing: border-box;
                     display: flex;
                     align-items: center;
@@ -296,6 +353,10 @@ export default defineComponent({
 
                     &-icon {
                         margin-right: 10px;
+
+                        &:hover {
+                            fill: $primary-color;
+                        }
                     }
 
                     &:hover,
@@ -313,6 +374,10 @@ export default defineComponent({
             height: 100%;
             padding: $pd;
             overflow: hidden;
+
+            .main-container {
+                height: 100%;
+            }
         }
     }
 }

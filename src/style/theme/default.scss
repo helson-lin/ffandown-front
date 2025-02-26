@@ -1,35 +1,39 @@
-$primary-color: rgb(73, 28, 188);
+$primary-color: rgb(73 28 188);
 $text-color: #000;
 $border-radius: 5px;
 $fz: 16px;
 $pd: 20px;
 
 .shadow-1 {
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    box-shadow: rgb(0 0 0 / 16%) 0 1px 4px;
 }
 
 .shadow-2 {
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    box-shadow: rgb(0 0 0 / 16%) 0 1px 4px;
 }
 
 .shadow-3 {
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    box-shadow: rgb(50 50 93 / 25%) 0 13px 27px -5px, rgb(0 0 0 / 30%) 0 8px 16px -8px;
+}
+
+host {
+    --n-icon-color: #b78aff !important;
+    --n-color: #b78aff !important;
 }
 
 body {
     font-size: $fz;
 }
 
-
 .btn {
-    padding: 5px 20px;
     box-sizing: border-box;
-    background-color: $primary-color;
-    outline: none;
-    border: none;
+    padding: 5px 20px;
     line-height: 100%;
-    border-radius: $border-radius;
     color: $text-color;
+    background-color: $primary-color;
+    border: none;
+    border-radius: $border-radius;
+    outline: none;
 }
 
 .m20 {

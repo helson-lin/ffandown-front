@@ -48,6 +48,7 @@
                 <n-form-item path="maxDownloadNum" :label="$t('maxDownloadNum')" label-width="110px">
                     <n-input-number
                         v-model:value="model.maxDownloadNum"
+                        :min="1"
                         type="number"
                         :placeholder="$t('please_enter_maxDownloadNum')"
                         @keydown.enter.prevent
@@ -89,7 +90,7 @@ export default defineComponent({
     setup(props, ctx) {
         const message = useMessage()
         const arrToOptions = (arr) => arr.map(i => ({ value: i, label: i }))
-        const webHookOptions = arrToOptions(['bark', 'feishu', 'dingding'])
+        const webHookOptions = arrToOptions(['bark', 'feishu', 'dingding', 'gotify'])
         const formInfo = reactive({
             rules: {
                 port: [

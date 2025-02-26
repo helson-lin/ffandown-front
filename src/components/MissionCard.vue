@@ -1,5 +1,5 @@
 <template>
-    <div :class="{'mission-card': true}">
+    <div class="mission-card" @click="showDetail = !showDetail">
         <div v-show="mission.percent == 0 && mission.protocolType === 'live'" class="badge">{{ $t('live') }}</div>
         <!-- top -->
         <div class="mission-card-top">
@@ -7,7 +7,7 @@
                 {{ mission.name }}
             </div>
             <div class="btns">
-                <div class="tags">
+                <div class="tags" @click.stop>
                     <n-popconfirm v-if="mission.status === '4'" v-model:show="showError">
                         <template #trigger>
                             <n-tag
@@ -25,11 +25,12 @@
                             {{ mission.message }}
                         </div>
                         <template #action>
-                            <n-button size="small" @click="showError = false">
+                            <n-button size="small" @click.stop="showError = false">
                                 {{ $t('confirm') }}
                             </n-button>
                         </template>
                     </n-popconfirm>
+                    <!-- 下载速度标签 --> 
                     <n-tag
                         v-if="mission.status === '1'"
                         size="small"
@@ -39,9 +40,9 @@
                         </template>
                         {{ mission.speed }}
                     </n-tag>
-
+                    <!-- 文件大小标签 --> 
                     <n-tag
-                        v-if="!['0', '5'].includes(mission.status)"
+                        v-if="!['0', '5'].includes(mission.status) && mission.size"
                         size="small"
                     >
                         <template #avatar>
@@ -49,14 +50,14 @@
                         </template>
                         {{ mission.size }}
                     </n-tag>
-
+                    <!-- 初始化状态标签 --> 
                     <n-tag
                         v-if="mission.status === '0'"
                         size="small"
                     >
                         {{ $t('initial') }}
                     </n-tag>
-
+                    <!-- 创建时间标签 --> 
                     <n-tag
                         size="small"
                     >
@@ -78,7 +79,7 @@
                             circle
                             ghost
                             size="tiny"
-                            @click="delMission(mission)"
+                            @click.stop="delMission(mission)"
                         >
                             <n-icon :component="Close"></n-icon>
                         </n-button>
@@ -86,8 +87,8 @@
                     <span>  {{ $t('delete') }}</span>
                 </n-tooltip>
                 <!-- resume mission -->
-                <!-- <n-tooltip
-                    v-if="mission.status === '2'"
+                <n-tooltip
+                    v-if="mission.status === '4'"
                     :show-arrow="false"
                     placement="top"
                     trigger="hover"
@@ -104,7 +105,7 @@
                         </n-button>
                     </template>
                     <span>{{ $t('resume_download') }}</span>
-                </n-tooltip> -->
+                </n-tooltip>
                 <!-- pause mission -->
                 <!-- <n-tooltip
                     v-if="mission.status === '1'"
@@ -137,7 +138,7 @@
                             circle
                             ghost
                             size="tiny"
-                            @click="stop(mission)"
+                            @click.stop="stop(mission)"
                         >
                             <n-icon :component="Forbid"></n-icon>
                         </n-button>
@@ -156,7 +157,7 @@
                             circle
                             ghost
                             size="tiny"
-                            @click="copyLink(mission.url)"
+                            @click.stop="copyLink(mission.url)"
                         >
                             <n-icon :component="LinkTwo">
                             </n-icon>
@@ -166,9 +167,9 @@
                 </n-tooltip>
             </div>
         </div>
-        <!-- bottom -->
+        <!-- bottom 卡片底部信息 -->
         <div class="mission-card-bottom">
-            <!-- progress -->
+            <!-- progress 进度条 -->
             <n-progress
                 type="line"
                 :color="changeColor(themeVars.primaryColor, 0.6)"
@@ -177,18 +178,26 @@
                 :indicator-text-color="themeVars.textColorBase"
             />
         </div>
+        <n-collapse-transition :show="showDetail">
+            <div class="mission-info" @click.stop>
+                <div v-for="detailKey in detailKeys" :key="detailKey" class="mission-info-item">
+                    <div class="mission-info-item-label">{{ $t(detailKey) }}: </div>
+                    <div class="mission-info-item-value">{{ mission[detailKey] || '' }}</div>
+                </div>
+            </div>
+        </n-collapse-transition>
     </div>
 </template>
 <script>
 import { defineComponent, ref } from 'vue'
-import { useThemeVars, useMessage, NTooltip, NPopconfirm } from 'naive-ui'
+import { useThemeVars, useMessage, NTooltip, NPopconfirm, NCollapseTransition } from 'naive-ui'
 import { changeColor } from 'seemly'
 import { Close, LinkTwo, ShuffleOne, Pause, Forbid } from '@icon-park/vue-next'
 import { copyToClipboard } from '@/utils/index.js'
 import i18n from '@/lang'
 
 export default defineComponent({
-    components: { NTooltip, NPopconfirm },
+    components: { NTooltip, NPopconfirm, NCollapseTransition },
     props: {
         mission: {
             type: Object,
@@ -198,24 +207,33 @@ export default defineComponent({
     emits: ['delMission', 'resume', 'stop'],
     setup(_, ctx) {
         const message = useMessage()
+        // 展示更多信息
+        const showDetail = ref(false)
+        const detailKeys = ['outputformat', 'preset', 'useragent', 'timemark', 'filePath']
+        // 复制
         const copyLink = (url) => {
             copyToClipboard(url)
             message.success(i18n.global.t('copyed_link'))
         }
+        // 删除任务
         const delMission = (mission) => {
             ctx.emit('delMission', mission)
         }
+        // 恢复下载任务
         const resume = (mission) => {
             ctx.emit('resume', mission)
         }
-        // stop mission
+        // stop mission 暂停任务
         const stop = (mission) => {
             ctx.emit('stop', mission)
         }
+        // 显示错误信息
         const showError = ref(false)
         return {
             changeColor,
             themeVars: useThemeVars(),
+            showDetail,
+            detailKeys,
             Close,
             LinkTwo,
             ShuffleOne,
@@ -244,12 +262,11 @@ export default defineComponent({
 
         .mission-name {
             width: 100%;
-            overflow: hidden;
-            text-wrap: nowrap;
         }
 
         .btns {
             width: 100% !important;
+            padding: 0 !important;
         }
 
         .btns .tags {
@@ -316,9 +333,10 @@ export default defineComponent({
 
         .mission-name {
             flex: 1;
+            overflow: hidden;
             line-height: 1.3em;
-            text-overflow: wrap;
-            white-space: wrap;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .tags {
@@ -362,6 +380,41 @@ export default defineComponent({
         display: flex;
         width: 100%;
         padding: 10px 0;
+    }
+
+    .mission-info {
+
+        // padding: 10px 0;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+        border-top: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+
+        &-item {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            &-label {
+                width: 70px;
+                margin-right: 20px;
+            }
+
+            &-value {
+                flex: 1;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
     }
 }
 </style>

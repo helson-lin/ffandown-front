@@ -25,6 +25,7 @@
                 >
                 </n-input>
             </n-form-item>
+            <!--- 文件名称  -->
             <n-form-item
                 path="name"
                 :label="$t('mission_filename')"
@@ -42,12 +43,18 @@
                     如果为m3u地址，那么自动采用m3u内的文件名称
                 </div>
             </n-form-item>
+            <n-form-item path="dir" :label="$t('downloadDir')" label-width="90px">
+                <n-select v-model:value="model.dir" :options="dirOptions" />
+            </n-form-item>
+            <!--- 转码方式 fast -->
             <n-form-item path="preset" :label="$t('preset')" label-width="90px">
                 <n-select v-model:value="model.preset" :options="persetOptions" />
             </n-form-item>
+            <!--- 转换格式 mp4  -->
             <n-form-item path="outputformat" :label="$t('outputformat')" label-width="90px">
                 <n-select v-model:value="model.outputformat" :options="videoFormatOptions" />
             </n-form-item>
+            <!--- 用户代理  -->
             <n-form-item path="useragent" :label="$t('useragent')" label-width="90px">
                 <n-input
                     v-model:value="model.useragent"
@@ -57,8 +64,6 @@
                 >
                 </n-input>
             </n-form-item>
-            <!--- 转码方式 fast -->
-            <!--- 转换格式 mp4  -->
         </n-form>
         <!-- file upload -->
         <template #footer>
@@ -81,6 +86,10 @@ export default defineComponent({
         show: {
             type: Boolean,
             default: false,
+        },
+        dirOptions: {
+            type: Array,
+            default: () => ([]),
         },
     },
     emits: ['update:show', 'confirm', 'refresh'],
@@ -111,6 +120,12 @@ export default defineComponent({
                         message: i18n.global.t('please_enter_filename'),
                     },
                 ],
+                dir: [
+                    {
+                        trigger: ['blur'],
+                        required: false,
+                    },
+                ],
                 outputformat: [
                     {
                         trigger: ['blur', 'change'],
@@ -137,6 +152,7 @@ export default defineComponent({
                 url: '',
                 preset: 'medium',
                 outputformat: 'mp4',
+                dir: '',
                 useragent: '',
             },
         })
@@ -147,6 +163,7 @@ export default defineComponent({
         const bodyStyle = {
             width: '550px',
         }
+
         const createDownloadMission = async () => {
             const res = await createMission(formInfo.model)
             if (res.code === 0) {

@@ -47,6 +47,9 @@ importers:
       eslint-plugin-vue:
         specifier: ^7.20.0
         version: https://r2.cnpmjs.org/eslint-plugin-vue/-/eslint-plugin-vue-7.20.0.tgz(eslint@https://r2.cnpmjs.org/eslint/-/eslint-7.32.0.tgz)
+      js-base64:
+        specifier: ^3.7.7
+        version: 3.7.7
       material-icons:
         specifier: ^1.13.11
         version: 1.13.11
@@ -2241,6 +2244,9 @@ packages:
 
   js-base64@2.6.4:
     resolution: {integrity: sha512-pZe//GGmwJndub7ZghVHz7vjb2LgC1m8B07Au3eYqeqv9emhESByMXxaEgkUkEqJe87oBbSniGYoQNIBklc7IQ==}
+
+  js-base64@3.7.7:
+    resolution: {integrity: sha512-7rCnleh0z2CkXhH67J8K1Ytz0b2Y+yxTPL+/KOJoa20hfnVQ/3/T6W/KflYI4bRHRagNeXeU2bkNGI3v1oS/lw==}
 
   js-tokens@8.0.0:
     resolution: {integrity: sha512-PC7MzqInq9OqKyTXfIvQNcjMkODJYC8A17kAaQgeW79yfhqTWSOfjHYQ2mDDcwJ96Iibtwkfh0C7R/OvqPlgVA==}
@@ -6056,6 +6062,8 @@ snapshots:
   isobject@3.0.1: {}
 
   js-base64@2.6.4: {}
+
+  js-base64@3.7.7: {}
 
   js-tokens@8.0.0: {}
 

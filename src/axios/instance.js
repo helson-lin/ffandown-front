@@ -1,6 +1,7 @@
 import axios from 'axios'
+import { useStore } from '../store'
 
-const baseURL = window.CONFIG.BASEURL || ''
+const baseURL = window.CONFIG?.BASEURL || ''
 
 const instance = axios.create({
     baseURL,
@@ -10,14 +11,6 @@ const instance = axios.create({
             'Content-Type': 'application/x-www-form;charset=utf-8',
         },
     },
-})
-// 请求拦截
-instance.interceptors.request.use((config) => {
-    const configBackup = config
-    if (window.localStorage.getItem('token')) {
-        configBackup.headers.Authorization = window.localStorage.getItem('token')
-    }
-    return configBackup
 })
 // 响应拦截
 instance.interceptors.response.use(
@@ -30,12 +23,14 @@ instance.interceptors.response.use(
     },
     (error) => {
         if (error && error.response) {
+            const store = useStore()
             switch (error.response.status) {
                 case 400:
                     error.response.message = '错误请求'
                     break
                 case 401:
                     error.response.message = '未授权，请重新登录'
+                    store.logout()
                     break
                 case 403:
                     error.response.message = '拒绝访问'
@@ -49,8 +44,7 @@ instance.interceptors.response.use(
         } else {
             error.response.message = '连接到服务器失败'
         }
-        console.error(error)
-        return Promise.resolve(error.response)
+        return Promise.reject(error.response)
     },
 )
 

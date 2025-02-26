@@ -1,4 +1,5 @@
 {
+    "login_title": "FFandown",
     "warn": "警告",
     "clear_all_mission": "是否确定，清除所有任务?",
     "confirm": "确定",
@@ -65,5 +66,18 @@
     "test": "测试",
     "test_webhook_success": "测试消息发送完毕",
     "upgrade_backend": "请升级后端版本后尝试新功能",
-    "create_success": "创建任务成功"
+    "create_success": "创建任务成功",
+    "username": "用户名",
+    "password": "密码",
+    "username_placeholder": "请输入用户名",
+    "password_placeholder": "请输入密码",
+    "login_btn": "登录",
+    "remmber_password": "记住密码",
+    "forget_password": "忘记密码？",
+    "current_version": "当前前端版本",
+    "latest_version": "最新前端版本",
+    "system_settings": "系统设置",
+    "plugin": "插件设置",
+    "timemark": "时长",
+    "filePath": "文件路径"
 }

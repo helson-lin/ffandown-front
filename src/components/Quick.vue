@@ -30,13 +30,20 @@
                 </n-tooltip>
             </div>
         </div>
-        <NewMission :show="showNewMission" @update:show="showNewMission = $event" @refresh="refresh" />  
+        <NewMission
+            :show="showNewMission"
+            :dir-options="dirOptions"
+            @update:show="showNewMission = $event"
+            @refresh="refresh"
+        />  
     </div>
 </template>
 <script>
 import { Redo, Clear, Add } from '@icon-park/vue-next'
 import NewMission from './NewMission.vue'
+import { getDir } from '../api'
 import i18n from '@/lang'
+import { onMounted } from 'vue'
 
 export default defineComponent({
     name: 'Blank',
@@ -45,6 +52,7 @@ export default defineComponent({
     setup(_, ctx) {
         const activeStatusKey = ref(null)
         const showNewMission = ref(false)
+        const dirOptions = ref([])
         const actions = [
             {
                 name: i18n.global.t('refresh'),
@@ -63,11 +71,25 @@ export default defineComponent({
                 },
             },
         ]
+        const getDirOption = async () => {
+            const res = await getDir()
+            if (res.code === 0) {
+                const list = res.data.map((item) => ({
+                    label: item.label.replace('/media', '配置目录'),
+                    value: item.value.replace('/media', '/'),
+                }))
+                dirOptions.value = list
+            }
+        }
         const refresh = () => ctx.emit('refresh')
+        onMounted(() => {
+            getDirOption()
+        })
         return {
             showNewMission,
             actions,
             activeStatusKey,
+            dirOptions,
             Add,
             refresh,
         }

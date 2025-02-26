@@ -16,9 +16,9 @@
     </div>
 </template>
 <script>
-import { defineComponent, toRefs, reactive, computed, watch } from 'vue'
+import { defineComponent, toRefs, reactive, onUnmounted, computed, watch } from 'vue'
 import MissionCard from './MissionCard.vue'
-import { deleteMission, pauseMission, resumeMission, stopMission, getDownloadList } from '../api/index'
+import { deleteMission, resumeMission, stopMission, getDownloadList } from '../api/index'
 import { useMessage, useDialog, NPagination } from 'naive-ui'
 import Blank from './Blank.vue'
 import i18n from '@/lang'
@@ -109,19 +109,14 @@ export default defineComponent({
         })
 
         const resume = async ({ uid, status }) => {
-            if (status === '2') {
+            if (status === '4') {
                 const res = await resumeMission(uid)
                 if (res.code === 0) {
                     message.success(i18n.global.t('resume_success'))
+                    // 刷新列表
+                    getData()
                 } else {
                     message.warning(i18n.global.t('resume_failed'))
-                }
-            } else {
-                const res = await pauseMission(uid)
-                if (res.code === 0) {
-                    message.success(i18n.global.t('pause_success'))
-                } else {
-                    message.warning(i18n.global.t('pause_failed'))
                 }
             }
         }
@@ -145,6 +140,11 @@ export default defineComponent({
         onMounted(() => {
             getMissionList()
         })
+
+        onUnmounted(() => {
+            clearInterval(timer)
+        })
+        
         return {
             delMission,
             resume,

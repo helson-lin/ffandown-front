@@ -1,4 +1,5 @@
 {
+    "login_title": "Login FFandown",
     "warn": "Warning",
     "clear_all_mission": "Clear all mission?",
     "confirm": "Confirm",
@@ -65,5 +66,16 @@
     "test": "test webhook",
     "test_webhook_success": "Test message sent.",
     "upgrade_backend": "Please upgrade the backend version and then try the new features.",
-    "create_success": "Create mission success"
+    "create_success": "Create mission success",
+    "username": "Username",
+    "password": "Password",
+    "username_placeholder": "Please enter your username",
+    "password_placeholder": "Please enter your password",
+    "login_btn": "Login",
+    "remember_password": "Remember password",
+    "forget_password": "Forgot password?",
+    "current_version": "Current version",
+    "latest_version": "Latest version",
+    "timemark": "Timemark",
+    "filePath": "File Path"
 }

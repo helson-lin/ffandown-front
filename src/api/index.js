@@ -15,12 +15,16 @@ export const pauseMission = (uid) => axiosAPI.get('/pause', { uid })
 
 export const stopMission = (uid) => axiosAPI.post(`/stop?uid=${uid}`)
 
-export const getSystemConfig = () => axiosAPI.get('/config')
+export const getSystemConfig = () => axiosAPI.get('/sys/config')
 
-export const updateSytemConfig = (data) => axiosAPI.post('/config', data)
+export const updateSytemConfig = (data) => axiosAPI.post('/sys/config', data)
 
-export const getSystemVersion = () => axiosAPI.get('/version')
+export const getSystemVersion = () => axiosAPI.get('/sys/version')
 
-export const upgradeVersion = () => axiosAPI.get('/upgrade')
+export const upgradeVersion = () => axiosAPI.get('/sys/upgrade')
 
-export const testWebhook = (params) => axiosAPI.get('/testWebhook', params)
+export const testWebhook = (params) => axiosAPI.get('/sys/testWebhook', params)
+
+export const userLogin = (data) => axiosAPI.post('/user/login', data)
+
+export const getDir = () => axiosAPI.get('/sys/dir')
