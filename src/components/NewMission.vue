@@ -4,7 +4,7 @@
         :show="showModel"
         preset="card"
         :closable="false"
-        :title="$t('mission')"
+        :title="$t('create_mission')"
         :style="bodyStyle"
         @on-close="closeModal"
     >
@@ -16,7 +16,12 @@
             label-align="left"
             label-placement="left"
         >
-            <n-form-item path="url" :label="$t('url')" label-width="90px">
+            <n-form-item 
+                path="url" 
+                :label="$t('url')" 
+                label-width="90px"  
+                class="warp"
+            >
                 <n-input
                     v-model:value="model.url"
                     type="textarea"
@@ -24,6 +29,9 @@
                     @keydown.enter.prevent
                 >
                 </n-input>
+                <div class="notice">
+                    {{ $t('url_notice') }}
+                </div>
             </n-form-item>
             <!--- 文件名称  -->
             <n-form-item
@@ -39,16 +47,28 @@
                     @keydown.enter.prevent
                 >
                 </n-input>
-                <div v-if="false" class="notice">
-                    如果为m3u地址，那么自动采用m3u内的文件名称
+                <div class="notice">
+                    {{ $t('filename_notice') }}
                 </div>
             </n-form-item>
             <n-form-item path="dir" :label="$t('downloadDir')" label-width="90px">
-                <n-select v-model:value="model.dir" :options="dirOptions" />
+                <n-input
+                    v-model:value="model.dir"
+                    type="text"
+                    :placeholder="$t('download_child_dir_placeholder')"
+                    @keydown.enter.prevent
+                >
+                </n-input>
             </n-form-item>
             <!--- 转码方式 fast -->
-            <n-form-item path="preset" :label="$t('preset')" label-width="90px">
+            <n-form-item 
+                path="preset" 
+                :label="$t('preset')" 
+                label-width="90px"
+                class="warp"
+            >
                 <n-select v-model:value="model.preset" :options="persetOptions" />
+                <div class="notice">{{ $t('preset_notice') }}</div>
             </n-form-item>
             <!--- 转换格式 mp4  -->
             <n-form-item path="outputformat" :label="$t('outputformat')" label-width="90px">
@@ -223,6 +243,6 @@ export default defineComponent({
     // top: 100%;
     font-size: 12px;
     line-height: 26px;
-    color: #333333be;
+    color: #c2c2c2;
 }
 </style>

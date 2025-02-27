@@ -20,7 +20,7 @@
                             size="24"
                             :fill="activeStatusKey === status.key ? '#B78AFF' : '#333'"
                         ></component>
-                        <div v-show="!isClosed" class="status-name slider-block-item-name">{{ status.name }}</div>
+                        <div v-show="showMenuName" class="status-name slider-block-item-name">{{ status.name }}</div>
                     </div>
                 </div>
                 <!-- 增加插件设置 --> 
@@ -40,7 +40,7 @@
                                 size="24"
                                 :fill="activeStatusKey === setting.key ? '#B78AFF' : '#333'"
                             ></component>
-                            <div class="slider-block-item-name">{{ setting.name }}</div>
+                            <div v-if="showMenuName" class="slider-block-item-name">{{ setting.name }}</div>
                         </div>
                     </div>
                 </div>
@@ -185,6 +185,11 @@ export default defineComponent({
         const toggleSlider = () => {
             isClosed.value = !isClosed.value
         }
+        // 展示菜单名称
+        const showMenuName = computed(() => {
+            if (store?.isMobile) return false
+            return !isClosed.value
+        })
 
         onMounted(() => {
             getVersionInfo()
@@ -200,6 +205,7 @@ export default defineComponent({
             mission,
             versionInfo,
             isClosed,
+            showMenuName,
             upgrade,
             toggleSlider,
             upgradeVersion,
@@ -214,7 +220,7 @@ export default defineComponent({
     }
 
     .panel-left.max {
-        width: 130px !important;
+        width: 70px !important;
     }
 }
 

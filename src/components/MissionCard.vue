@@ -30,6 +30,24 @@
                             </n-button>
                         </template>
                     </n-popconfirm>
+                    <!-- 视频质量--> 
+                    <n-tag
+                        size="small"
+                    >
+                        <template #avatar>
+                            <Icon name="quality" :size="15" />
+                        </template>
+                        {{ mission.preset }}
+                    </n-tag>
+                    <!-- 视频格式--> 
+                    <n-tag
+                        size="small"
+                    >
+                        <template #avatar>
+                            <Icon name="video" :size="15" />
+                        </template>
+                        {{ mission.outputformat }}
+                    </n-tag>
                     <!-- 下载速度标签 --> 
                     <n-tag
                         v-if="mission.status === '1'"
@@ -383,7 +401,6 @@ export default defineComponent({
     }
 
     .mission-info {
-
         // padding: 10px 0;
         box-sizing: border-box;
         display: flex;

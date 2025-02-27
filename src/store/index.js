@@ -1,11 +1,13 @@
 // stores/counter.js
 import { defineStore } from 'pinia'
 import { userLogin } from '@/api/index'
+import { isMobile } from '../utils'
 
 export const useStore = defineStore('main', {
     state: () => ({ 
         authed: true,
         status: '0,1,5',
+        isMobile: isMobile(),
     }),
     actions: {
         async login(data) {

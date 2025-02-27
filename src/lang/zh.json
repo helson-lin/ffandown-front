@@ -14,7 +14,8 @@
     "delete_failed": "删除任务失败",
     "stop_failed": "终止任务失败",
     "url": "链接",
-    "please_enter_url": "请输入链接, 支持m3u8、rtsp、rtmp、mp4",
+    "please_enter_url": "请输入链接",
+    "url_notice": "支持m3u8、rtsp、rtmp、mp4、mpd。\n 批量下载，请逗号分割",
     "mission": "任务",
     "downloading": "下载中",
     "finish": "已完成",
@@ -30,6 +31,9 @@
     "mission_filename": "文件名",
     "filename_placeholder": "文件名称（不填默认随机, 批量下载时会自动命名）",
     "download_dir_placeholder": "默认相对地址（/media/）",
+    "filename_notice": "批量下载时，不需要填写",
+    "preset_notice": "该参数影响编码效率和视频质量和下载速度。veryslow 速度慢压缩率低质量最好, ultrafast 最快压缩率高质量最差",
+    "download_child_dir_placeholder": "相对于配置的下载目录（不填默认配置目录）",
     "preset": "视频质量",
     "outputformat": "视频格式",
     "downloadDir": "目录",
@@ -79,5 +83,6 @@
     "system_settings": "系统设置",
     "plugin": "插件设置",
     "timemark": "时长",
-    "filePath": "文件路径"
+    "filePath": "文件路径",
+    "create_mission": "新增任务"
 }
