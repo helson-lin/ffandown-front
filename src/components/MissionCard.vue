@@ -82,7 +82,7 @@
                         <template #avatar>
                             <Icon name="date" :size="15" />
                         </template>
-                        {{ mission.crt_tm }}
+                        {{ transformTm(mission.crt_tm) }}
                     </n-tag>
                 </div>
                 <!-- delete mission -->
@@ -105,7 +105,7 @@
                     <span>  {{ $t('delete') }}</span>
                 </n-tooltip>
                 <!-- resume mission -->
-                <n-tooltip
+                <!-- <n-tooltip
                     v-if="mission.status === '4'"
                     :show-arrow="false"
                     placement="top"
@@ -123,7 +123,7 @@
                         </n-button>
                     </template>
                     <span>{{ $t('resume_download') }}</span>
-                </n-tooltip>
+                </n-tooltip> -->
                 <!-- pause mission -->
                 <!-- <n-tooltip
                     v-if="mission.status === '1'"
@@ -247,6 +247,8 @@ export default defineComponent({
         }
         // 显示错误信息
         const showError = ref(false)
+        // 转换时间戳
+        const transformTm = (tmStr) => new Date(tmStr).toLocaleString()
         return {
             changeColor,
             themeVars: useThemeVars(),
@@ -259,6 +261,7 @@ export default defineComponent({
             Forbid,
             copyLink,
             delMission,
+            transformTm,
             showError,
             resume,
             stop,
