@@ -45,6 +45,11 @@
                     </div>
                 </div>
             </div>
+            <div v-show="!isClosed" class="open-resource">
+                <a href="https://github.com/helson-lin/ffandown" target="_blank">
+                    <Icon name="github" :size="30" />
+                </a>
+            </div>
             <!-- 侧边栏展开收起 -->
             <div class="arrow" @click="toggleSlider">
                 <n-icon size="13">
@@ -224,7 +229,7 @@ export default defineComponent({
     }
 }
 
-::v-deep .n-dialog .n-dialog__icon {
+:deep(.n-dialog .n-dialog__icon) {
     --n-icon-color: #b78aff !important;
 
     color: #b78aff !important;
@@ -268,7 +273,7 @@ export default defineComponent({
             position: relative;
             box-sizing: border-box;
             display: flex;
-            width: 220px;
+            width: 170px;
             height: 100%;
             padding-bottom: 40px;
             border-right: 1px solid #eee;
@@ -291,7 +296,17 @@ export default defineComponent({
             }
 
             &.max {
-                width: 220px;
+                width: 170px;
+            }
+
+            .open-resource {
+                position: absolute;
+                bottom: 20px;
+                left: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
             }
 
             .arrow {

@@ -45,7 +45,12 @@
                         </n-input>
                     </n-input-group>
                 </n-form-item>
-                <n-form-item path="maxDownloadNum" :label="$t('maxDownloadNum')" label-width="110px">
+                <n-form-item 
+                    path="maxDownloadNum" 
+                    :label="$t('maxDownloadNum')" 
+                    label-width="110px"
+                    class="warp"
+                >
                     <n-input-number
                         v-model:value="model.maxDownloadNum"
                         :min="1"
@@ -54,9 +59,20 @@
                         @keydown.enter.prevent
                     >
                     </n-input-number>
+                    <div class="notice">
+                        {{ $t('maxDownloadNum_notice') }}
+                    </div>
                 </n-form-item>
-                <n-form-item path="downloadThread" :label="$t('thread')" label-width="110px">
+                <n-form-item 
+                    path="downloadThread" 
+                    :label="$t('thread')" 
+                    label-width="110px"
+                    class="warp"
+                >
                     <n-switch v-model:value="model.thread" />
+                    <div class="notice">
+                        {{ $t('thread_notice') }}
+                    </div>
                 </n-form-item>
                 <n-form-item>
                     <div class="btns">

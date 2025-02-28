@@ -39,3 +39,17 @@ body {
 .m20 {
     margin-top: 20px;
 }
+
+.warp {
+    :deep(.n-form-item-blank) {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+.notice {
+    font-size: 12px;
+    line-height: 26px;
+    color: #c2c2c2;
+}

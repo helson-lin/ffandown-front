@@ -61,7 +61,8 @@ export default defineComponent({
                 const list = rows.map(i => ({
                     ...i,
                     percent: parseInt(Number(i.percent).toFixed(2)),
-                }))
+                // eslint-disable-next-line dot-notation
+                })).sort((a, b) => new Date(a['crt_tm']) - new Date(b['crt_tm']))
                 page.value.count = Math.ceil(count / page.value.pageSize)
                 state.list = list
             }

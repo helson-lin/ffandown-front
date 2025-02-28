@@ -75,7 +75,12 @@
                 <n-select v-model:value="model.outputformat" :options="videoFormatOptions" />
             </n-form-item>
             <!--- 用户代理  -->
-            <n-form-item path="useragent" :label="$t('useragent')" label-width="90px">
+            <n-form-item 
+                path="useragent" 
+                :label="$t('useragent')" 
+                label-width="90px"
+                class="warp"
+            >
                 <n-input
                     v-model:value="model.useragent"
                     type="text"
@@ -83,6 +88,9 @@
                     @keydown.enter.prevent
                 >
                 </n-input>
+                <div class="notice">
+                    {{ $t('useragent_notice') }}
+                </div>
             </n-form-item>
         </n-form>
         <!-- file upload -->
@@ -177,7 +185,7 @@ export default defineComponent({
             },
         })
         const arrToOptions = (arr) => arr.map(i => ({ value: i, label: i }))
-        const videoFormatOptions = arrToOptions(['mp4', 'mov', 'flv', 'avi'])
+        const videoFormatOptions = arrToOptions(['mp4', 'mov', 'flv', 'avi', 'mkv'])
         const persetOptions = arrToOptions(['ultrafast', 'superfast', 'veryfast', 'faster', 'fast', 'medium', 'slow', 'slower', 'veryslow'])
 
         const bodyStyle = {
@@ -238,11 +246,9 @@ export default defineComponent({
 }
 
 .notice {
-    // position: absolute;
-    // left: 0px;
-    // top: 100%;
     font-size: 12px;
     line-height: 26px;
     color: #c2c2c2;
 }
+
 </style>
