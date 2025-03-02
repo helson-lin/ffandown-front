@@ -7,7 +7,12 @@ export const useStore = defineStore('main', {
     state: () => ({ 
         authed: true,
         status: '0,1,5',
+        // 是否为手机端
         isMobile: isMobile(),
+        systemConfig: {
+            preset: 'medium',
+            outputformat: 'mp4',
+        },
     }),
     actions: {
         async login(data) {
@@ -25,6 +30,10 @@ export const useStore = defineStore('main', {
         },
         setStatus(status) {
             this.status = status
+        },
+        setSystemConfig(options) {
+            if (options?.preset) this.systemConfig.preset = options.preset
+            if (options?.outputformat) this.systemConfig.outputformat = options.outputformat
         },
     },
 })

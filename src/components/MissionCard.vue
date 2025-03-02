@@ -210,7 +210,7 @@
 import { defineComponent, ref } from 'vue'
 import { useThemeVars, useMessage, NTooltip, NPopconfirm, NCollapseTransition } from 'naive-ui'
 import { changeColor } from 'seemly'
-import { Close, LinkTwo, ShuffleOne, Pause, Forbid } from '@icon-park/vue-next'
+import { Close, LinkTwo, ShuffleOne, Pause, Forbid, PlayOne } from '@icon-park/vue-next'
 import { copyToClipboard } from '@/utils/index.js'
 import i18n from '@/lang'
 
@@ -245,6 +245,7 @@ export default defineComponent({
         const stop = (mission) => {
             ctx.emit('stop', mission)
         }
+
         // 显示错误信息
         const showError = ref(false)
         // 转换时间戳
@@ -259,10 +260,11 @@ export default defineComponent({
             ShuffleOne,
             Pause,
             Forbid,
+            PlayOne,
+            showError,
             copyLink,
             delMission,
             transformTm,
-            showError,
             resume,
             stop,
         }

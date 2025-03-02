@@ -32,6 +32,7 @@
     "filename_placeholder": "Please enter filename (do not fill the default random, batch download will be automatically named)",
     "preset": "Transfrom preset",
     "outputformat": "Video format",
+    "outputformat_notice": "TS and MKV formats support downloading and playing simultaneously",
     "downloadDir": "Download directory",
     "downloadDir_placeholder": "Download directory location",
     "useragent": "Useragent",
@@ -54,6 +55,7 @@
     "download_dir_required": "Downlod dir is required",
     "please_enter_filename": "Please enter filename",
     "please_enter_download_dir": "Please enter download dir",
+    "download_dir_notice": "If it starts with '/', it indicates relative to the program directory. If you want to use an absolute address, use '@', for example, '@/Users/lin/Downloads'/' '",
     "please_enter_useragent": "Please enter useragent",
     "please_enter_webhooks": "Please enter webhook url",
     "please_enter_webhookType": "Please enter webhookType",
@@ -85,5 +87,8 @@
     "latest_version": "Latest version",
     "timemark": "Timemark",
     "filePath": "File Path",
-    "create_mission": "Create mission"
+    "create_mission": "Create mission",
+    "play_tooltip": "Play",
+    "enableTimeSuffix": "Time suffix",
+    "enableTimeSuffix_notice": "Enable time suffix, the file name will be suffixed with the time of the file"
 }

@@ -71,8 +71,16 @@
                 <div class="notice">{{ $t('preset_notice') }}</div>
             </n-form-item>
             <!--- 转换格式 mp4  -->
-            <n-form-item path="outputformat" :label="$t('outputformat')" label-width="90px">
+            <n-form-item 
+                path="outputformat" 
+                :label="$t('outputformat')" 
+                label-width="90px"
+                class="warp"
+            >
                 <n-select v-model:value="model.outputformat" :options="videoFormatOptions" />
+                <div class="notice">
+                    {{ $t('outputformat_notice') }}
+                </div>
             </n-form-item>
             <!--- 用户代理  -->
             <n-form-item 
@@ -108,6 +116,8 @@ import { defineComponent, reactive } from 'vue'
 import { useMessage } from 'naive-ui'
 import { createMission } from '../api'
 import i18n from '@/lang'
+import { SUPPORT_VIDEO_OUTPUT, SUPPORT_PRESET } from '@/utils/constant'
+import { useStore } from '../store'
 
 export default defineComponent({
     props: {
@@ -130,8 +140,10 @@ export default defineComponent({
                 ctx.emit('update:show', val)
             },
         })
+        const store = useStore()
         const formRef = ref(null)
         const message = useMessage()
+        const systemConfig = computed(() => store.systemConfig)
         const formInfo = reactive({
             rules: {
                 url: [
@@ -178,15 +190,22 @@ export default defineComponent({
             },
             model: {
                 url: '',
-                preset: 'medium',
-                outputformat: 'mp4',
+                preset: '',
+                outputformat: '',
                 dir: '',
                 useragent: '',
             },
         })
+        watchEffect(() => {
+            if (systemConfig) {
+                const { preset, outputformat } = systemConfig.value
+                formInfo.model.preset = preset
+                formInfo.model.outputformat = outputformat
+            }
+        })
         const arrToOptions = (arr) => arr.map(i => ({ value: i, label: i }))
-        const videoFormatOptions = arrToOptions(['mp4', 'mov', 'flv', 'avi', 'mkv'])
-        const persetOptions = arrToOptions(['ultrafast', 'superfast', 'veryfast', 'faster', 'fast', 'medium', 'slow', 'slower', 'veryslow'])
+        const videoFormatOptions = arrToOptions(SUPPORT_VIDEO_OUTPUT)
+        const persetOptions = arrToOptions(SUPPORT_PRESET)
 
         const bodyStyle = {
             width: '550px',
@@ -198,9 +217,9 @@ export default defineComponent({
                 message.success(i18n.global.t('create_success'))
                 formInfo.model = {
                     url: '',
-                    downloadDir: '/Download',
-                    preset: 'medium',
-                    outputformat: 'mp4',
+                    dir: '',
+                    preset: systemConfig.value.preset || '',
+                    outputformat: systemConfig.value.outputformat || '',
                     useragent: '',
                 }
                 ctx.emit('refresh')
@@ -237,7 +256,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .new-mission {
     .warp {
-        :deep .n-form-item-blank {
+        ::v-deep(.n-form-item-blank) {
             display: flex;
             flex-direction: column;
             align-items: flex-start;

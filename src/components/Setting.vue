@@ -8,9 +8,11 @@
                 label-align="left"
                 label-placement="left"
             >
+                <!-- 端口配置 -->
                 <n-form-item path="port" :label="$t('port')" label-width="110px">
                     <n-input-number
                         v-model:value="model.port"
+                        style="width: 100%;"
                         type="number"
                         :placeholder="$t('port')"
                         disabled
@@ -18,7 +20,12 @@
                     >
                     </n-input-number>
                 </n-form-item>
-                <n-form-item path="downloadDir" :label="$t('download_dir')" label-width="110px">
+                <!-- 下载目录配置 -->
+                <n-form-item 
+                    path="downloadDir" 
+                    :label="$t('download_dir')" 
+                    label-width="110px"
+                >
                     <n-input
                         v-model:value="model.downloadDir"
                         type="text"
@@ -30,9 +37,11 @@
                         </template>
                     </n-input>
                 </n-form-item>
+                <!-- webhook 类型 -->
                 <n-form-item path="webhookType" :label="$t('webhookType')" label-width="110px">
                     <n-select v-model:value="model.webhookType" :options="webHookOptions" />
                 </n-form-item>
+                <!-- webhook 地址 --> 
                 <n-form-item path="webhooks" :label="$t('webhooks')" label-width="110px">
                     <n-input-group>
                         <n-input
@@ -45,6 +54,29 @@
                         </n-input>
                     </n-input-group>
                 </n-form-item>
+                <!--- 转码方式 fast -->
+                <n-form-item 
+                    path="preset" 
+                    :label="$t('preset')" 
+                    label-width="110px"
+                    class="warp"
+                >
+                    <n-select v-model:value="model.preset" :options="persetOptions" />
+                    <div class="notice">{{ $t('preset_notice') }}</div>
+                </n-form-item>
+                <!--- 转换格式 mp4  -->
+                <n-form-item 
+                    path="outputformat" 
+                    :label="$t('outputformat')" 
+                    label-width="110px"
+                    class="warp"
+                >
+                    <n-select v-model:value="model.outputformat" :options="videoFormatOptions" />
+                    <div class="notice">
+                        {{ $t('outputformat_notice') }}
+                    </div>
+                </n-form-item>
+                <!-- 同时下载任务数量 -->
                 <n-form-item 
                     path="maxDownloadNum" 
                     :label="$t('maxDownloadNum')" 
@@ -53,6 +85,7 @@
                 >
                     <n-input-number
                         v-model:value="model.maxDownloadNum"
+                        style="width: 100%;"
                         :min="1"
                         type="number"
                         :placeholder="$t('please_enter_maxDownloadNum')"
@@ -72,6 +105,18 @@
                     <n-switch v-model:value="model.thread" />
                     <div class="notice">
                         {{ $t('thread_notice') }}
+                    </div>
+                </n-form-item>
+                <!-- 后缀时间戳-->
+                <n-form-item 
+                    path="enableTimeSuffix" 
+                    :label="$t('enableTimeSuffix')" 
+                    label-width="110px"
+                    class="warp"
+                >
+                    <n-switch v-model:value="model.enableTimeSuffix" />
+                    <div class="notice">
+                        {{ $t('enableTimeSuffix_notice') }}
                     </div>
                 </n-form-item>
                 <n-form-item>
@@ -94,6 +139,8 @@ import { defineComponent, reactive, toRefs, onMounted } from 'vue'
 import { FolderClose, Send } from '@icon-park/vue-next'
 import { useMessage } from 'naive-ui'
 import i18n from '@/lang'
+import { SUPPORT_VIDEO_OUTPUT, SUPPORT_PRESET, SUPPORT_NOTIFICATION } from '@/utils/constant'
+import { useStore } from '../store'
 
 export default defineComponent({
     props: {
@@ -104,9 +151,12 @@ export default defineComponent({
     },
     emits: ['update:show'],
     setup(props, ctx) {
+        const store = useStore()
         const message = useMessage()
         const arrToOptions = (arr) => arr.map(i => ({ value: i, label: i }))
-        const webHookOptions = arrToOptions(['bark', 'feishu', 'dingding', 'gotify'])
+        const webHookOptions = arrToOptions(SUPPORT_NOTIFICATION)
+        const videoFormatOptions = arrToOptions(SUPPORT_VIDEO_OUTPUT)
+        const persetOptions = arrToOptions(SUPPORT_PRESET)
         const formInfo = reactive({
             rules: {
                 port: [
@@ -130,6 +180,7 @@ export default defineComponent({
                 webhookType: 'bark',
                 webhooks: '',
                 thread: true,
+                enableTimeSuffix: false,
                 maxDownloadNum: 5,
             },
         })
@@ -137,11 +188,13 @@ export default defineComponent({
             const res = await getSystemConfig()
             if (res.code === 0) {
                 formInfo.model = res.data
+                store.setSystemConfig(res.data)
             }
         }
         const updateConfig = async () => {
             const res = await updateSytemConfig(formInfo.model)
             if (res.code === 0) {
+                getData()
                 message.success(i18n.global.t('update_setting_success'))
             } else {
                 message.warning(res.message)
@@ -174,6 +227,8 @@ export default defineComponent({
             Send,
             update,
             confirmUpdate,
+            persetOptions,
+            videoFormatOptions,
             testWebhookUrl,
             webHookOptions,
         }
