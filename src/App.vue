@@ -1,5 +1,5 @@
 <template>
-    <n-config-provider :theme-overrides="themeOverrides" :locale="localLocale" :date-locale="dataLocale">
+    <n-config-provider :theme-overrides="themeOverrides" :locale="locale" :date-locale="dateLocale">
         <n-message-provider>
             <n-dialog-provider>
                 <router-view></router-view>
@@ -50,8 +50,8 @@ const themeOverrides = {
 }
 
 const language = navigator.language
-const localLocale = computed(() => (language === 'zh-CN' ? zhCN : enUS))
-const dataLocale = computed(() => (language === 'zh-CN' ? dateZhCN : dateEnUS))
+const locale = computed(() => (language === 'zh-CN' ? zhCN : enUS))
+const dateLocale = computed(() => (language === 'zh-CN' ? dateZhCN : dateEnUS))
 const store = useStore()
 const router = useRouter()
 

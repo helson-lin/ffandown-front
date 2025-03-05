@@ -90,5 +90,11 @@
     "create_mission": "Create mission",
     "play_tooltip": "Play",
     "enableTimeSuffix": "Time suffix",
-    "enableTimeSuffix_notice": "Enable time suffix, the file name will be suffixed with the time of the file"
+    "enableTimeSuffix_notice": "Enable time suffix, the file name will be suffixed with the time of the file",
+    "custom_headers": "Headers",
+    "headers_key": "Headers key",
+    "headers_value": "Headers value",
+    "add_headers": "Add",
+    "headers_notice": "Custom headers, please separate with commas",
+    "headers_key_placeholder": "Please enter headers key"
 }

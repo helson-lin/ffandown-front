@@ -92,5 +92,11 @@
     "create_mission": "新增任务",
     "play_tooltip": "播放",
     "enableTimeSuffix": "时间戳后缀",
-    "enableTimeSuffix_notice": "开启后文件会自动添加时间戳后缀"
+    "enableTimeSuffix_notice": "开启后文件会自动添加时间戳后缀",
+    "custom_headers": "请求头",
+    "headers_key": "键名",
+    "headers_value": "键值",
+    "add_headers": "添加",
+    "headers_key_placeholder": "Please enter headers key",
+    "headers_notice": "自定义请求头的配置权限最高，会覆盖程序默认的 Referer  和 UserAgent 配置。"
 }

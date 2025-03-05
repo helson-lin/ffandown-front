@@ -100,6 +100,18 @@
                     {{ $t('useragent_notice') }}
                 </div>
             </n-form-item>
+            <!-- 自定义请求头 -->
+            <n-form-item 
+                path="headers" 
+                :label="$t('custom_headers')" 
+                label-width="90px"
+                class="warp"
+            >
+                <Kv v-model:value="model.headers" />
+                <div class="notice">
+                    {{ $t('headers_notice') }}
+                </div>
+            </n-form-item>
         </n-form>
         <!-- file upload -->
         <template #footer>
@@ -118,8 +130,10 @@ import { createMission } from '../api'
 import i18n from '@/lang'
 import { SUPPORT_VIDEO_OUTPUT, SUPPORT_PRESET } from '@/utils/constant'
 import { useStore } from '../store'
+import Kv from './Kv.vue'
 
 export default defineComponent({
+    components: { Kv },
     props: {
         show: {
             type: Boolean,
@@ -187,6 +201,13 @@ export default defineComponent({
                         message: i18n.global.t('please_enter_useragent'),
                     },
                 ],
+                headers: [
+                    {
+                        trigger: ['blur', 'change'],
+                        type: 'array',
+                        required: false,
+                    },
+                ],
             },
             model: {
                 url: '',
@@ -194,6 +215,8 @@ export default defineComponent({
                 outputformat: '',
                 dir: '',
                 useragent: '',
+                // 自定义请求头
+                headers: [],
             },
         })
         watchEffect(() => {
@@ -221,6 +244,7 @@ export default defineComponent({
                     preset: systemConfig.value.preset || '',
                     outputformat: systemConfig.value.outputformat || '',
                     useragent: '',
+                    headers: [],
                 }
                 ctx.emit('refresh')
                 ctx.emit('update:show', false)
@@ -256,7 +280,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .new-mission {
     .warp {
-        ::v-deep(.n-form-item-blank) {
+        :deep(.n-form-item-blank) {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
