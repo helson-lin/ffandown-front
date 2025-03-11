@@ -313,7 +313,7 @@ export default defineComponent({
 .mission-card {
     position: relative;
     box-sizing: border-box;
-    padding: 20px;
+    padding: 20px 20px 10px;
     margin-bottom: 20px;
     overflow: hidden;
     border: 1px solid #e2e2e3;

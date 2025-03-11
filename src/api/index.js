@@ -26,3 +26,5 @@ export const testWebhook = (params) => axiosAPI.get('/sys/testWebhook', params)
 export const userLogin = (data) => axiosAPI.post('/user/login', data)
 // 获取媒体目录
 export const getDir = () => axiosAPI.get('/sys/dir')
+// 登出
+export const userLogout = () => axiosAPI.get('/user/logout')

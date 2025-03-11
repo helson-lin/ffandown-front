@@ -1,6 +1,6 @@
 <template>
     <div class="quick">
-        <div class="left-tool">
+        <div class="operation">
             <add
                 theme="filled"
                 size="24"
@@ -103,13 +103,16 @@ export default defineComponent({
     display: flex;
     justify-content: space-between;
     padding: 10px 10px 20px;
+    background: #fff;
 
     &::after {
         position: absolute;
-        right: 0;
+        right: 10px;
         bottom: 10px;
+        left: 10px;
         display: block;
-        width: 100%;
+
+        // width: 100%;
         height: 0;
         content: "";
         border-bottom: 1px solid #b6b2b271;

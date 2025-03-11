@@ -1,66 +1,69 @@
 <template>
-    <div class="controller-panel">
-        <div :class="['panel-left', isClosed ? 'min' : 'max']">
-            <div class="mission">
-                <!-- 标题 --> 
-                <h2>{{ $t('mission_list') }}</h2>
-                <!-- 任务状态列表 -->
-                <div class="status-list slider-block">
-                    <div
-                        v-for="status in statusList"
-                        :key="status.name"
-                        class="slider-block-item status"
-                        :class="{ 'status-active': activeStatusKey === status.key }"
-                        @click="changeStatusTab(status.key)"
-                    >
-                        <component
-                            :is="status.icon"
-                            class="status-icon slider-block-item-icon"
-                            theme="filled"
-                            size="24"
-                            :fill="activeStatusKey === status.key ? '#B78AFF' : '#333'"
-                        ></component>
-                        <div v-show="showMenuName" class="status-name slider-block-item-name">{{ status.name }}</div>
-                    </div>
-                </div>
-                <!-- 增加插件设置 --> 
-                <h2 v-if="false">{{ $t("system_settings") }}</h2>
-                <div v-if="false" class="base-settings">
-                    <div class="settings-list slider-block">
-                        <div 
-                            v-for="setting in settingsList" 
-                            :key="setting.key" 
-                            class="slider-block-item" 
-                            @click="changeSystemSetting(setting)"
+    <div class="home">
+        <Header />
+        <div class="controller-panel">
+            <div :class="['panel-left', isClosed ? 'min' : 'max']">
+                <div class="mission">
+                    <!-- 标题 --> 
+                    <h2>{{ $t('mission_list') }}</h2>
+                    <!-- 任务状态列表 -->
+                    <div class="status-list slider-block">
+                        <div
+                            v-for="status in statusList"
+                            :key="status.name"
+                            class="slider-block-item status"
+                            :class="{ 'status-active': activeStatusKey === status.key }"
+                            @click="changeStatusTab(status.key)"
                         >
                             <component
-                                :is="setting.icon"
-                                class="slider-block-item-icon"
+                                :is="status.icon"
+                                class="status-icon slider-block-item-icon"
                                 theme="filled"
                                 size="24"
-                                :fill="activeStatusKey === setting.key ? '#B78AFF' : '#333'"
+                                :fill="activeStatusKey === status.key ? '#B78AFF' : '#333'"
                             ></component>
-                            <div v-if="showMenuName" class="slider-block-item-name">{{ setting.name }}</div>
+                            <div v-show="showMenuName" class="status-name slider-block-item-name">{{ status.name }}</div>
+                        </div>
+                    </div>
+                    <!-- 增加插件设置 --> 
+                    <h2>{{ $t("system_settings") }}</h2>
+                    <div class="base-settings">
+                        <div class="settings-list slider-block">
+                            <div 
+                                v-for="setting in settingsList" 
+                                :key="setting.key" 
+                                class="slider-block-item" 
+                                @click="changeSystemSetting(setting)"
+                            >
+                                <component
+                                    :is="setting.icon"
+                                    class="slider-block-item-icon"
+                                    theme="filled"
+                                    size="24"
+                                    :fill="activeStatusKey === setting.key ? '#B78AFF' : '#333'"
+                                ></component>
+                                <div v-if="showMenuName" class="slider-block-item-name">{{ setting.name }}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div v-show="!isClosed" class="open-resource">
+                    <a href="https://github.com/helson-lin/ffandown" target="_blank">
+                        <Icon name="github" :size="30" />
+                    </a>
+                </div>
+                <!-- 侧边栏展开收起 -->
+                <div class="arrow" @click="toggleSlider">
+                    <n-icon size="13">
+                        <ArrowLeft v-if="!isClosed" />
+                        <ArrowRight v-else />
+                    </n-icon>
+                </div>
             </div>
-            <div v-show="!isClosed" class="open-resource">
-                <a href="https://github.com/helson-lin/ffandown" target="_blank">
-                    <Icon name="github" :size="30" />
-                </a>
+            <!-- 内容展示区域 -->
+            <div class="panel-right">
+                <router-view class="main-container" />
             </div>
-            <!-- 侧边栏展开收起 -->
-            <div class="arrow" @click="toggleSlider">
-                <n-icon size="13">
-                    <ArrowLeft v-if="!isClosed" />
-                    <ArrowRight v-else />
-                </n-icon>
-            </div>
-        </div>
-        <!-- 内容展示区域 -->
-        <div class="panel-right">
-            <router-view class="main-container" />
         </div>
         <!-- 系统升级 -->
         <div class="system">
@@ -114,13 +117,14 @@ import Quick from '../components/Quick.vue'
 import Setting from '../components/Setting.vue'
 import Upgrade from '../components/Upgrade.vue'
 import Mission from './pages/Mission.vue'
+import Header from '../components/Header.vue'
 import i18n from '@/lang'
 import { useStore } from '../store'
 import { getSystemVersion } from '@/api/index'
 import { useRouter, useRoute } from 'vue-router'
 // 引入i8n实例
 export default defineComponent({
-    components: { MissionList, Blank, Quick, Setting, SettingConfig, Refresh, Mission, Upgrade, ArrowLeft, ArrowRight },
+    components: { Header, MissionList, Blank, Quick, Setting, SettingConfig, Refresh, Mission, Upgrade, ArrowLeft, ArrowRight },
     setup() {
         const dialog = useDialog()
         const message = useMessage()
@@ -236,36 +240,27 @@ export default defineComponent({
     background-color: #000;
 }
 
-.controller-panel {
-    position: absolute;
+.home {
+    position: relative;
     display: flex;
+    flex-direction: column;
     width: 100%;
     height: 100%;
-    background-color: #fff;
-    border-radius: 10px;
+}
 
-    @include center;
+.controller-panel {
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    height: calc(100% - 40px);
+    overflow: hidden;
+    background-color: #f1f5f9;
 
     .n-modal-body-wrapper .n-dialog {
         --n-icon-color: #b78aff !important;
         --n-color: #b78aff !important;
 
         background-color: #000;
-    }
-
-    .system {
-        position: absolute;
-        right: 20px;
-        bottom: 20px;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-
-        .n-button {
-            margin-bottom: 10px;
-        }
     }
 
     .panel {
@@ -276,6 +271,7 @@ export default defineComponent({
             width: 170px;
             height: 100%;
             padding-bottom: 40px;
+            background-color: #fff;
             border-right: 1px solid #eee;
             transition: width .3s ease-in-out;
 
@@ -390,16 +386,31 @@ export default defineComponent({
         }
 
         &-right {
+            // background-color: #fff;
             box-sizing: border-box;
             flex: 1;
             height: 100%;
             padding: $pd;
-            overflow: hidden;
 
             .main-container {
                 height: 100%;
             }
         }
+    }
+}
+
+.system {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    .n-button {
+        margin-bottom: 10px;
     }
 }
 </style>

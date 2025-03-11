@@ -46,7 +46,7 @@ export default {
             list.value.splice(index, 1)
         }
         const arrToOptions = (arr) => arr.map(i => ({ value: i, label: i }))
-        const headersOptions = ['Accept', 'Accept-Encoding', 'Accept-Language', 'User-Agent', 'Referer', 'Cookie', 'Authorization']
+        const headersOptions = ['Authorization', 'Accept', 'Accept-Encoding', 'Accept-Language', 'Cookie', 'User-Agent', 'Referer']
         return {
             list,
             add,
