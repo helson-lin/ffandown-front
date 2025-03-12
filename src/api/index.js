@@ -28,3 +28,5 @@ export const userLogin = (data) => axiosAPI.post('/user/login', data)
 export const getDir = () => axiosAPI.get('/sys/dir')
 // 登出
 export const userLogout = () => axiosAPI.get('/user/logout')
+// 获取所有的插件
+export const getAllPlugins = (params) => axiosAPI.get('/plugin/list', params)

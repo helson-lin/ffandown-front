@@ -20,7 +20,7 @@
                                 class="status-icon slider-block-item-icon"
                                 theme="filled"
                                 size="24"
-                                :fill="activeStatusKey === status.key ? '#B78AFF' : '#333'"
+                                :fill="activeStatusKey === status.key ? '#b78aff' : '#333'"
                             ></component>
                             <div v-show="showMenuName" class="status-name slider-block-item-name">{{ status.name }}</div>
                         </div>
@@ -40,7 +40,7 @@
                                     class="slider-block-item-icon"
                                     theme="filled"
                                     size="24"
-                                    :fill="activeStatusKey === setting.key ? '#B78AFF' : '#333'"
+                                    :fill="activeStatusKey === setting.key ? '#b78aff' : '#333'"
                                 ></component>
                                 <div v-if="showMenuName" class="slider-block-item-name">{{ setting.name }}</div>
                             </div>

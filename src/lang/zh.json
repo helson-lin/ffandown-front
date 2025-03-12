@@ -98,5 +98,14 @@
     "headers_value": "键值",
     "add_headers": "添加",
     "headers_key_placeholder": "Please enter headers key",
-    "headers_notice": "自定义请求头的配置权限最高，会覆盖程序默认的 Referer  和 UserAgent 配置。"
+    "headers_notice": "自定义请求头的配置权限最高，会覆盖程序默认的 Referer  和 UserAgent 配置。",
+    "add_plugin": "新增插件",
+    "add_mission": "新增任务",
+    "create_plugin": "新增插件",
+    "placeholder_plugin_url": "请输入插件链接",
+    "plugin_notice": "确保插件是一个合法的链接",
+    "delete_plugin": "卸载",
+    "filter_none": "全部",
+    "enable_plugin": "启用",
+    "disabled_plugin": "停用"
 }

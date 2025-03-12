@@ -1,12 +1,18 @@
 <template>
     <div class="quick">
         <div class="operation">
-            <add
-                theme="filled"
-                size="24"
-                fill="#333"
+            <n-button 
+                icon-placement="left" 
                 @click="showNewMission = !showNewMission"
-            />
+            >
+                <template #icon>
+                    <add
+                        size="18"
+                        fill="#333"
+                    />
+                </template>
+                {{ $t('add_mission') }}
+            </n-button>
         </div>
         <div class="quick-actions">
             <div v-for="(action, index) in actions" :key="index" class="quick-action">

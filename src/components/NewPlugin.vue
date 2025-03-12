@@ -1,10 +1,10 @@
 <template>
     <n-modal
-        class="new-mission"
+        class="new-plugin"
         :show="showModel"
         preset="card"
         :closable="false"
-        :title="$t('create_mission')"
+        :title="$t('create_plugin')"
         :style="'width: 550px'"
         @on-close="closeModal"
     >
@@ -24,22 +24,34 @@
                 <n-input
                     v-model:value="model.url"
                     type="textarea"
-                    :placeholder="$t('please_enter_url')"
+                    :placeholder="$t('placeholder_plugin_url')"
                     @keydown.enter.prevent
                 >
                 </n-input>
                 <div class="notice">
-                    {{ $t('url_notice') }}
+                    {{ $t('plugin_notice') }}
                 </div>
             </n-form-item>
         </n-form>
+        <template #footer>
+            <div class="flex jce footer-color">
+                <n-button class="mr2" @click="closeModal">{{ $t('cancel') }}</n-button>
+                <n-button type="primary" @click="confirmModal">{{ $t('confirm') }}</n-button>
+            </div>
+        </template>
     </n-modal>
 </template>
 <script>
-import { reactive, toRefs } from 'vue'
-import i18n from '@/i18n'
+import { reactive, toRefs, defineComponent } from 'vue'
+import i18n from '@/lang'
 
-export default {
+export default defineComponent({
+    props: {
+        show: {
+            type: Boolean,
+            default: false,
+        },
+    },
     emits: ['update:show', 'confirm', 'refresh'],
     setup(props, ctx) {
         const formInfo = reactive({
@@ -48,59 +60,12 @@ export default {
                     {
                         trigger: ['blur'],
                         required: true,
-                        message: i18n.global.t('please_enter_url'),
-                    },
-                ],
-                name: [
-                    {
-                        trigger: ['blur'],
-                        required: false,
-                        message: i18n.global.t('please_enter_filename'),
-                    },
-                ],
-                dir: [
-                    {
-                        trigger: ['blur'],
-                        required: false,
-                    },
-                ],
-                outputformat: [
-                    {
-                        trigger: ['blur', 'change'],
-                        required: true,
-                        message: i18n.global.t('please_select_outputformat'),
-                    },
-                ],
-                preset: [
-                    {
-                        trigger: ['blur', 'change'],
-                        required: true,
-                        message: i18n.global.t('please_select_perset'),
-                    },
-                ],
-                useragent: [
-                    {
-                        tigger: ['blur', 'change'],
-                        required: false,
-                        message: i18n.global.t('please_enter_useragent'),
-                    },
-                ],
-                headers: [
-                    {
-                        trigger: ['blur', 'change'],
-                        type: 'array',
-                        required: false,
+                        message: i18n.global.t('placeholder_plugin_url'),
                     },
                 ],
             },
-            model: {
+            model: {  
                 url: '',
-                preset: '',
-                outputformat: '',
-                dir: '',
-                useragent: '',
-                // 自定义请求头
-                headers: [],
             },
         })
         const showModel = computed({
@@ -114,11 +79,33 @@ export default {
         const closeModal = () => {
             showModel.value = false
         }
+        const confirmModal = () => {
+            showModel.value = false
+        }
         return {
             showModel,
             closeModal,
+            confirmModal,
             ...toRefs(formInfo),
         }
     },
-}
+})
 </script>
+<style lang="scss" scoped>
+.new-plugin {
+    .warp {
+        :deep(.n-form-item-blank) {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+}
+
+.notice {
+    font-size: 12px;
+    line-height: 26px;
+    color: #c2c2c2;
+}
+
+</style>

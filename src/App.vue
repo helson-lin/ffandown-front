@@ -18,9 +18,9 @@ import { watch } from 'vue'
    */
 const themeOverrides = {
     common: {
-        primaryColor: '#B78AFF',
+        primaryColor: '#b78aff',
         primaryColorHover: '#a8a4ff', 
-        iconColor: '#B78AFF',
+        iconColor: '#b78aff',
         pressedColor: '#a8a4ff',
         warningColor: '#cd3f01',
         warningColorHover: '#b41901',
@@ -28,18 +28,18 @@ const themeOverrides = {
         warningColorSuppl: '#b41901',
     },
     Button: {
-        backgroundColor: '#B78AFF',
-        activeColor: '#B78AFF',
+        backgroundColor: '#b78aff',
+        activeColor: '#b78aff',
         colorPressedPrimary: '#a8a4ff',
         borderPressedPrimary: '#a8a4ff',
     },
     Dialog: {
-        backgroundColor: '#B78AFF',
-        activeColor: '#B78AFF',
+        backgroundColor: '#b78aff',
+        activeColor: '#b78aff',
         peers: {
             InternalSelection: {
-                backgroundColor: '#B78AFF',
-                textCOlor: '#B78AFF',
+                backgroundColor: '#b78aff',
+                textCOlor: '#b78aff',
             },
             InternalSelectMenu: {
                 borderRadius: '6px',

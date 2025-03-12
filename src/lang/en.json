@@ -96,5 +96,14 @@
     "headers_value": "Headers value",
     "add_headers": "Add",
     "headers_notice": "Custom headers, please separate with commas",
-    "headers_key_placeholder": "Please enter headers key"
+    "headers_key_placeholder": "Please enter headers key",
+    "add_plugin": "Add plugin",
+    "add_mission": "Add mission",
+    "create_plugin": "Create plugin",
+    "placeholder_plugin_url": "Please enter plugin url",
+    "plugin_notice": "Make sure your plugin is compatible with FFandown",
+    "delete_plugin": "Uninstall",
+    "filter_none": "All",
+    "enable_plugin": "Enable",
+    "disabled_plugin": "Disabled"
 }
