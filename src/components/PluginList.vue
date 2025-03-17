@@ -15,7 +15,12 @@
                 <div class="plugin-right">
                     <div class="author leading">@{{ plugin.author }}</div>
                     <div class="crt leading">{{ plugin.crt_tm }}</div>
-                    <n-switch v-model:value="plugin.status" checked-value="1" unchecked-value="0" />
+                    <n-switch 
+                        v-model:value="plugin.status" 
+                        checked-value="1" 
+                        unchecked-value="0" 
+                        @update:value="(status) => updateStatus(plugin?.uid, status)" 
+                    />
                 </div>
             </div>
         </n-checkbox-group>
@@ -36,7 +41,7 @@ export default defineComponent({
             default: () => ([]),
         },
     },
-    emits: ['update:modelValue'],
+    emits: ['update:modelValue', 'updateStatus'],
     setup(props, ctx) {
         const checkList = computed({
             get() {
@@ -46,9 +51,13 @@ export default defineComponent({
                 ctx.emit('update:modelValue', value)
             },
         })
+        const updateStatus = (uid, status) => {
+            ctx.emit('updateStatus', { uid, status })
+        }
         return {
             DefaultPluginLogo,
             checkList,
+            updateStatus,
         }
     },
 })

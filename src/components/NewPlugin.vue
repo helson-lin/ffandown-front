@@ -44,6 +44,8 @@
 <script>
 import { reactive, toRefs, defineComponent } from 'vue'
 import i18n from '@/lang'
+import { addPlugin } from '../api'
+import { useMessage } from 'naive-ui'
 
 export default defineComponent({
     props: {
@@ -54,6 +56,7 @@ export default defineComponent({
     },
     emits: ['update:show', 'confirm', 'refresh'],
     setup(props, ctx) {
+        const message = useMessage()
         const formInfo = reactive({
             rules: {
                 url: [
@@ -79,7 +82,14 @@ export default defineComponent({
         const closeModal = () => {
             showModel.value = false
         }
-        const confirmModal = () => {
+        const confirmModal = async () => {
+            const res = await addPlugin({
+                url: formInfo.model.url,
+            })
+            if (res.code === 0) {
+                message.success(i18n.global.t('add_plugin_success'))
+                ctx.emit('refresh')
+            }
             showModel.value = false
         }
         return {

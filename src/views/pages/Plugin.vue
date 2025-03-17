@@ -6,7 +6,7 @@
                     v-if="checked.length"
                     icon-placement="left"
                     class="mr1" 
-                    @click="addPluginShow = !addPluginShow"
+                    @click="changePluginStatus('1')"
                 >
                     {{ $t('enable_plugin') }}
                 </n-button>
@@ -14,7 +14,7 @@
                     v-if="checked.length"
                     icon-placement="left"
                     class="mr1" 
-                    @click="addPluginShow = !addPluginShow"
+                    @click="changePluginStatus('0')"
                 >
                     {{ $t('disabled_plugin') }}
                 </n-button>
@@ -23,7 +23,7 @@
                     v-if="checked.length"
                     icon-placement="left" 
                     type="error"
-                    @click="addPluginShow = !addPluginShow"
+                    @click="deletePlugin"
                 >
                     <template #icon>
                         <DeleteOne
@@ -66,7 +66,7 @@
                 :columns="columns"
                 :data="data"
             /> -->
-            <PluginList v-model="checked" :data="data" />
+            <PluginList v-model="checked" :data="data" @updateStatus="updateStatus" />
             <div class="pg-box">
                 <n-pagination v-model:page="page.current" :page-count="page.count" :on-update:page="updatePg" />
             </div>
@@ -74,13 +74,14 @@
         <NewPlugin 
             :show="addPluginShow"
             @update:show="addPluginShow = $event" 
+            @refresh="refresh"
         />
     </div>
 </template>
 <script>
 import { ref, defineComponent, onMounted, reactive } from 'vue'
 import { AddOne, DeleteOne, DownOne } from '@icon-park/vue-next'
-import { getAllPlugins } from '../../api'
+import { getAllPlugins, batchDelete, batchStatus } from '../../api'
 import NewPlugin from '../../components/NewPlugin.vue'
 import PluginList from '../../components/PluginList.vue'
 import { useMessage, NPagination } from 'naive-ui'
@@ -100,11 +101,11 @@ export default defineComponent({
         const addPluginShow = ref(false)
         const checked = ref([])
         const filters = reactive({
-            status: 'all',
+            status: '1,0',
         })
         const statusOptions = [{
             label: i18n.global.t('filter_none'),
-            key: 'all',
+            key: '1,0',
         }, {
             label: i18n.global.t('enable_plugin'),
             key: '1',
@@ -141,22 +142,63 @@ export default defineComponent({
         const data = ref([])
         const page = ref({
             current: 1,
-            pageSize: 6,
+            pageSize: 8,
             count: 1,
         })
+        // 删除插件
+        const deletePlugin = async () => {
+            const res = await batchDelete({ uids: checked.value.join(',') })
+            if (res.code === 0) {
+                message.success(i18n.global.t('delete_success'))
+                checked.value = []
+                getData()
+            }
+        }
+        // 修改状态
+        const changePluginStatus = async (status) => {
+            const res = await batchStatus({ uids: checked.value.join(','), status })
+            if (res.code === 0) {
+                checked.value = []
+                message.success(i18n.global.t(status === '1' ? 'enable_plugin_success' : 'disabled_plugin_success'))
+                getData()
+            }
+        }
+        // 更新状态插件
+        const updateStatus = async ({ uid, status }) => {
+            const res = await batchStatus({ uids: uid, status })
+            if (res.code === 0) {
+                checked.value = []
+                message.success(i18n.global.t(status === '1' ? 'enable_plugin_success' : 'disabled_plugin_success'))
+                getData()
+            }
+        }
         // 获取数据
         const getData = async () => {
-            const res = await getAllPlugins(page.value)
+            const res = await getAllPlugins({
+                ...page.value,
+                ...filters,
+            })
             if (res.code === 0) {
-                const { rows, count } = res.data
+                const { rows, total } = res.data
                 data.value = rows
-                page.value.count = count
+                page.value.count = total
             } else {
                 message.error(res.msg)
             }
         }
+        // 状态筛选
         const handleSelect = (key) => {
             filters.status = key
+            getData()
+        }
+        // 更新页码
+        const updatePg = (currentPage) => {
+            page.value.current = currentPage
+            getData()
+        }
+        // 刷新列表
+        const refresh = () => {
+            getData()
         }
         onMounted(() => {
             getData()
@@ -166,12 +208,17 @@ export default defineComponent({
             data,
             statusOptions,
             handleSelect,
+            updatePg,
             ...toRefs(filters),
             page,
             message,
             checked,
             addPluginShow,
             statusNameMap,
+            deletePlugin,
+            refresh,
+            updateStatus,
+            changePluginStatus,
         }
     },
 })

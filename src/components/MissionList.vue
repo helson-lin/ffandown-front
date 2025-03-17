@@ -57,12 +57,12 @@ export default defineComponent({
         const getData = async () => {
             const res = await getDownloadList(Object.assign(page.value, { status: props.status }))
             if (res.code === 0) {
-                const { rows, count } = res.data
+                const { rows, total } = res.data
                 const list = rows.map(i => ({
                     ...i,
                     percent: parseInt(Number(i.percent).toFixed(2)),
                 }))
-                page.value.count = Math.ceil(count / page.value.pageSize)
+                page.value.count = total
                 state.list = list
             }
         }

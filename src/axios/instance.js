@@ -14,13 +14,7 @@ const instance = axios.create({
 })
 // 响应拦截
 instance.interceptors.response.use(
-    (response) => {
-        const data = response.data
-        if (typeof data.data === 'string') {
-            data.data = JSON.parse(data.data)
-        }
-        return data
-    },
+    (response) => response.data,
     (error) => {
         if (error && error.response) {
             const store = useStore()

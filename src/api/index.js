@@ -30,3 +30,13 @@ export const getDir = () => axiosAPI.get('/sys/dir')
 export const userLogout = () => axiosAPI.get('/user/logout')
 // 获取所有的插件
 export const getAllPlugins = (params) => axiosAPI.get('/plugin/list', params)
+// 新增插件
+export const addPlugin = (data) => axiosAPI.post('/plugin/create', data)
+// 删除插件
+export const deletePlugin = (id) => axiosAPI.delete('/plugin/delete', { id })
+// 更新插件
+export const updatePlugin = (data) => axiosAPI.post('/plugin/update', data)
+// 批量删除插件
+export const batchDelete = (params) => axiosAPI.get('/plugin/batchDelete', params)
+// 批量修改插件状态
+export const batchStatus = (data) => axiosAPI.post('/plugin/batchStatus', data)
