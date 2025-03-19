@@ -53,6 +53,10 @@ export default defineComponent({
             type: Boolean,
             default: false,
         },
+        settings: {
+            type: String,
+            required: true,
+        },
     },
     emits: ['update:show', 'confirm', 'refresh'],
     setup(props, ctx) {
@@ -89,6 +93,8 @@ export default defineComponent({
             if (res.code === 0) {
                 message.success(i18n.global.t('add_plugin_success'))
                 ctx.emit('refresh')
+            } else {
+                message.error(res.message)
             }
             showModel.value = false
         }

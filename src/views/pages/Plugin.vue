@@ -170,7 +170,7 @@ export default defineComponent({
                 checked.value = []
                 message.success(i18n.global.t(status === '1' ? 'enable_plugin_success' : 'disabled_plugin_success'))
                 getData()
-            }
+            } 
         }
         // 获取数据
         const getData = async () => {
@@ -183,7 +183,7 @@ export default defineComponent({
                 data.value = rows
                 page.value.count = total
             } else {
-                message.error(res.msg)
+                message.error(res.message)
             }
         }
         // 状态筛选

@@ -5,7 +5,7 @@
                 <div class="plugin-left">
                     <n-checkbox :value="plugin.uid" size="large"></n-checkbox>
                     <div class="plugin-left-logo">
-                        <img :src="DefaultPluginLogo" alt="" srcset="">
+                        <img :src="plugin.icon || DefaultPluginLogo" alt="icon">
                     </div>
                     <div class="plugin-left-baseinfo">
                         <div class="plugin-name">{{ plugin.name }}</div>
@@ -13,24 +13,35 @@
                     </div>
                 </div>
                 <div class="plugin-right">
-                    <div class="author leading">@{{ plugin.author }}</div>
-                    <div class="crt leading">{{ plugin.crt_tm }}</div>
+                    <div class="author leading">
+                        <a :href="plugin.homepage" target="_blank">@{{ plugin.author }}</a>
+                    </div>
+                    <div class="version leading">{{ plugin.version }}</div>
+                    <div class="crt leading">{{ transformTm(plugin.upd_tm) }}</div> 
                     <n-switch 
                         v-model:value="plugin.status" 
                         checked-value="1" 
                         unchecked-value="0" 
                         @update:value="(status) => updateStatus(plugin?.uid, status)" 
                     />
+                    <!-- 插件设置 -->
+                    <div class="setting">
+                        <span class="setting-btn" @click="openSetting(plugin)">...</span>
+                    </div>
                 </div>
             </div>
         </n-checkbox-group>
+        <PluginSetting :show="pluginSettingShow" :settings="pluginSettings" />
     </div>
 </template>
 <script>
 import { computed, defineComponent } from 'vue'
 import DefaultPluginLogo from '@/assets/imgs/plugin_default.png'
+// import { SettingConfig } from '@icon-park/vue-next'
+import PluginSetting from './PluginSetting.vue'
 
 export default defineComponent({
+    components: { PluginSetting },
     props: {
         data: {
             type: Array,
@@ -43,6 +54,8 @@ export default defineComponent({
     },
     emits: ['update:modelValue', 'updateStatus'],
     setup(props, ctx) {
+        const pluginSettingShow = ref(false)
+        const pluginSettings = ref('')
         const checkList = computed({
             get() {
                 return props.modelValue
@@ -51,13 +64,25 @@ export default defineComponent({
                 ctx.emit('update:modelValue', value)
             },
         })
+        const transformTm = (tmStr) => new Date(tmStr).toLocaleString()
+        // 更新插件使用状态
         const updateStatus = (uid, status) => {
             ctx.emit('updateStatus', { uid, status })
+        }
+        // 打开插件设置
+        const openSetting = (plugin) => {
+            console.warn(plugin)
+            if (!plugin.settings) return
+            pluginSettings.value = plugin.settings
+            pluginSettingShow.value = true
         }
         return {
             DefaultPluginLogo,
             checkList,
+            pluginSettingShow,
+            openSetting,
             updateStatus,
+            transformTm,
         }
     },
 })
@@ -83,11 +108,16 @@ export default defineComponent({
             align-items: center;
 
             &-logo {
+                box-sizing: border-box;
                 width: 40px;
                 height: 40px;
                 margin-left: 10px;
-                background: #ccc;
+                background: #f2f2f2;
                 border-radius: 10px;
+
+                &.pad {
+                    padding: 5px;
+                }
 
                 img {
                     width: 100%;
@@ -115,11 +145,40 @@ export default defineComponent({
             display: flex;
             align-items: center;
 
+            .author {
+                a {
+                    color: #999;
+                    transition: color .3s ease;
+                }
+
+                a:hover {
+                    text-decoration: none;
+                }
+            }
+
             .leading {
                 margin-right: 10px;
-                font-size: 12px;
+                font-size: 13px;
                 line-height: 1.5;
                 color: #999;
+            }
+
+            .setting {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-left: 10px;
+
+                &-btn {
+                    box-sizing: border-box;
+                    padding: 5px;
+                    border-radius: 4px;
+
+                    &:hover {
+                        cursor: pointer;
+                        background: #e2e2e3;
+                    }
+                }
             }
         }
     }
