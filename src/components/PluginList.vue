@@ -31,7 +31,7 @@
                 </div>
             </div>
         </n-checkbox-group>
-        <PluginSetting :show="pluginSettingShow" :settings="pluginSettings" />
+        <PluginSetting :show="pluginSettingShow" :settings="pluginSettings" @update:show="pluginSettingShow = $event" />
     </div>
 </template>
 <script>

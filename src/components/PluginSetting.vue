@@ -4,14 +4,14 @@
         :show="showModel"
         preset="card"
         :closable="false"
-        :title="$t('create_plugin')"
+        :title="$t('plugin_settings')"
         :style="'width: 550px'"
         @on-close="closeModal"
     >
         <n-form
             ref="formRef"
-            :model="model"
-            :rules="rules"
+            :model="settingsItems.model"
+            :rules="settingsItems.rules"
             label-align="left"
             label-placement="left"
         >
@@ -27,7 +27,7 @@
                     v-if="item.type === 'input'"
                     v-model:value="settingsItems.model[key]"
                     type="text"
-                    :placeholder="$t('please_enter_url')"
+                    :placeholder="`please input ${item.key}`"
                     @keydown.enter.prevent
                 >
                 </n-input>
@@ -64,11 +64,19 @@ export default defineComponent({
             try {
                 const settings = JSON.parse(props.settings)
                 const allSettinsItem = Object.entries(settings).map(([key, val]) => ({ ...val, key }))
-                // const model = Object.keys(settings).reduce(() => { return pre; }, {})
+                const model = allSettinsItem.reduce((pre, item) => { 
+                    pre[item.key] = item?.default || ''
+                    return pre 
+                }, {})
+                const rules = allSettinsItem.reduce((pre, item) => {
+                    pre[item.key] = [{ required: true, message: `please input ${item.key}`, trigger: ['blur'] }]
+                    return pre
+                }, {})
+                console.log(rules, model)
                 return {
                     items: allSettinsItem,
-                    rules: {},
-                    model: {},
+                    rules,
+                    model,
                 }
             } catch {
                 return {

@@ -108,5 +108,6 @@
     "disabled_plugin": "Disabled",
     "enable_plugin_success": "Enable plugin success",
     "disabled_plugin_success": "Disabled plugin success",
-    "add_plugin_success": "Add plugin success"
+    "add_plugin_success": "Add plugin success",
+    "plugin_settings": "Plugin settings"
 }

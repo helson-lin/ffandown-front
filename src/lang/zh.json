@@ -110,5 +110,6 @@
     "disabled_plugin": "停用",
     "enable_plugin_success": "启用插件成功",
     "disabled_plugin_success": "停用插件成功",
-    "add_plugin_success": "添加插件成功"
+    "add_plugin_success": "添加插件成功",
+    "plugin_settings": "插件设置"
 }
