@@ -81,6 +81,7 @@ export default defineComponent({
             checkList,
             pluginSettingShow,
             openSetting,
+            pluginSettings,
             updateStatus,
             transformTm,
         }
