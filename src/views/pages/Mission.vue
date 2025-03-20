@@ -33,3 +33,10 @@ export default defineComponent({
     },
 })
 </script>
+<style lang="scss" scoped>
+.mission-page {
+    box-sizing: border-box;
+    padding-bottom: 10px;
+    background: #fff;
+}
+</style>

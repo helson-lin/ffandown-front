@@ -1,7 +1,7 @@
 <template>
     <n-modal
         class="new-mission"
-        :show="showModel"
+        :show="showModal"
         preset="card"
         :closable="false"
         :title="$t('create_mission')"
@@ -146,7 +146,7 @@ export default defineComponent({
     },
     emits: ['update:show', 'confirm', 'refresh'],
     setup(props, ctx) {
-        const showModel = computed({
+        const showModal = computed({
             get() {
                 return props.show
             },
@@ -272,7 +272,7 @@ export default defineComponent({
             ...toRefs(formInfo),
             confirmModal,
             closeModal,
-            showModel,
+            showModal,
         }
     },
 })

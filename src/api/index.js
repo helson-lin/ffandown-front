@@ -40,3 +40,5 @@ export const updatePlugin = (data) => axiosAPI.post('/plugin/update', data)
 export const batchDelete = (params) => axiosAPI.get('/plugin/batchDelete', params)
 // 批量修改插件状态
 export const batchStatus = (data) => axiosAPI.post('/plugin/batchStatus', data)
+// 更新插件设置
+export const updatePluginOptions = (data) => axiosAPI.post('/plugin/options', data)

@@ -109,5 +109,7 @@
     "enable_plugin_success": "Enable plugin success",
     "disabled_plugin_success": "Disabled plugin success",
     "add_plugin_success": "Add plugin success",
-    "plugin_settings": "Plugin settings"
+    "plugin_settings": "Plugin settings",
+    "status": "Status",
+    "plugin_option_updated": "Update plugin settings succcess"
 }

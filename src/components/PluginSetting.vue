@@ -1,7 +1,7 @@
 <template>
     <n-modal
         class="new-plugin"
-        :show="showModel"
+        :show="showModal"
         preset="card"
         :closable="false"
         :title="$t('plugin_settings')"
@@ -25,10 +25,9 @@
             >
                 <n-input
                     v-if="item.type === 'input'"
-                    v-model:value="settingsItems.model[key]"
+                    v-model:value="settingsItems.model[item.key]"
                     type="text"
                     :placeholder="`please input ${item.key}`"
-                    @keydown.enter.prevent
                 >
                 </n-input>
             </n-form-item>
@@ -42,9 +41,10 @@
     </n-modal>
 </template>
 <script>
-import { defineComponent } from 'vue'
-// import i18n from '@/lang'
+import { defineComponent, ref } from 'vue'
+import i18n from '@/lang'
 import { useMessage } from 'naive-ui'
+import { updatePluginOptions } from '@/api/index.js'
 
 export default defineComponent({
     props: {
@@ -52,42 +52,60 @@ export default defineComponent({
             type: Boolean,
             default: false,
         },
+        uid: {
+            type: String,
+            required: true,
+        },
         settings: {
             type: String,
             default: '',
         },
+        options: {
+            type: String,
+            default: '',
+        },
+        
     },
     emits: ['update:show', 'confirm', 'refresh'],
     setup(props, ctx) {
+        const formRef = ref(null)
         const message = useMessage()
-        const settingsItems = computed(() => {
+        const settingsItems = ref({
+            items: [],
+            rules: {},
+            model: {},
+        })
+        const getSettingsItem = () => {
             try {
                 const settings = JSON.parse(props.settings)
+                const options = JSON.parse(props.options)
                 const allSettinsItem = Object.entries(settings).map(([key, val]) => ({ ...val, key }))
                 const model = allSettinsItem.reduce((pre, item) => { 
-                    pre[item.key] = item?.default || ''
+                    pre[item.key] = options[item.key] || item?.default || ''
                     return pre 
                 }, {})
                 const rules = allSettinsItem.reduce((pre, item) => {
-                    pre[item.key] = [{ required: true, message: `please input ${item.key}`, trigger: ['blur'] }]
+                    pre[item.key] = [{ required: item.required || false, message: `please input ${item.key}`, trigger: ['blur'] }]
                     return pre
                 }, {})
-                console.log(rules, model)
                 return {
                     items: allSettinsItem,
                     rules,
                     model,
                 }
-            } catch {
+            } catch (e) {
                 return {
                     items: [],
                     rules: {},
-                    model: {},
+                    model: {
+                        cookie: '',
+                    },
                 }
             }
-        })
-        const showModel = computed({
+        }
+        const showModal = computed({
             get() {
+                settingsItems.value = getSettingsItem()
                 return props.show
             },
             set(val) {
@@ -95,15 +113,33 @@ export default defineComponent({
             },
         })
         const closeModal = () => {
-            showModel.value = false
+            showModal.value = false
         }
-        const confirmModal = () => {}
+        const updatePlugin = async (data) => {
+            const res = await updatePluginOptions(data)
+            if (res.code === 0) {
+                message.success(i18n.global.$t('plugin_option_updated'))
+                ctx.emit('update:show', false)
+                ctx.emit('refresh')
+            }
+        }
+        const confirmModal = () => {
+            formRef.value?.validate(async (errors) => {
+                if (!errors) {
+                    await updatePlugin({
+                        uid: props.uid,
+                        options: JSON.stringify(settingsItems.value.model),
+                    })
+                }
+            })
+        }
         return {
-            showModel,
+            showModal,
             closeModal,
             confirmModal,
             message,
             settingsItems,
+            formRef,
         }
     },
 })

@@ -4,22 +4,49 @@
         <div class="logo">
             <span class="logo-txt">ffandown</span>
         </div>
-        <!-- 退出登录-->
-        <div class="logout" @click="logout">
-            <Icon name="logout" :size="15" />
+        <div class="headers-right">
+            <div class="user-info">
+                <n-dropdown :options="options" @select="handleSelect">
+                    <n-avatar 
+                        round 
+                        :style="{
+                            color: '#f2f2f2',
+                            backgroundColor: '#333',
+                        }"
+                    >  
+                        {{ username }}
+                    </n-avatar>
+                </n-dropdown>
+            </div>
         </div>
     </div>
 </template>
 <script>
 import { userLogout } from '@/api/index'
 import { useMessage } from 'naive-ui'
+import { Key, Logout } from '@icon-park/vue-next'
 import { useRouter } from 'vue-router'
+import { h } from 'vue'
 
 export default {
     setup() {
         const router = useRouter()
         const message = useMessage()
+        const username = localStorage.getItem('x-username')
+        const options = [
+            {
+                label: '重置密码',
+                key: 'resetPassword',
+                icon: () => h(Key, { theme: 'outline', fill: '#000000', strokeLinecap: 'square' }),
+            },
+            {
+                label: '退出登录',
+                key: 'logout',
+                icon: () => h(Logout, { theme: 'outline', fill: '#000000', strokeLinecap: 'square' }),
+            },
+        ]
         // 退出登录
+        
         const logout = async () => {
             const res = await userLogout()
             if (res.code !== 0) {
@@ -29,8 +56,28 @@ export default {
                 router.push({ path: '/login' })
             }
         }
+
+        const resetPassword = () => {
+            console.log('resetPassword')
+        }
+
+        const handleSelect = (key) => {
+            switch (key) {
+                case 'logout':
+                    logout()
+                    break
+                case 'resetPassword':
+                    resetPassword()
+                    break
+                default:
+                    break
+            }
+        }
         return {
+            handleSelect,
             logout,
+            options,
+            username,
         }
     },
 }
@@ -55,18 +102,9 @@ export default {
         text-transform: uppercase;
     }
 
-    .logout {
-        padding: $pd / 3;
-        cursor: pointer;
-        border-radius: 10px;
-
-        &:hover {
-            background-color: $primary-color;
-
-            :deep(svg) {
-                fill: white;
-            }
-        }
+    &-right {
+        display: flex;
+        align-items: center;
     }
 }
 </style>

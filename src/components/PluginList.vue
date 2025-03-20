@@ -31,7 +31,14 @@
                 </div>
             </div>
         </n-checkbox-group>
-        <PluginSetting :show="pluginSettingShow" :settings="pluginSettings" @update:show="pluginSettingShow = $event" />
+        <PluginSetting 
+            :show="pluginSettingShow" 
+            :uid="pluginUid" 
+            :settings="pluginSettings" 
+            :options="pluginOptions"
+            @refresh="refresh"
+            @update:show="pluginSettingShow = $event" 
+        />
     </div>
 </template>
 <script>
@@ -52,10 +59,12 @@ export default defineComponent({
             default: () => ([]),
         },
     },
-    emits: ['update:modelValue', 'updateStatus'],
+    emits: ['update:modelValue', 'updateStatus', 'refresh'],
     setup(props, ctx) {
         const pluginSettingShow = ref(false)
+        const pluginUid = ref('')
         const pluginSettings = ref('')
+        const pluginOptions = ref('')
         const checkList = computed({
             get() {
                 return props.modelValue
@@ -71,19 +80,24 @@ export default defineComponent({
         }
         // 打开插件设置
         const openSetting = (plugin) => {
-            console.warn(plugin)
             if (!plugin.settings) return
             pluginSettings.value = plugin.settings
+            pluginUid.value = plugin.uid
+            pluginOptions.value = plugin.options
             pluginSettingShow.value = true
         }
+        const refresh = () => ctx.emit('refresh')
         return {
             DefaultPluginLogo,
             checkList,
-            pluginSettingShow,
             openSetting,
+            pluginSettingShow,
             pluginSettings,
+            pluginOptions,
+            pluginUid,
             updateStatus,
             transformTm,
+            refresh,
         }
     },
 })

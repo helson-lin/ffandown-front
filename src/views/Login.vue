@@ -62,7 +62,7 @@
 </template>
 <script>
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useMessage } from 'naive-ui'
 import { useStore } from '../store'
 import { Base64 } from 'js-base64'
@@ -88,6 +88,7 @@ export default defineComponent({
             },
         })
         const router = useRouter()
+        const route = useRoute()
         const message = useMessage()
         /**
          * @description login
@@ -105,7 +106,8 @@ export default defineComponent({
                     localStorage.removeItem('x-password')
                     localStorage.setItem('x-remmber', '0')
                 }
-                router.push({ path: '/' })
+                const redirect = route.query?.redirect
+                router.push({ path: redirect || '/mission' })
             } else {
                 message.warning(res)
             }

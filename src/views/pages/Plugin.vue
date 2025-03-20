@@ -52,7 +52,7 @@
                 <div class="filter-item">
                     <n-dropdown trigger="hover" :options="statusOptions" @select="handleSelect">
                         <n-button ghost>
-                            状态：{{ statusNameMap[status] }}
+                            {{ $t('status') }}：{{ statusNameMap[status] }}
                             <down-one theme="filled" size="15" fill="#333" />
                         </n-button>
                     </n-dropdown>
@@ -60,17 +60,19 @@
             </div>
         </div>
         <div class="plugin-content">
-            <!-- <n-data-table
-                :bordered="true"
-                :single-line="false"
-                :columns="columns"
-                :data="data"
-            /> -->
-            <PluginList v-model="checked" :data="data" @updateStatus="updateStatus" />
+            <!-- 插件列表 -->
+            <PluginList 
+                v-model="checked" 
+                :data="data" 
+                @updateStatus="updateStatus" 
+                @refresh="refresh"
+            />
+            <!-- 分页器-->
             <div class="pg-box">
                 <n-pagination v-model:page="page.current" :page-count="page.count" :on-update:page="updatePg" />
             </div>
         </div>
+        <!-- 新增插件 -->
         <NewPlugin 
             :show="addPluginShow"
             @update:show="addPluginShow = $event" 
@@ -226,6 +228,8 @@ export default defineComponent({
 <style lang="scss" scoped>
 .plugin {
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
     background: #fff;
 
     &-header {
@@ -252,7 +256,15 @@ export default defineComponent({
     }
 
     &-content {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
         padding: 10px;
+
+        .plugin-list {
+            flex: 1;
+            border-bottom: 1px solid #e2e2e3;
+        }
 
         .pg-box {
             padding-top: 30px;

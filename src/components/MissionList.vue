@@ -168,7 +168,8 @@ export default defineComponent({
 }
 
 .pg-box {
+    box-sizing: border-box;
     width: 100%;
-    padding: 20px 0;
+    padding: 0 10px;
 }
 </style>

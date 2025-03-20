@@ -5,14 +5,14 @@
             <div :class="['panel-left', isClosed ? 'min' : 'max']">
                 <div class="mission">
                     <!-- 标题 --> 
-                    <h2>{{ $t('mission_list') }}</h2>
+                    <h2 class="module-name">{{ $t('mission_list') }}</h2>
                     <!-- 任务状态列表 -->
                     <div class="status-list slider-block">
                         <div
                             v-for="status in statusList"
                             :key="status.name"
                             class="slider-block-item status"
-                            :class="{ 'status-active': activeStatusKey === status.key }"
+                            :class="{ 'status-active': activeStatusKey === status.key && menuName === 'mission' }"
                             @click="changeStatusTab(status.key)"
                         >
                             <component
@@ -20,32 +20,32 @@
                                 class="status-icon slider-block-item-icon"
                                 theme="filled"
                                 size="24"
-                                :fill="activeStatusKey === status.key ? '#b78aff' : '#333'"
+                                :fill="(activeStatusKey === status.key && menuName === 'mission') ? '#b78aff' : '#333'"
                             ></component>
                             <div v-show="showMenuName" class="status-name slider-block-item-name">{{ status.name }}</div>
                         </div>
                     </div>
                     <!-- 增加插件设置 --> 
-                    <h2>{{ $t("system_settings") }}</h2>
-                    <div class="base-settings">
-                        <div class="settings-list slider-block">
-                            <div 
-                                v-for="setting in settingsList" 
-                                :key="setting.key" 
-                                class="slider-block-item" 
-                                @click="changeSystemSetting(setting)"
-                            >
-                                <component
-                                    :is="setting.icon"
-                                    class="slider-block-item-icon"
-                                    theme="filled"
-                                    size="24"
-                                    :fill="activeStatusKey === setting.key ? '#b78aff' : '#333'"
-                                ></component>
-                                <div v-if="showMenuName" class="slider-block-item-name">{{ setting.name }}</div>
-                            </div>
+                    <h2 class="module-name">{{ $t("system_settings") }}</h2>
+                    <!-- <div class="base-settings"> -->
+                    <div class="settings-list slider-block">
+                        <div 
+                            v-for="setting in settingsList" 
+                            :key="setting.key" 
+                            class="slider-block-item" 
+                            @click="changeSystemSetting(setting)"
+                        >
+                            <component
+                                :is="setting.icon"
+                                class="slider-block-item-icon"
+                                theme="filled"
+                                size="24"
+                                :fill="menuName === 'plugin' ? '#b78aff' : '#333'"
+                            ></component>
+                            <div v-if="showMenuName" class="slider-block-item-name" :class="{ 'active': menuName === 'plugin'}">{{ setting.name }}</div>
                         </div>
                     </div>
+                    <!-- </div> -->
                 </div>
                 <div v-show="!isClosed" class="open-resource">
                     <a href="https://github.com/helson-lin/ffandown" target="_blank">
@@ -134,6 +134,12 @@ export default defineComponent({
         const isClosed = ref(false)
         const router = useRouter()
         const route = useRoute()
+        const menuPathMap = {
+            '/mission': 'mission',
+            '/plugins': 'plugin',
+        }
+        const menuName = computed(() => menuPathMap[route.path] || menuPathMap['/mission'])
+        // const menuName = ref(menuPathMap[route.path] || menuPathMap['/mission'])
         const statusList = [{
             name: i18n.global.t('downloading'),
             icon: PlayOne,
@@ -162,14 +168,14 @@ export default defineComponent({
         const activeStatusKey = computed({
             get: () => store?.status,
             set: (val) => {
-                // todo: 如果当前的路由不是/那么跳转
-                if (route.path !== '/') router.push({ path: '/' })
+                if (route.path !== '/mission') router.push({ path: '/mission' })
                 store.setStatus(val)
             },
         })
         const changeStatusTab = (key) => { activeStatusKey.value = key }
         // 切换系统设置
         const changeSystemSetting = ({ path }) => {
+            // 设置是否为当前页面
             router.push({ path })
         }
         const getVersionInfo = async () => {
@@ -215,6 +221,7 @@ export default defineComponent({
             versionInfo,
             isClosed,
             showMenuName,
+            menuName,
             upgrade,
             toggleSlider,
             upgradeVersion,
@@ -230,6 +237,16 @@ export default defineComponent({
 
     .panel-left.max {
         width: 70px !important;
+    }
+
+    // 设置模块名称
+    .module-name {
+        font-size: 14px;
+    }
+
+    // 隐藏菜单名称
+    .slider-block-item-name {
+        display: none;
     }
 }
 
@@ -261,6 +278,16 @@ export default defineComponent({
         --n-color: #b78aff !important;
 
         background-color: #000;
+    }
+
+    .slider-block {
+        &-item {
+            &-name {
+                &.active {
+                    color: #b78aff;
+                }
+            }
+        }
     }
 
     .panel {
@@ -413,4 +440,5 @@ export default defineComponent({
         margin-bottom: 10px;
     }
 }
+
 </style>

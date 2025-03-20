@@ -1,20 +1,23 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import Mission from '../views/pages/Mission.vue'
+import Plugin from '../views/pages/Plugin.vue'
+import Layout from '../views/Home.vue'
 
 const routes = [
     {
         path: '/',
         name: 'home',
-        component: () => import('../views/Home.vue'),
+        component: Layout,
         children: [
             {
-                path: '/',
+                path: '/mission',
                 name: 'Mission',
-                component: () => import('../views/pages/Mission.vue'),
+                component: Mission,
             },
             {
                 path: '/plugins',
                 name: 'Plugin',
-                component: () => import('../views/pages/Plugin.vue'),
+                component: Plugin,
             },
         ],
     },
@@ -23,6 +26,11 @@ const routes = [
         name: 'Login',
         component: () => import('../views/Login.vue'),
     },
+    {
+        path: '/:pathMatch(.*)*',
+        redirect: '/',
+    },
+
 ]
 
 // 添加设备识别和自动跳转

@@ -1,7 +1,7 @@
 <template>
     <n-modal
         class="new-plugin"
-        :show="showModel"
+        :show="showModal"
         preset="card"
         :closable="false"
         :title="$t('create_plugin')"
@@ -75,7 +75,7 @@ export default defineComponent({
                 url: '',
             },
         })
-        const showModel = computed({
+        const showModal = computed({
             get() {
                 return props.show
             },
@@ -84,7 +84,7 @@ export default defineComponent({
             },
         })
         const closeModal = () => {
-            showModel.value = false
+            showModal.value = false
         }
         const confirmModal = async () => {
             const res = await addPlugin({
@@ -96,10 +96,10 @@ export default defineComponent({
             } else {
                 message.error(res.message)
             }
-            showModel.value = false
+            showModal.value = false
         }
         return {
-            showModel,
+            showModal,
             closeModal,
             confirmModal,
             ...toRefs(formInfo),

@@ -10,7 +10,7 @@
 <script setup>
 import { NConfigProvider, NMessageProvider, NDialogProvider, zhCN, dateZhCN, enUS, dateEnUS } from 'naive-ui'
 import { useStore } from './store'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { watch } from 'vue'
 /**
    * js 文件下使用这个做类型提示
@@ -54,10 +54,16 @@ const locale = computed(() => (language === 'zh-CN' ? zhCN : enUS))
 const dateLocale = computed(() => (language === 'zh-CN' ? dateZhCN : dateEnUS))
 const store = useStore()
 const router = useRouter()
+const route = useRoute()
 
 watch(() => store.authed, (newValue) => {
     if (!newValue) {
-        router.push({ path: '/login' }) // 跳转到登录页
+        router.push({ 
+            path: '/login', 
+            query: {
+                redirect: route.path,
+            },
+        }) // 跳转到登录页,并且携带当前路由参数
     }
 }, {
     immediate: true,
