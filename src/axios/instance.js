@@ -20,17 +20,17 @@ instance.interceptors.response.use(
             const store = useStore()
             switch (error.response.status) {
                 case 400:
-                    error.response.message = '错误请求'
+                    error.response.message = error.response.data.message
                     break
                 case 401:
-                    error.response.message = '未授权，请重新登录'
+                    error.response.message = 'No authorized'
                     store.logout()
                     break
                 case 403:
-                    error.response.message = '拒绝访问'
+                    error.response.message = 'Resource access denied'
                     break
                 case 404:
-                    error.response.message = '请求错误,未找到该资源'
+                    error.response.message = 'Not Found'
                     break
                 default:
                     break
@@ -38,7 +38,11 @@ instance.interceptors.response.use(
         } else {
             error.response.message = '连接到服务器失败'
         }
-        return Promise.reject(error.response)
+        return {
+            code: -1,
+            status: error.response.status,
+            message: error.response.message,
+        }
     },
 )
 

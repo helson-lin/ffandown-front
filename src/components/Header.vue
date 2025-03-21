@@ -9,16 +9,17 @@
                 <n-dropdown :options="options" @select="handleSelect">
                     <n-avatar 
                         round 
+                        :src="logo"
                         :style="{
-                            color: '#f2f2f2',
-                            backgroundColor: '#333',
+                            background: '#fff'
                         }"
                     >  
-                        {{ username }}
+                        <!-- {{ username }} -->
                     </n-avatar>
                 </n-dropdown>
             </div>
         </div>
+        <ResetPassword v-model:show="showResetPassword" />
     </div>
 </template>
 <script>
@@ -26,21 +27,28 @@ import { userLogout } from '@/api/index'
 import { useMessage } from 'naive-ui'
 import { Key, Logout } from '@icon-park/vue-next'
 import { useRouter } from 'vue-router'
+import i18n from '../lang/index'
 import { h } from 'vue'
+import logo from '../assets/imgs/logo.webp'
+import ResetPassword from './ResetPassword.vue'
 
 export default {
+    components: {
+        ResetPassword,
+    },
     setup() {
         const router = useRouter()
         const message = useMessage()
         const username = localStorage.getItem('x-username')
+        const showResetPassword = ref(false)
         const options = [
             {
-                label: '重置密码',
+                label: i18n.global.t('reset_password'),
                 key: 'resetPassword',
                 icon: () => h(Key, { theme: 'outline', fill: '#000000', strokeLinecap: 'square' }),
             },
             {
-                label: '退出登录',
+                label: i18n.global.t('logout'),
                 key: 'logout',
                 icon: () => h(Logout, { theme: 'outline', fill: '#000000', strokeLinecap: 'square' }),
             },
@@ -58,6 +66,8 @@ export default {
         }
 
         const resetPassword = () => {
+            // resetUserPassword
+            showResetPassword.value = true
             console.log('resetPassword')
         }
 
@@ -76,6 +86,8 @@ export default {
         return {
             handleSelect,
             logout,
+            showResetPassword,
+            logo,
             options,
             username,
         }

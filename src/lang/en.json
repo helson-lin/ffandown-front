@@ -83,6 +83,8 @@
     "login_btn": "Login",
     "remember_password": "Remember password",
     "forget_password": "Forgot password?",
+    "forget_password_notice": "First login account is your account",
+    "first_login": "The first login account is the default account, please remember the username and password.",
     "current_version": "Current version",
     "latest_version": "Latest version",
     "timemark": "Timemark",
@@ -111,5 +113,10 @@
     "add_plugin_success": "Add plugin success",
     "plugin_settings": "Plugin settings",
     "status": "Status",
-    "plugin_option_updated": "Update plugin settings succcess"
+    "plugin_option_updated": "Update plugin settings succcess",
+    "currentPassword": "Current password",
+    "currentPassword_placeholder": "Please enter current password",
+    "reset_password": "Reset password",
+    "newPassword": "New password",
+    "reset_password_success": "Reset password success"
 }

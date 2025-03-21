@@ -42,3 +42,5 @@ export const batchDelete = (params) => axiosAPI.get('/plugin/batchDelete', param
 export const batchStatus = (data) => axiosAPI.post('/plugin/batchStatus', data)
 // 更新插件设置
 export const updatePluginOptions = (data) => axiosAPI.post('/plugin/options', data)
+// 重置密码
+export const resetUserPassword = (data) => axiosAPI.post('/user/resetPassword', data)

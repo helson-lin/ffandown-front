@@ -14,9 +14,9 @@
                 <!-- <n-input v-model:value="item.key" :placeholder="$t('headers_key')" class="kv-item-box-k" /> -->
                 <n-input v-model:value="item.value" :placeholder="$t('headers_value')" class="kv-item-box-v" />
             </div>
-            <n-button type="danger" @click="remove(index)">删除</n-button>
+            <n-button type="danger" @click="remove(index)">{{ $t('delete') }}</n-button>
         </div>
-        <n-button class="add-kv" type="primary" @click="add">添加</n-button>
+        <n-button class="add-kv" type="primary" @click="add">{{ $t('add_headers') }}</n-button>
     </div>
 </template>
 <script>

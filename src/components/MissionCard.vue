@@ -35,7 +35,7 @@
                         size="small"
                     >
                         <template #avatar>
-                            <Icon name="quality" :size="15" />
+                            <Icon name="preset" :size="15" />
                         </template>
                         {{ mission.preset }}
                     </n-tag>

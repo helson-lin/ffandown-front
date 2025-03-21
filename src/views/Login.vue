@@ -40,9 +40,15 @@
                 </n-form-item>
 
                 <div class="remember">
-                    <n-checkbox v-model:checked="remmberPassword" size="medium" :label="$t('remmber_password')" />
-                    <div class="forget">{{ $t('forget_password') }}</div>
+                    <n-checkbox v-model:checked="remmberPassword" size="medium" :label="$t('remember_password')" />
+                    <n-popover trigger="hover" class="forget">
+                        <template #trigger>
+                            <n-button text @click="goToDocs">{{ $t('forget_password') }}</n-button>
+                        </template>
+                        <span>{{ $t('forget_password_notice') }}</span>
+                    </n-popover>
                 </div>
+                <div v-if="showNotice" class="notice">{{ $t('first_login') }}</div>
                 <div style="display: flex; justify-content: center;">
                     <n-button 
                         type="primary"
@@ -66,6 +72,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { useMessage } from 'naive-ui'
 import { useStore } from '../store'
 import { Base64 } from 'js-base64'
+import i18n from '../lang/index'
 
 export default defineComponent({
     setup() {
@@ -78,18 +85,21 @@ export default defineComponent({
         const rules = ref({
             username: {
                 required: true,
-                message: '请输入用户名',
+                message: i18n.global.t('username_placeholder'),
                 trigger: 'blur',
             },
             password: {
                 required: true,
-                message: '请输入密码',
+                message: i18n.global.t('password_placeholder'),
                 trigger: 'blur',
             },
         })
         const router = useRouter()
         const route = useRoute()
         const message = useMessage()
+        // 是否展示提示信息
+        const showNotice = ref(false)
+        
         /**
          * @description login
          */
@@ -112,12 +122,18 @@ export default defineComponent({
                 message.warning(res)
             }
         }
+
+        const goToDocs = () => {
+            window.open('https://ffandown.oimi.space', '_blank')
+        }
+
         onMounted(() => {
             const xUsername = localStorage.getItem('x-username')
             const xPassword = localStorage.getItem('x-password')
             const remmberPasswordCached = localStorage.getItem('x-remmber') 
             if (xUsername) model.value.username = xUsername
             if (xPassword) model.value.password = Base64.decode(xPassword)
+            if (!xUsername && !xPassword && remmberPasswordCached !== '1') showNotice.value = true
             if (remmberPasswordCached === '1') remmberPassword.value = true
         })
         return {
@@ -125,6 +141,8 @@ export default defineComponent({
             rules,
             login,
             remmberPassword,
+            showNotice,
+            goToDocs,
         }
     },
 })

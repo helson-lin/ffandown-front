@@ -81,8 +81,10 @@
     "username_placeholder": "请输入用户名",
     "password_placeholder": "请输入密码",
     "login_btn": "登录",
-    "remmber_password": "记住密码",
+    "remember_password": "记住密码",
     "forget_password": "忘记密码？",
+    "forget_password_notice": "第一次登录的账号和密码就是默认的账号和密码。",
+    "first_login": "第一次登录的账号就是默认账号，请记住用户名和密码。",
     "current_version": "当前前端版本",
     "latest_version": "最新前端版本",
     "system_settings": "系统设置",
@@ -113,5 +115,9 @@
     "add_plugin_success": "添加插件成功",
     "plugin_settings": "插件设置",
     "status": "状态",
-    "plugin_option_updated": "更新插件设置成功"
+    "plugin_option_updated": "更新插件设置成功",
+    "currentPassword": "当前的密码",
+    "currentPassword_placeholder": "请输入当前的密码",
+    "reset_password": "重置密码",
+    "reset_password_success": "重置密码成功"
 }
