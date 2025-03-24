@@ -27,7 +27,6 @@
                     type="currentPassword"
                     :placeholder="$t('currentPassword_placeholder')"
                     show-password-on="mousedown"
-                    @input="handlePasswordInput"
                     @keydown.enter.prevent
                 />
             </n-form-item>
@@ -38,7 +37,6 @@
                     type="password"
                     :placeholder="$t('password_placeholder')"
                     show-password-on="mousedown"
-                    @input="handlePasswordInput"
                     @keydown.enter.prevent
                 />
             </n-form-item>

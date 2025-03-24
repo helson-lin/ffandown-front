@@ -53,10 +53,6 @@ export default defineComponent({
             type: Boolean,
             default: false,
         },
-        settings: {
-            type: String,
-            required: true,
-        },
     },
     emits: ['update:show', 'confirm', 'refresh'],
     setup(props, ctx) {
