@@ -119,5 +119,6 @@
     "currentPassword": "当前的密码",
     "currentPassword_placeholder": "请输入当前的密码",
     "reset_password": "重置密码",
-    "reset_password_success": "重置密码成功"
+    "reset_password_success": "重置密码成功",
+    "logout": "退出登录"
 }

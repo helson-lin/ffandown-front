@@ -32,7 +32,7 @@
             </div>
         </n-checkbox-group>
         <PluginSetting 
-            :show="pluginSettingShow" 
+            v-model:show="pluginSettingShow" 
             :uid="pluginUid" 
             :settings="pluginSettings" 
             :options="pluginOptions"
@@ -81,9 +81,9 @@ export default defineComponent({
         // 打开插件设置
         const openSetting = (plugin) => {
             if (!plugin.settings) return
-            pluginSettings.value = plugin.settings
+            pluginSettings.value = plugin.settings || '{}'
             pluginUid.value = plugin.uid
-            pluginOptions.value = plugin.options
+            pluginOptions.value = plugin.options || '{}'
             pluginSettingShow.value = true
         }
         const refresh = () => ctx.emit('refresh')

@@ -87,6 +87,8 @@
     "first_login": "The first login account is the default account, please remember the username and password.",
     "current_version": "Current version",
     "latest_version": "Latest version",
+    "system_settings": "System settings",
+    "plugin": "Plugin",
     "timemark": "Timemark",
     "filePath": "File Path",
     "create_mission": "Create mission",
@@ -118,5 +120,6 @@
     "currentPassword_placeholder": "Please enter current password",
     "reset_password": "Reset password",
     "newPassword": "New password",
-    "reset_password_success": "Reset password success"
+    "reset_password_success": "Reset password success",
+    "logout": "Logout"
 }

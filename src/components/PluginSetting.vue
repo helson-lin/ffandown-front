@@ -19,7 +19,7 @@
                 v-for="item in settingsItems.items"
                 :key="item.key"
                 :path="item.key" 
-                :label="$t(item.key)" 
+                :label="item?.label ?? $t(item.key)" 
                 label-width="90px"  
                 class="warp"
             >
@@ -30,6 +30,12 @@
                     :placeholder="`please input ${item.key}`"
                 >
                 </n-input>
+                <n-select
+                    v-if="item.type === 'select'"
+                    v-model:value="settingsItems.model[item.key]"
+                    :options="item.options"
+                    :placeholder="item?.placeholder ?? `please select ${item.key}`"
+                ></n-select>
             </n-form-item>
         </n-form>
         <template #footer>
@@ -77,15 +83,15 @@ export default defineComponent({
         })
         const getSettingsItem = () => {
             try {
-                const settings = JSON.parse(props.settings)
-                const options = JSON.parse(props.options)
+                const settings = JSON.parse(props.settings || '{}')
+                const options = JSON.parse(props.options || '{}')
                 const allSettinsItem = Object.entries(settings).map(([key, val]) => ({ ...val, key }))
                 const model = allSettinsItem.reduce((pre, item) => { 
                     pre[item.key] = options[item.key] || item?.default || ''
                     return pre 
                 }, {})
                 const rules = allSettinsItem.reduce((pre, item) => {
-                    pre[item.key] = [{ required: item.required || false, message: `please input ${item.key}`, trigger: ['blur'] }]
+                    pre[item.key] = [{ required: item.require || item.required || false, message: `please input ${item.key}`, trigger: ['blur'] }]
                     return pre
                 }, {})
                 return {
@@ -94,6 +100,7 @@ export default defineComponent({
                     model,
                 }
             } catch (e) {
+                console.error(e)
                 return {
                     items: [],
                     rules: {},
@@ -118,8 +125,8 @@ export default defineComponent({
         const updatePlugin = async (data) => {
             const res = await updatePluginOptions(data)
             if (res.code === 0) {
-                message.success(i18n.global.$t('plugin_option_updated'))
-                ctx.emit('update:show', false)
+                message.success(i18n.global.t('plugin_option_updated'))
+                closeModal()
                 ctx.emit('refresh')
             }
         }
