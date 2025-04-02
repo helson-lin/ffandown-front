@@ -27,7 +27,7 @@
                     v-if="item.type === 'input'"
                     v-model:value="settingsItems.model[item.key]"
                     type="text"
-                    :placeholder="`please input ${item.key}`"
+                    :placeholder="item?.placeholder ?? `please input ${item.key}`"
                 >
                 </n-input>
                 <n-select
@@ -36,6 +36,9 @@
                     :options="item.options"
                     :placeholder="item?.placeholder ?? `please select ${item.key}`"
                 ></n-select>
+                <div v-if="item.notice" class="notice">
+                    {{ item.notice }}
+                </div>
             </n-form-item>
         </n-form>
         <template #footer>
@@ -91,7 +94,7 @@ export default defineComponent({
                     return pre 
                 }, {})
                 const rules = allSettinsItem.reduce((pre, item) => {
-                    pre[item.key] = [{ required: item.require || item.required || false, message: `please input ${item.key}`, trigger: ['blur'] }]
+                    pre[item.key] = [{ required: item.require || item.required || false, message: item?.placeholder ?? `please input ${item.key}`, trigger: ['blur'] }]
                     return pre
                 }, {})
                 return {
@@ -151,3 +154,12 @@ export default defineComponent({
     },
 })
 </script>
+<style lang="scss" scoped>
+.warp {
+    :deep(.n-form-item-blank) {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+</style>

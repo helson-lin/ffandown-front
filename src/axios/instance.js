@@ -5,12 +5,8 @@ const baseURL = window.CONFIG?.BASEURL || ''
 
 const instance = axios.create({
     baseURL,
-    // timeout: 30000,
-    headers: {
-        post: {
-            'Content-Type': 'application/x-www-form;charset=utf-8',
-        },
-    },
+    timeout: 10000,
+    headers: {},
 })
 // 响应拦截
 instance.interceptors.response.use(

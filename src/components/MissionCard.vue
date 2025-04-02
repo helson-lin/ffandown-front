@@ -44,7 +44,7 @@
                         size="small"
                     >
                         <template #avatar>
-                            <Icon name="video" :size="15" />
+                            <Icon name="video" :size="17" />
                         </template>
                         {{ mission.outputformat }}
                     </n-tag>
@@ -64,7 +64,7 @@
                         size="small"
                     >
                         <template #avatar>
-                            <Icon name="fileSize" :size="15" />
+                            <Icon name="storage" :size="12" />
                         </template>
                         {{ mission.size }}
                     </n-tag>

@@ -19,6 +19,10 @@ const routes = [
                 name: 'Plugin',
                 component: Plugin,
             },
+            {
+                path: '/',
+                redirect: '/mission',
+            },
         ],
     },
     {

@@ -81,6 +81,7 @@ export default defineComponent({
         })
         const closeModal = () => {
             showModal.value = false
+            formInfo.model.url = ''
         }
         const confirmModal = async () => {
             const res = await addPlugin({
@@ -93,6 +94,7 @@ export default defineComponent({
                 message.error(res.message)
             }
             showModal.value = false
+            formInfo.model.url = ''
         }
         return {
             showModal,

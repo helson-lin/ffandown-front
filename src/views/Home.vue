@@ -74,7 +74,11 @@
                 trigger="hover"
             >
                 <template #trigger>
-                    <n-button circle type="primary" @click="upgrade">
+                    <n-button 
+                        circle 
+                        type="primary" 
+                        @click="upgrade" 
+                    >
                         <template #icon>
                             <n-icon>
                                 <Refresh size="24" />
@@ -330,6 +334,11 @@ export default defineComponent({
                 align-items: center;
                 justify-content: center;
                 width: 100%;
+
+                :deep(svg) {
+                    color: black;
+                    fill: black;
+                }
             }
 
             .arrow {

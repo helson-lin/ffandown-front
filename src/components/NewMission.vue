@@ -261,6 +261,14 @@ export default defineComponent({
         }
         const closeModal = () => {
             ctx.emit('update:show', false)
+            formInfo.model = {
+                url: '',
+                preset: '',
+                outputformat: '',
+                dir: '',
+                useragent: '',
+                headers: [],
+            }
         }
         return {
             videoFormatOptions,

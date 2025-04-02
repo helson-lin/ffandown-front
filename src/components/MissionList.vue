@@ -22,6 +22,7 @@ import { deleteMission, resumeMission, stopMission, getDownloadList } from '../a
 import { useMessage, useDialog, NPagination } from 'naive-ui'
 import Blank from './Blank.vue'
 import i18n from '@/lang'
+import { useSSE } from '../hooks/useSSE'
 
 export default defineComponent({
     components: { MissionCard, Blank, NPagination },
@@ -43,12 +44,26 @@ export default defineComponent({
         const state = reactive({
             list: [],
         })
+        const { initSSE, closeSSE } = useSSE('/list/sse', {
+            onMessage: (res) => {
+                if (res.code !== 0) return
+                const { rows, total } = res.data
+                const list = rows.map(i => ({
+                    ...i,
+                    percent: parseInt(Number(i.percent).toFixed(2)),
+                }))
+                page.value.count = total
+                state.list = list
+            },
+            events: {
+                end: (data) => console.warn(`连接结束: ${data}`),
+            },
+        })
         const missionList = computed(() => state.list.filter(i => props.status.includes(i.status)))
         const delMission = async ({ uid }) => {
             const res = await deleteMission(uid)
             if (res.code === 0) {
                 message.success(i18n.global.t('delete_success'))
-                getMissionList()
             } else {
                 message.success(i18n.global.t('delete_failed'))
             }
@@ -67,13 +82,7 @@ export default defineComponent({
             }
         }
 
-        const getMissionList = () => {
-            if (timer) clearInterval(timer)
-            getData()
-            timer = setInterval(() => {
-                getData()
-            }, 5000)
-        }
+        const getMissionList = () => initSSE(Object.assign(page.value, { status: props.status }))
 
         const updatePg = (val) => {
             page.value.current = val
@@ -99,10 +108,10 @@ export default defineComponent({
 
         watch(() => props.status, () => {
             if (props.status === '0,1,5') {
-                // reset page to 1
                 page.value.current = 1
                 getMissionList()
             } else {
+                closeSSE()
                 clearInterval(timer)
                 getData()
             }
