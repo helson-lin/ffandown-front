@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <Header />
+        <Header :version="versionInfo" />
         <div class="controller-panel">
             <div :class="['panel-left', isClosed ? 'min' : 'max']">
                 <div class="mission">
@@ -112,7 +112,7 @@
     </div>
 </template>
 <script>
-import { defineComponent, ref, onMounted } from 'vue'
+import { defineComponent, ref, onMounted, h } from 'vue'
 import { PlayOne, PauseOne, Box, SettingConfig, Refresh, ArrowLeft, ArrowRight, PlugOne } from '@icon-park/vue-next'
 import { useDialog, useMessage } from 'naive-ui'
 import MissionList from '../components/MissionList.vue'
@@ -191,9 +191,21 @@ export default defineComponent({
             }
         }
         const upgrade = () => {
+            const renderContent = () => {
+                const arr = [
+                    h('p', { style: 'font-weight: bold;margin-bottom: 10px;' }, i18n.global.t('upgrade_message')),
+                    h('p', {}, `${i18n.global.t('current_version')}: ${versionInfo.value.current}, ${i18n.global.t('latest_version')}: ${versionInfo.value.version}`),
+                ]
+                if (versionInfo.value?.body) {
+                    arr.push(
+                        h('p', { style: 'margin-top: 10px;' }, versionInfo.value?.body),
+                    )
+                }
+                return h('p', {}, arr)
+            }
             dialog.success({
                 title: i18n.global.t('notification'),
-                content: `${i18n.global.t('current_version')}: ${versionInfo.value.current}, ${i18n.global.t('latest_version')}: ${versionInfo.value.version}`,
+                content: renderContent,
                 positiveText: i18n.global.t('upgrade'),
                 negativeText: i18n.global.t('cancel'),
                 onPositiveClick: async () => {

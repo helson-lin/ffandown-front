@@ -1,10 +1,18 @@
 <template>
-    <div class="headers">
+    <div class="header">
         <!-- logo 文本 -->
-        <div class="logo">
+        <div class="header-left">
             <span class="logo-txt">ffandown</span>
+            <div class="version-info">
+                <div class="verion front-version">
+                    {{ $t('current_version') }} {{ version.current }}
+                </div>
+                <div v-if="version.backendVersion" class="verion backend-version">
+                    {{ $t('current_backend_version') }} {{ version.backendVersion }}
+                </div>
+            </div>
         </div>
-        <div class="headers-right">
+        <div class="header-right">
             <div class="user-info">
                 <n-dropdown :options="options" @select="handleSelect">
                     <n-avatar 
@@ -35,6 +43,12 @@ import ResetPassword from './ResetPassword.vue'
 export default {
     components: {
         ResetPassword,
+    },
+    props: {
+        version: {
+            type: Object,
+            default: () => ({}),
+        },
     },
     setup() {
         const router = useRouter()
@@ -95,7 +109,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.headers {
+.header {
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -112,6 +126,19 @@ export default {
         font-size: 18px;
         font-weight: 600;
         text-transform: uppercase;
+    }
+
+    &-left {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+
+        .version-info {
+            display: flex;
+            gap: 5px;
+            font-size: 12px;
+            color: #999;
+        }
     }
 
     &-right {
