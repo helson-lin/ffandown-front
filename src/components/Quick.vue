@@ -111,8 +111,6 @@ export default defineComponent({
     justify-content: space-between;
     padding: 10px 10px 20px;
     background: #fff;
-    transition: all .3s ease;
-    animation: fade-in .3s ease-out;
 
     &::after {
         position: absolute;
@@ -286,19 +284,6 @@ export default defineComponent({
             box-shadow: 0 4px 12px rgb(0 0 0 / 30%);
             backdrop-filter: blur(10px);
         }
-    }
-}
-
-// 动画效果
-@keyframes fade-in {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
     }
 }
 </style>

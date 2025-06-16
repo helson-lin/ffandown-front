@@ -247,11 +247,10 @@ export default defineComponent({
             bottom: 0;
             left: 20px;
             display: block;
-
-            // width: 100%;
             height: 0;
             content: "";
-            border-bottom: 1px solid #b6b2b271;
+            border-bottom: 1px solid rgb(0 0 0 / 6%);
+            transition: all .3s ease;
         }
     }
 
@@ -262,11 +261,43 @@ export default defineComponent({
 
         .plugin-list {
             flex: 1;
-            border-bottom: 1px solid #e2e2e3;
         }
 
         .pg-box {
-            padding-left: 20px;
+            padding: 25px 0 16px 20px;
+            border-top: 1px solid rgb(0 0 0 / 6%);
+
+            :deep(.n-pagination) {
+                .n-pagination-item {
+                    transition: all .2s ease;
+
+                    &:hover:not(.n-pagination-item--disabled) {
+                        background-color: rgb(0 0 0 / 4%);
+                    }
+
+                    &--active {
+                        color: #fff;
+                        background-color: $primary-color;
+                        border-color: $primary-color;
+
+                        &:hover {
+                            background-color: darken($primary-color, 5%);
+                        }
+                    }
+                }
+
+                .n-pagination-item-quick-jumper {
+                    input {
+                        border-color: rgb(0 0 0 / 12%);
+                        transition: all .2s ease;
+
+                        &:hover,
+                        &:focus {
+                            border-color: $primary-color;
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -275,6 +306,65 @@ export default defineComponent({
 @media (prefers-color-scheme: dark) {
     .plugin {
         background: rgb(255 255 255 / 2%);
+    }
+
+    .pg-box {
+        background: rgb(255 255 255 / 2%);
+        border-top-color: rgb(255 255 255 / 8%);
+
+        :deep(.n-pagination) {
+            .n-pagination-item {
+                color: rgb(255 255 255 / 85%);
+                background-color: rgb(255 255 255 / 4%);
+                border-color: rgb(255 255 255 / 12%);
+
+                &:hover:not(.n-pagination-item--disabled) {
+                    background-color: rgb(255 255 255 / 8%);
+                }
+
+                &--active {
+                    color: #fff;
+                    background-color: $primary-color;
+                    border-color: $primary-color;
+
+                    &:hover {
+                        background-color: darken($primary-color, 5%);
+                    }
+                }
+
+                &--disabled {
+                    color: rgb(255 255 255 / 30%);
+                    background-color: rgb(255 255 255 / 2%);
+                }
+            }
+
+            .n-pagination-item-quick-jumper {
+                color: rgb(255 255 255 / 85%);
+
+                input {
+                    color: rgb(255 255 255 / 85%);
+                    background-color: rgb(255 255 255 / 4%);
+                    border-color: rgb(255 255 255 / 12%);
+
+                    &:hover,
+                    &:focus {
+                        background-color: rgb(255 255 255 / 6%);
+                        border-color: $primary-color;
+                    }
+
+                    &::placeholder {
+                        color: rgb(255 255 255 / 30%);
+                    }
+                }
+            }
+        }
+    }
+}
+
+// 移动端适配
+@media screen and (max-width: 768px) {
+    .pg-box {
+        padding: 12px;
     }
 }
 

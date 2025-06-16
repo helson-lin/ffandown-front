@@ -183,7 +183,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .mission-list {
     box-sizing: border-box;
-    height: calc(100% - 120px);
+    flex: 1;
     padding: 16px;
     overflow-y: auto;
     background: #fff;
@@ -249,7 +249,6 @@ export default defineComponent({
 // 移动端适配
 @media screen and (max-width: 768px) {
     .mission-list {
-        height: calc(100% - 70px);
         padding: 12px;
     }
 
