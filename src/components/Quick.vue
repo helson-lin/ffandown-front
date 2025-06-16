@@ -126,7 +126,6 @@ export default defineComponent({
 
     .operation {
         :deep(.n-button) {
-            height: 36px;
             padding: 0 16px;
             font-size: 14px;
             border-radius: 6px;
