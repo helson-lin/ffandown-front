@@ -234,39 +234,13 @@ export default defineComponent({
 })
 </script>
 <style lang="scss" scoped>
-@media screen and (max-width: 768px) {
-    .panel-left.min {
-        width: 0 !important;
-    }
-
-    .panel-left.max {
-        width: 70px !important;
-    }
-
-    // 设置模块名称
-    .module-name {
-        font-size: 14px;
-    }
-
-    // 隐藏菜单名称
-    .slider-block-item-name {
-        display: none;
-    }
-}
-
-:deep(.n-dialog .n-dialog__icon) {
-    --n-icon-color: #b78aff !important;
-
-    color: #b78aff !important;
-    background-color: #000;
-}
-
 .home {
     position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
+    background-color: #f8fafc;
 }
 
 .controller-panel {
@@ -275,36 +249,20 @@ export default defineComponent({
     width: 100%;
     height: calc(100% - 40px);
     overflow: hidden;
-    background-color: #f1f5f9;
-
-    .n-modal-body-wrapper .n-dialog {
-        --n-icon-color: #b78aff !important;
-        --n-color: #b78aff !important;
-
-        background-color: #000;
-    }
-
-    .slider-block {
-        &-item {
-            &-name {
-                &.active {
-                    color: #b78aff;
-                }
-            }
-        }
-    }
+    background-color: #f8fafc;
 
     .panel {
         &-left {
             position: relative;
             box-sizing: border-box;
             display: flex;
-            width: 170px;
+            width: 240px;
             height: 100%;
             padding-bottom: 40px;
             background-color: #fff;
-            border-right: 1px solid #eee;
-            transition: width .3s ease-in-out;
+            border-right: 1px solid rgb(0 0 0 / 6%);
+            box-shadow: 0 1px 2px rgb(0 0 0 / 3%);
+            transition: all .3s cubic-bezier(.4, 0, .2, 1);
 
             &::after {
                 position: absolute;
@@ -314,16 +272,16 @@ export default defineComponent({
                 left: 0;
                 z-index: -1;
                 content: "";
-                background-color: #f2f2f2;
-                filter: blur(20px);
+                background-color: rgb(255 255 255 / 80%);
+                backdrop-filter: blur(20px);
             }
 
             &.min {
-                width: 70px;
+                width: 80px;
             }
 
             &.max {
-                width: 170px;
+                width: 240px;
             }
 
             .open-resource {
@@ -334,56 +292,65 @@ export default defineComponent({
                 align-items: center;
                 justify-content: center;
                 width: 100%;
+                padding: 12px;
+                transition: opacity .3s ease;
+
+                &:hover {
+                    opacity: .8;
+                }
 
                 :deep(svg) {
-                    color: black;
-                    fill: black;
+                    color: #1a1a1a;
+                    fill: #1a1a1a;
                 }
             }
 
             .arrow {
                 position: absolute;
                 top: 50%;
-                right: -20px;
+                right: -16px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                width: 30px;
-                height: 30px;
+                width: 32px;
+                height: 32px;
                 cursor: pointer;
                 background-color: #fff;
                 border-radius: 50%;
-                box-shadow: 0 2px 4px rgb(0 0 0 / 12%), 0 0 6px rgb(0 0 0 / 4%);
+                box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
+                transition: all .3s ease;
                 transform: translateY(-50%);
-            }
 
-            .quick-actions {
-                box-sizing: border-box;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: flex-start;
-                width: 50px;
-                height: 100%;
-                padding: 10px 0;
-                background: #000;
-
-                .action {
-                    margin: 10px 0;
-                    cursor: pointer;
+                &:hover {
+                    background-color: #f8fafc;
+                    box-shadow: 0 4px 12px rgb(0 0 0 / 12%);
                 }
             }
 
             .mission {
                 box-sizing: border-box;
                 flex: 1;
-                padding: 0 10px;
-                overflow: hidden;
+                padding: 0 16px;
+                overflow-x: hidden;
+                overflow-y: auto;
+
+                &::-webkit-scrollbar {
+                    width: 4px;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    background-color: rgb(0 0 0 / 10%);
+                    border-radius: 2px;
+                }
 
                 h2 {
                     display: inline-block;
-                    padding: 20px 10px;
-                    transition: width 200ms ease-in-out;
+                    padding: 24px 12px 16px;
+                    margin: 0;
+                    font-size: 16px;
+                    font-weight: 600;
+                    color: #1a1a1a;
+                    transition: all .3s ease;
                 }
             }
 
@@ -392,41 +359,73 @@ export default defineComponent({
                 display: flex;
                 flex-direction: column;
                 width: 100%;
+                padding: 0 4px;
 
                 .status,
                 .slider-block-item {
                     box-sizing: border-box;
                     display: flex;
                     align-items: center;
-                    padding: 5px 0;
-                    padding-left: 10px;
-                    margin-bottom: 10px;
+                    padding: 10px 12px;
+                    margin-bottom: 8px;
                     cursor: pointer;
-                    border-radius: 5px;
+                    border-radius: 8px;
+                    transition: all .2s ease;
 
                     &-icon {
-                        margin-right: 10px;
+                        margin-right: 12px;
+                        transition: all .2s ease;
 
                         &:hover {
                             fill: $primary-color;
+                            transform: scale(1.05);
                         }
                     }
 
-                    &:hover,
+                    &-name {
+                        font-size: 14px;
+                        font-weight: 500;
+                        color: #4a4a4a;
+                        transition: all .2s ease;
+                    }
+
+                    &:hover {
+                        background-color: rgb(0 0 0 / 4%);
+                    }
+
                     &.status-active {
-                        color: $primary-color;
-                        background-color: #eaecf0;
+                        background-color: rgba($primary-color, .08);
+
+                        .status-icon,
+                        .slider-block-item-icon {
+                            fill: $primary-color;
+                        }
+
+                        .status-name,
+                        .slider-block-item-name {
+                            color: $primary-color;
+                        }
                     }
                 }
             }
         }
 
         &-right {
-            // background-color: #fff;
             box-sizing: border-box;
             flex: 1;
             height: 100%;
-            padding: $pd;
+            padding: 24px;
+            overflow-x: hidden;
+            overflow-y: auto;
+
+            &::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background-color: rgb(0 0 0 / 10%);
+                border-radius: 2px;
+            }
 
             .main-container {
                 height: 100%;
@@ -436,9 +435,10 @@ export default defineComponent({
 }
 
 .system {
-    position: absolute;
-    right: 20px;
-    bottom: 20px;
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 100;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -446,8 +446,160 @@ export default defineComponent({
     justify-content: flex-start;
 
     .n-button {
-        margin-bottom: 10px;
+        margin-bottom: 12px;
+        transition: all .3s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+        }
     }
 }
 
+// 移动端适配
+@media screen and (max-width: 768px) {
+    .controller-panel {
+        .panel {
+            &-left {
+                position: fixed;
+                top: 40px;
+                left: 0;
+                z-index: 100;
+                width: 100%;
+                height: calc(100% - 40px);
+                transition: transform .3s cubic-bezier(.4, 0, .2, 1);
+                transform: translateX(-100%);
+
+                &.min {
+                    transform: translateX(-100%);
+                }
+
+                &.max {
+                    transform: translateX(0);
+                }
+
+                .arrow {
+                    top: 16px;
+                    right: 16px;
+                    transform: none;
+                }
+
+                .mission {
+                    padding: 0 16px;
+                    padding-top: 48px;
+
+                    h2 {
+                        padding: 16px 12px;
+                        font-size: 15px;
+                    }
+                }
+
+                .status-list,
+                .slider-block {
+                    padding: 0;
+
+                    .status,
+                    .slider-block-item {
+                        padding: 12px;
+                        margin-bottom: 4px;
+
+                        &-icon {
+                            margin-right: 16px;
+                        }
+
+                        &-name {
+                            font-size: 15px;
+                        }
+                    }
+                }
+            }
+
+            &-right {
+                padding: 16px;
+            }
+        }
+    }
+
+    .system {
+        right: 16px;
+        bottom: 16px;
+
+        .n-button {
+            margin-bottom: 8px;
+        }
+    }
+}
+
+// 平板适配
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .controller-panel {
+        .panel {
+            &-left {
+                width: 200px;
+
+                &.min {
+                    width: 80px;
+                }
+
+                &.max {
+                    width: 200px;
+                }
+            }
+        }
+    }
+}
+
+// 暗色模式支持
+@media (prefers-color-scheme: dark) {
+    .home {
+        background-color: #1a1a1a;
+    }
+
+    .controller-panel {
+        background-color: #1a1a1a;
+
+        .panel {
+            &-left {
+                background-color: #242424;
+                border-right-color: rgb(255 255 255 / 8%);
+
+                &::after {
+                    background-color: rgb(36 36 36 / 80%);
+                }
+
+                .arrow {
+                    background-color: #242424;
+                    box-shadow: 0 2px 8px rgb(0 0 0 / 20%);
+
+                    &:hover {
+                        background-color: #2a2a2a;
+                    }
+                }
+
+                .mission {
+                    h2 {
+                        color: rgb(255 255 255 / 85%);
+                    }
+                }
+
+                .status-list,
+                .slider-block {
+                    .status,
+                    .slider-block-item {
+                        &-name {
+                            color: rgb(255 255 255 / 65%);
+                        }
+
+                        &:hover {
+                            background-color: rgb(255 255 255 / 8%);
+                        }
+
+                        &.status-active {
+                            background-color: rgba($primary-color, .15);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 </style>

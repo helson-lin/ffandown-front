@@ -106,96 +106,410 @@ export default defineComponent({
 .plugin-list {
     display: flex;
     flex-direction: column;
-    border-bottom: 1px solid #e2e2e3;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 8px;
+    transition: all .3s ease;
 
     .plugin {
+        position: relative;
         box-sizing: border-box;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 10px 0;
+        padding: 20px 24px;
+        border-bottom: 1px solid rgb(0 0 0 / 6%);
+        transition: all .2s ease;
+        animation: fade-in .3s ease-out;
+        animation-fill-mode: both;
 
-        // border-bottom: 1px solid #e2e2e3;
-        border-top: 1px solid #e2e2e3;
+        @for $i from 1 through 10 {
+            &:nth-child(#{$i}) {
+                animation-delay: #{($i - 1) * .05}s;
+            }
+        }
+
+        &:hover {
+            background: rgb(0 0 0 / 2%);
+            box-shadow: 0 2px 8px rgb(0 0 0 / 4%);
+            transform: translateY(-1px);
+        }
+
+        &:last-child {
+            border-bottom: none;
+        }
 
         &-left {
             display: flex;
+            flex: 1;
             align-items: center;
+            min-width: 0;
+
+            :deep(.n-checkbox) {
+                margin-right: 16px;
+
+                .n-checkbox__input {
+                    border-radius: 4px;
+                    transition: all .2s ease;
+                }
+            }
 
             &-logo {
                 box-sizing: border-box;
-                width: 40px;
-                height: 40px;
-                margin-left: 10px;
-                background: #f2f2f2;
-                border-radius: 10px;
+                flex-shrink: 0;
+                width: 48px;
+                height: 48px;
+                margin-right: 16px;
+                overflow: hidden;
+                background: rgb(0 0 0 / 4%);
+                border-radius: 12px;
+                transition: all .2s ease;
 
-                &.pad {
-                    padding: 5px;
+                &:hover {
+                    transform: scale(1.05);
                 }
 
                 img {
                     width: 100%;
                     height: 100%;
+                    object-fit: cover;
+                    border-radius: 12px;
                 }
             }
 
             &-baseinfo {
-                margin-left: 10px;
+                flex: 1;
+                min-width: 0;
 
                 .plugin-name {
-                    font-weight: 500;
-                    line-height: 1.5;
+                    margin-bottom: 4px;
+                    overflow: hidden;
+                    font-size: 16px;
+                    font-weight: 600;
+                    line-height: 1.4;
+                    color: rgb(0 0 0 / 85%);
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
                 }
 
                 .plugin-desc {
-                    font-size: 12px;
+                    overflow: hidden;
+                    font-size: 13px;
                     line-height: 1.5;
-                    color: #999;
+                    color: rgb(0 0 0 / 45%);
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
                 }
             }
         }
 
         &-right {
             display: flex;
+            flex-shrink: 0;
+            gap: 16px;
             align-items: center;
 
             .author {
-                a {
-                    color: #999;
-                    transition: color .3s ease;
-                }
+                min-width: 80px;
 
-                a:hover {
+                a {
+                    padding: 4px 8px;
+                    font-size: 13px;
+                    color: rgb(0 0 0 / 45%);
                     text-decoration: none;
+                    border-radius: 4px;
+                    transition: all .2s ease;
+
+                    &:hover {
+                        color: #b78aff;
+                        background: rgb(183 138 255 / 5%);
+                    }
                 }
             }
 
-            .leading {
-                margin-right: 10px;
+            .version {
+                min-width: 60px;
+                padding: 2px 6px;
+                font-family: "SF Mono", Monaco, "Cascadia Code", monospace;
                 font-size: 13px;
-                line-height: 1.5;
-                color: #999;
+                color: rgb(0 0 0 / 45%);
+                background: rgb(0 0 0 / 4%);
+                border-radius: 4px;
+            }
+
+            .crt {
+                min-width: 100px;
+                font-size: 12px;
+                color: rgb(0 0 0 / 35%);
+            }
+
+            :deep(.n-switch) {
+                .n-switch__rail {
+                    transition: all .2s ease;
+                }
             }
 
             .setting {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                margin-left: 10px;
 
                 &-btn {
                     box-sizing: border-box;
-                    padding: 5px;
-                    border-radius: 4px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 32px;
+                    height: 32px;
+                    font-size: 16px;
+                    font-weight: 600;
+                    color: rgb(0 0 0 / 45%);
+                    cursor: pointer;
+                    border-radius: 6px;
+                    transition: all .2s ease;
 
                     &:hover {
-                        cursor: pointer;
-                        background: #e2e2e3;
+                        color: rgb(0 0 0 / 65%);
+                        background: rgb(0 0 0 / 6%);
+                        transform: scale(1.1);
+                    }
+
+                    &:active {
+                        transform: scale(.95);
                     }
                 }
             }
         }
     }
 }
+
+// 移动端适配
+@media screen and (max-width: 768px) {
+    .plugin-list {
+        .plugin {
+            flex-direction: column;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 16px;
+
+            &-left {
+                width: 100%;
+
+                :deep(.n-checkbox) {
+                    margin-right: 12px;
+                }
+
+                &-logo {
+                    width: 40px;
+                    height: 40px;
+                    margin-right: 12px;
+                    border-radius: 8px;
+                }
+
+                &-baseinfo {
+                    .plugin-name {
+                        font-size: 15px;
+                        line-height: 1.3;
+                        white-space: normal;
+                    }
+
+                    .plugin-desc {
+                        display: box;
+                        overflow: hidden;
+                        font-size: 12px;
+                        line-height: 1.4;
+                        white-space: normal;
+                        -webkit-line-clamp: 2;
+                        -webkit-box-orient: vertical;
+                    }
+                }
+            }
+
+            &-right {
+                flex-wrap: wrap;
+                gap: 8px;
+                justify-content: space-between;
+                width: 100%;
+
+                .author {
+                    order: 1;
+                    min-width: auto;
+
+                    a {
+                        padding: 2px 6px;
+                        font-size: 12px;
+                    }
+                }
+
+                .version {
+                    order: 2;
+                    min-width: auto;
+                    padding: 1px 4px;
+                    font-size: 12px;
+                }
+
+                .crt {
+                    order: 3;
+                    min-width: auto;
+                    font-size: 11px;
+                }
+
+                :deep(.n-switch) {
+                    order: 4;
+                    margin-left: auto;
+                }
+
+                .setting {
+                    order: 5;
+
+                    &-btn {
+                        width: 28px;
+                        height: 28px;
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// 平板适配
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .plugin-list {
+        .plugin {
+            padding: 18px 20px;
+
+            &-left {
+                &-logo {
+                    width: 44px;
+                    height: 44px;
+                    border-radius: 10px;
+                }
+
+                &-baseinfo {
+                    .plugin-name {
+                        font-size: 15px;
+                    }
+                }
+            }
+
+            &-right {
+                gap: 12px;
+
+                .author {
+                    min-width: 70px;
+                }
+
+                .version {
+                    min-width: 50px;
+                }
+
+                .crt {
+                    min-width: 90px;
+                }
+            }
+        }
+    }
+}
+
+// 暗色模式支持
+@media (prefers-color-scheme: dark) {
+    .plugin-list {
+        background: rgb(255 255 255 / 2%);
+
+        .plugin {
+            border-bottom-color: rgb(255 255 255 / 8%);
+
+            &:hover {
+                background: rgb(255 255 255 / 4%);
+                box-shadow: 0 2px 8px rgb(0 0 0 / 20%);
+            }
+
+            &-left {
+                :deep(.n-checkbox) {
+                    .n-checkbox__input {
+                        background: rgb(255 255 255 / 4%);
+                        border-color: rgb(255 255 255 / 24%);
+                    }
+
+                    .n-checkbox__input--checked {
+                        background: #b78aff;
+                        border-color: #b78aff;
+                    }
+                }
+
+                &-logo {
+                    background: rgb(255 255 255 / 6%);
+                }
+
+                &-baseinfo {
+                    .plugin-name {
+                        color: rgb(255 255 255 / 90%);
+                    }
+
+                    .plugin-desc {
+                        color: rgb(255 255 255 / 45%);
+                    }
+                }
+            }
+
+            &-right {
+                .author {
+                    a {
+                        color: rgb(255 255 255 / 45%);
+
+                        &:hover {
+                            color: #b78aff;
+                            background: rgb(183 138 255 / 10%);
+                        }
+                    }
+                }
+
+                .version {
+                    color: rgb(255 255 255 / 45%);
+                    background: rgb(255 255 255 / 6%);
+                }
+
+                .crt {
+                    color: rgb(255 255 255 / 35%);
+                }
+
+                :deep(.n-switch) {
+                    .n-switch__rail {
+                        background: rgb(255 255 255 / 16%);
+
+                        &--active {
+                            background: #b78aff;
+                        }
+                    }
+                }
+
+                .setting {
+                    &-btn {
+                        color: rgb(255 255 255 / 45%);
+
+                        &:hover {
+                            color: rgb(255 255 255 / 65%);
+                            background: rgb(255 255 255 / 8%);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// 动画效果
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 </style>

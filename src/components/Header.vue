@@ -45,12 +45,20 @@ export default {
             {
                 label: i18n.global.t('reset_password'),
                 key: 'resetPassword',
-                icon: () => h(Key, { theme: 'outline', fill: '#000000', strokeLinecap: 'square' }),
+                icon: () => h(Key, { 
+                    theme: 'outline', 
+                    strokeLinecap: 'square',
+                    class: 'icon-park-icon',
+                }),
             },
             {
                 label: i18n.global.t('logout'),
                 key: 'logout',
-                icon: () => h(Logout, { theme: 'outline', fill: '#000000', strokeLinecap: 'square' }),
+                icon: () => h(Logout, { 
+                    theme: 'outline', 
+                    strokeLinecap: 'square',
+                    class: 'icon-park-icon',
+                }),
             },
         ]
         // 退出登录
@@ -96,27 +104,145 @@ export default {
 </script>
 <style lang="scss" scoped>
 .headers {
+    position: relative;
+    z-index: 100;
     box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    height: 60px;
-    padding: $pd;
+    height: 64px;
+    padding: 0 24px;
     background: #fff;
-    border-bottom: 1px solid #ddd;
-    box-shadow: rgb(50 50 93 / 25%) 0 6px 12px -2px, rgb(0 0 0 / 30%) 0 3px 7px -3px;
+    border-bottom: 1px solid rgb(0 0 0 / 6%);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 3%);
+    transition: all .3s ease;
+    animation: fade-in .3s ease-out;
 
-    .logo-txt {
-        font-family: monospace, sans-serif;
-        font-size: 18px;
-        font-weight: 600;
-        text-transform: uppercase;
+    .logo {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        cursor: pointer;
+        transition: all .2s ease;
+
+        &:hover {
+            opacity: .8;
+        }
+
+        .logo-txt {
+            font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: rgb(0 0 0 / 85%);
+            text-transform: none;
+            letter-spacing: -.5px;
+            transition: all .2s ease;
+        }
     }
 
     &-right {
         display: flex;
+        gap: 16px;
         align-items: center;
+
+        .user-info {
+            :deep(.n-avatar) {
+                cursor: pointer;
+                border: 2px solid transparent;
+                transition: all .2s ease;
+
+                &:hover {
+                    border-color: rgb(0 0 0 / 10%);
+                    transform: scale(1.05);
+                }
+            }
+        }
     }
 }
+
+// 移动端适配
+@media screen and (max-width: 768px) {
+    .headers {
+        height: 56px;
+        padding: 0 16px;
+
+        .logo {
+            .logo-txt {
+                font-size: 18px;
+            }
+        }
+
+        &-right {
+            gap: 12px;
+        }
+    }
+}
+
+// 平板适配
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .headers {
+        height: 60px;
+        padding: 0 20px;
+    }
+}
+
+// 暗色模式支持
+@media (prefers-color-scheme: dark) {
+    .headers {
+        background: rgb(255 255 255 / 3%);
+        border-bottom-color: rgb(255 255 255 / 8%);
+        box-shadow: 0 1px 2px rgb(0 0 0 / 20%);
+
+        .logo {
+            .logo-txt {
+                color: rgb(255 255 255 / 90%);
+            }
+        }
+
+        &-right {
+            .user-info {
+                :deep(.n-avatar) {
+                    &:hover {
+                        border-color: rgb(255 255 255 / 10%);
+                    }
+                }
+            }
+        }
+    }
+
+    // 下拉菜单暗色模式样式
+    :deep(.n-dropdown-menu) {
+        background: rgb(30 30 30 / 95%);
+        border: 1px solid rgb(255 255 255 / 8%);
+        box-shadow: 0 4px 12px rgb(0 0 0 / 30%);
+        backdrop-filter: blur(10px);
+
+        .n-dropdown-option {
+            color: rgb(255 255 255 / 85%);
+
+            &:hover {
+                background: rgb(255 255 255 / 6%);
+            }
+
+            .n-dropdown-option-icon {
+                color: rgb(255 255 255 / 65%);
+            }
+        }
+    }
+}
+
+// 动画效果
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 </style>

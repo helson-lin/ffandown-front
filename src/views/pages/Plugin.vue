@@ -28,7 +28,7 @@
                     <template #icon>
                         <DeleteOne
                             size="18"
-                            fill="#fff"
+                            class="icon-park-icon"
                         />
                     </template>
                     {{ $t('delete_plugin') }}
@@ -42,7 +42,7 @@
                     <template #icon>
                         <AddOne
                             size="18"
-                            fill="#333"
+                            class="icon-park-icon"
                         />
                     </template>
                     {{ $t('create_plugin') }}
@@ -53,7 +53,7 @@
                     <n-dropdown trigger="hover" :options="statusOptions" @select="handleSelect">
                         <n-button ghost>
                             {{ $t('status') }}：{{ statusNameMap[status] }}
-                            <down-one theme="filled" size="15" fill="#333" />
+                            <down-one theme="filled" size="15" class="icon-park-icon" />
                         </n-button>
                     </n-dropdown>
                 </div>

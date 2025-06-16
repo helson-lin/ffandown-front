@@ -37,6 +37,5 @@ export default defineComponent({
 .mission-page {
     box-sizing: border-box;
     padding-bottom: 10px;
-    background: #fff;
 }
 </style>

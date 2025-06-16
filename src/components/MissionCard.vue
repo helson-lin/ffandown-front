@@ -99,7 +99,7 @@
                             size="tiny"
                             @click.stop="delMission(mission)"
                         >
-                            <n-icon :component="Close"></n-icon>
+                            <n-icon :component="Close" class="icon-park-icon"></n-icon>
                         </n-button>
                     </template>
                     <span>  {{ $t('delete') }}</span>
@@ -158,7 +158,7 @@
                             size="tiny"
                             @click.stop="stop(mission)"
                         >
-                            <n-icon :component="Forbid"></n-icon>
+                            <n-icon :component="Forbid" class="icon-park-icon"></n-icon>
                         </n-button>
                     </template>
                     <span>{{ $t('stop_download') }}</span>
@@ -177,7 +177,7 @@
                             size="tiny"
                             @click.stop="copyLink(mission.url)"
                         >
-                            <n-icon :component="LinkTwo">
+                            <n-icon :component="LinkTwo" class="icon-park-icon">
                             </n-icon>
                         </n-button>
                     </template>
@@ -273,79 +273,55 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@media screen and (max-width: 768px) {
-    .msg {
-        max-width: 100%;
-        line-height: 22px;
-        white-space: wrap;
-    }
-
-    .mission-card-top {
-        flex-direction: column;
-
-        .mission-name {
-            width: 100%;
-        }
-
-        .btns {
-            width: 100% !important;
-            padding: 0 !important;
-        }
-
-        .btns .tags {
-            flex-wrap: wrap;
-            width: 100% !important;
-            padding: 0 !important;
-        }
-
-        .btns .tags > * {
-            margin-top: 10px;
-        }
-    }
-}
-
-.msg {
-    max-width: 500px;
-    line-height: 22px;
-    white-space: wrap;
-}
-
 .mission-card {
     position: relative;
     box-sizing: border-box;
-    padding: 20px 20px 10px;
-    margin-bottom: 20px;
+    padding: 24px;
+    margin-bottom: 24px;
     overflow: hidden;
-    border: 1px solid #e2e2e3;
-    border-radius: 5px;
+    background: #fff;
+    border: 1px solid rgb(0 0 0 / 8%);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 4%);
+    transition: all .3s ease;
 
     .badge {
-        position: absolute; /* 绝对定位 */
-        top: -25px; /* 控制垂直位置 */
-        right: -25px; /* 控制水平位置 */
+        position: absolute;
+        top: -30px;
+        right: -30px;
         box-sizing: border-box;
         display: flex;
         align-items: flex-end;
         justify-content: center;
-        width: 50px;
-        height: 50px;
-        padding-bottom: 5px;
-        font-size: 10px;
+        width: 60px;
+        height: 60px;
+        padding-bottom: 6px;
+        font-size: 11px;
+        font-weight: 500;
         color: white;
-        background-color: #7f7f7f;
+        background-color: #666;
+        box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
         transform: rotate(45deg);
     }
 
     &:hover {
-        border: 1px solid $primary-color;
+        border-color: $primary-color;
+        box-shadow: 0 4px 12px rgb(0 0 0 / 8%);
+        transform: translateY(-2px);
     }
 
     .hover {
         cursor: pointer;
+        transition: opacity .2s ease;
+
+        &:hover {
+            opacity: .8;
+        }
     }
 
     &.error {
-        box-shadow: inset 0 0 7px 1px #ffbf0098;
+        background: rgb(255 77 79 / 2%);
+        box-shadow: inset 0 0 0 1px rgb(255 77 79 / 20%);
     }
 
     &-top {
@@ -353,37 +329,60 @@ export default defineComponent({
         align-items: flex-start;
         justify-content: space-between;
         width: 100%;
+        margin-bottom: 16px;
 
         .mission-name {
             flex: 1;
+            margin-right: 16px;
             overflow: hidden;
-            line-height: 1.3em;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.4;
+            color: rgb(0 0 0 / 85%);
             text-overflow: ellipsis;
             white-space: nowrap;
         }
 
         .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
 
-            :deep .n-tag { margin-right: 10px; }
+            :deep .n-tag {
+                height: 24px;
+                padding: 0 8px;
+                margin: 0;
+                font-size: 12px;
+                line-height: 22px;
+                background: rgb(0 0 0 / 4%);
+                border: none;
+                border-radius: 6px;
+
+                &:hover {
+                    background: rgb(0 0 0 / 8%);
+                }
+            }
         }
 
         .btns {
             box-sizing: border-box;
             display: flex;
+            gap: 4px;
             align-items: center;
-            width: max-content;
-            padding: 0 10px;
-
-            // border: 1px solid #e3e3e3;
-            border-radius: 999px;
+            padding: 4px;
+            background: rgb(0 0 0 / 2%);
+            border-radius: 8px;
 
             :deep button {
-                margin: 0 5px;
+                width: 28px;
+                height: 28px;
+                margin: 0;
+                transition: all .2s ease;
 
                 &:hover {
-                    color: #e2e2e3;
+                    color: #fff;
                     background-color: $primary-color;
-                    border: none;
+                    transform: scale(1.05);
                 }
             }
 
@@ -393,7 +392,7 @@ export default defineComponent({
             }
 
             :deep svg {
-                font-weight: bolder;
+                font-weight: 600;
             }
         }
     }
@@ -402,39 +401,351 @@ export default defineComponent({
         box-sizing: border-box;
         display: flex;
         width: 100%;
-        padding: 10px 0;
+        padding: 12px 0;
+
+        :deep .n-progress {
+            .n-progress-rail {
+                height: 6px;
+                border-radius: 3px;
+            }
+
+            .n-progress-fill {
+                border-radius: 3px;
+            }
+        }
     }
 
     .mission-info {
-        // padding: 10px 0;
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
-        margin-top: 10px;
-        border-top: 1px solid #eee;
-        border-bottom: 1px solid #eee;
+        padding: 16px;
+        margin-top: 16px;
+        background: rgb(0 0 0 / 2%);
+        border-radius: 8px;
 
         &-item {
             display: flex;
             align-items: center;
             width: 100%;
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
+            padding: 12px 0;
+            border-bottom: 1px solid rgb(0 0 0 / 6%);
 
             &:last-child {
+                padding-bottom: 0;
                 border-bottom: none;
             }
 
+            &:first-child {
+                padding-top: 0;
+            }
+
             &-label {
-                width: 70px;
-                margin-right: 20px;
+                width: 80px;
+                margin-right: 24px;
+                font-size: 13px;
+                color: rgb(0 0 0 / 45%);
             }
 
             &-value {
                 flex: 1;
                 overflow: hidden;
+                font-size: 13px;
+                color: rgb(0 0 0 / 85%);
                 text-overflow: ellipsis;
                 white-space: nowrap;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .mission-card {
+        padding: 16px;
+        margin-bottom: 16px;
+        border-radius: 8px;
+
+        .badge {
+            top: -20px;
+            right: -20px;
+            width: 40px;
+            height: 40px;
+            font-size: 10px;
+        }
+
+        .msg {
+            max-width: 100%;
+            padding: 8px;
+            font-size: 13px;
+            line-height: 1.5;
+            white-space: normal;
+        }
+
+        .mission-card-top {
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 12px;
+
+            .mission-name {
+                width: 100%;
+                margin-bottom: 0;
+                font-size: 15px;
+                line-height: 1.4;
+            }
+
+            .btns {
+                flex-wrap: wrap;
+                gap: 8px;
+                justify-content: space-between;
+                width: 100%;
+                padding: 8px 0;
+                background: none;
+
+                .tags {
+                    gap: 6px;
+                    justify-content: flex-start;
+                    width: 100%;
+                    margin-bottom: 8px;
+
+                    :deep .n-tag {
+                        height: 22px;
+                        padding: 0 6px;
+                        font-size: 11px;
+                        line-height: 20px;
+                    }
+                }
+
+                :deep button {
+                    width: 24px;
+                    height: 24px;
+                }
+            }
+        }
+
+        .mission-card-bottom {
+            padding: 8px 0;
+
+            :deep .n-progress {
+                .n-progress-rail {
+                    height: 4px;
+                }
+            }
+        }
+
+        .mission-info {
+            padding: 12px;
+            margin-top: 12px;
+            border-radius: 6px;
+
+            &-item {
+                flex-wrap: wrap;
+                padding: 8px 0;
+
+                &-label {
+                    margin-right: 0;
+                    margin-bottom: 4px;
+                    font-size: 12px;
+                    color: rgb(0 0 0 / 45%);
+                }
+
+                &-value {
+                    padding-left: 0;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}
+
+// 添加平板设备的样式
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .mission-card {
+        padding: 20px;
+        margin-bottom: 20px;
+
+        .mission-card-top {
+            .mission-name {
+                font-size: 15px;
+            }
+
+            .btns {
+                .tags {
+                    gap: 6px;
+                }
+            }
+        }
+
+        .mission-info {
+            padding: 14px;
+
+            &-item {
+                padding: 10px 0;
+
+                &-label {
+                    width: 75px;
+                }
+            }
+        }
+    }
+}
+
+// 添加暗色模式支持
+@media (prefers-color-scheme: dark) {
+    .mission-card {
+        background: rgb(255 255 255 / 3%);
+        border-color: rgb(255 255 255 / 8%);
+        box-shadow: 0 2px 8px rgb(0 0 0 / 20%);
+
+        &:hover {
+            background: rgb(255 255 255 / 4%);
+            border-color: $primary-color;
+            box-shadow: 0 4px 12px rgb(0 0 0 / 30%);
+        }
+
+        .badge {
+            background-color: #4a4a4a;
+            box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
+        }
+
+        &.error {
+            background: rgb(255 77 79 / 5%);
+            box-shadow: inset 0 0 0 1px rgb(255 77 79 / 30%);
+        }
+
+        .mission-card-top {
+            .mission-name {
+                color: rgb(255 255 255 / 90%);
+            }
+
+            .tags {
+                :deep .n-tag {
+                    color: rgb(255 255 255 / 85%);
+                    background: rgb(255 255 255 / 6%);
+
+                    &:hover {
+                        background: rgb(255 255 255 / 10%);
+                    }
+
+                    .n-tag__avatar {
+                        color: rgb(255 255 255 / 65%);
+                    }
+                }
+            }
+
+            .btns {
+                background: rgb(255 255 255 / 4%);
+
+                :deep button {
+                    color: rgb(255 255 255 / 65%);
+                    border-color: rgb(255 255 255 / 12%);
+
+                    &:hover {
+                        color: #fff;
+                        background-color: $primary-color;
+                        border-color: $primary-color;
+                    }
+                }
+
+                :deep svg {
+                    color: rgb(255 255 255 / 65%);
+                }
+            }
+        }
+
+        .mission-card-bottom {
+            :deep .n-progress {
+                .n-progress-rail {
+                    background-color: rgb(255 255 255 / 8%);
+                }
+
+                .n-progress-fill {
+                    background-color: $primary-color;
+                }
+
+                .n-progress-indicator {
+                    color: rgb(255 255 255 / 65%);
+                }
+            }
+        }
+
+        .mission-info {
+            background: rgb(255 255 255 / 3%);
+            border: 1px solid rgb(255 255 255 / 6%);
+
+            &-item {
+                border-bottom-color: rgb(255 255 255 / 6%);
+
+                &:last-child {
+                    border-bottom: none;
+                }
+
+                &-label {
+                    color: rgb(255 255 255 / 45%);
+                }
+
+                &-value {
+                    color: rgb(255 255 255 / 85%);
+                }
+            }
+        }
+
+        .hover {
+            &:hover {
+                opacity: .9;
+            }
+        }
+    }
+
+    // 错误提示弹窗样式
+    :deep(.n-popconfirm) {
+        .n-popconfirm__content {
+            background-color: #1a1a1a;
+            border: 1px solid rgb(255 255 255 / 8%);
+            box-shadow: 0 4px 12px rgb(0 0 0 / 30%);
+        }
+
+        .msg {
+            color: rgb(255 255 255 / 85%);
+        }
+
+        .n-button {
+            color: rgb(255 255 255 / 85%);
+            background-color: rgb(255 255 255 / 6%);
+            border-color: rgb(255 255 255 / 12%);
+
+            &:hover {
+                background-color: rgb(255 255 255 / 10%);
+            }
+        }
+    }
+
+    // 工具提示样式
+    :deep(.n-tooltip) {
+        .n-tooltip__content {
+            color: rgb(255 255 255 / 85%);
+            background-color: #1a1a1a;
+            border: 1px solid rgb(255 255 255 / 8%);
+            box-shadow: 0 4px 12px rgb(0 0 0 / 30%);
+        }
+    }
+}
+
+// 移动端暗色模式适配
+@media screen and (max-width: 768px) {
+    @media (prefers-color-scheme: dark) {
+        .mission-card {
+            .mission-card-top {
+                .btns {
+                    background: none;
+
+                    :deep button {
+                        background: rgb(255 255 255 / 6%);
+                    }
+                }
+            }
+
+            .mission-info {
+                background: rgb(255 255 255 / 2%);
             }
         }
     }

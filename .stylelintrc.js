@@ -10,6 +10,10 @@ module.exports = {
         'indentation': 4,
         'property-no-vendor-prefix': null,
         'at-rule-no-vendor-prefix': null,
+        'selector-type-no-unknown': null,
+        'scss/no-global-function-names': null,
+        'no-descending-specificity': null,
+        'selector-pseudo-class-no-unknown': null,
         // 'selector-pseudo-element-no-unknown': [
         //     true,
         //     {
