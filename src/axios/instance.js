@@ -5,7 +5,7 @@ const baseURL = window.CONFIG?.BASEURL || ''
 
 const instance = axios.create({
     baseURL,
-    timeout: 10000,
+    timeout: 60000,
     headers: {},
 })
 // 响应拦截

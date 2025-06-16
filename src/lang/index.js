@@ -1,14 +1,12 @@
 import { createI18n } from 'vue-i18n'
-import EN from './en'
-import ZH from './zh'
+import zh from './zh.json'
+import en from './en.json'
+import ja from './ja.json'
 
 const messages = {
-    zh: {
-        ...ZH,
-    },
-    en: {
-        ...EN,
-    },
+    zh,
+    en,
+    ja,
 }
 const language = (navigator.language || 'en').toLocaleLowerCase() 
 const i18n = createI18n({

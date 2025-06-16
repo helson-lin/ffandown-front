@@ -1,5 +1,5 @@
 {
-    "login_title": "Login FFandown",
+    "login_title": "FFandown",
     "warn": "Warning",
     "clear_all_mission": "Clear all mission?",
     "confirm": "Confirm",
@@ -99,13 +99,13 @@
     "headers_key": "Headers key",
     "headers_value": "Headers value",
     "add_headers": "Add",
-    "headers_notice": "Custom headers, please separate with commas",
+    "headers_notice": "Custom request header configuration has the highest priority, which will override the program's default Referer and UserAgent configuration.",
     "headers_key_placeholder": "Please enter headers key",
     "add_plugin": "Add plugin",
     "add_mission": "Add mission",
     "create_plugin": "Create plugin",
     "placeholder_plugin_url": "Please enter plugin url",
-    "plugin_notice": "Make sure your plugin is compatible with FFandown",
+    "plugin_notice": "Ensure your plugin is a valid link",
     "delete_plugin": "Uninstall",
     "filter_none": "All",
     "enable_plugin": "Enable",
@@ -121,5 +121,6 @@
     "reset_password": "Reset password",
     "newPassword": "New password",
     "reset_password_success": "Reset password success",
-    "logout": "Logout"
+    "logout": "Logout",
+    "refresh_success": "Refresh success"
 }

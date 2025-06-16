@@ -60,16 +60,18 @@ export default defineComponent({
             },
         })
         const missionList = computed(() => state.list.filter(i => props.status.includes(i.status)))
+        // 删除任务
         const delMission = async ({ uid }) => {
             const res = await deleteMission(uid)
             if (res.code === 0) {
                 message.success(i18n.global.t('delete_success'))
+                getData()
             } else {
                 message.success(i18n.global.t('delete_failed'))
             }
         }
 
-        const getData = async () => {
+        const getData = async (notice = false) => {
             const res = await getDownloadList(Object.assign(page.value, { status: props.status }))
             if (res.code === 0) {
                 const { rows, total } = res.data
@@ -80,20 +82,29 @@ export default defineComponent({
                 page.value.count = total
                 state.list = list
             }
+            if (notice) {
+                message.success(i18n.global.t('refresh_success'))
+            }
         }
 
-        const getMissionList = () => initSSE(Object.assign(page.value, { status: props.status }))
+        // 获取任务列表
+        const getMissionList = () => {
+            closeSSE()
+            initSSE(Object.assign(page.value, { status: props.status }))
+        }
 
+        // 更新分页
         const updatePg = (val) => {
             page.value.current = val
             getData()
         }
 
+        // 删除所有任务
         const delAllMission = () => {
             const uids = missionList.value.map(i => i.uid)
             delMission({ uid: uids.join(',') })
         }
-        // clear all mission
+        // 清除所有任务
         const clearAllMission = () => {
             dialog.warning({
                 title: i18n.global.t('warn'),
@@ -107,14 +118,16 @@ export default defineComponent({
         }
 
         watch(() => props.status, () => {
-            if (props.status === '0,1,5') {
-                page.value.current = 1
-                getMissionList()
-            } else {
-                closeSSE()
-                clearInterval(timer)
-                getData()
-            }
+            clearInterval(timer)
+            page.value.current = 1
+            getMissionList()
+            // if (props.status === '0,1,5') {
+            //     page.value.current = 1
+            //     getMissionList()
+            // } else {
+            //     closeSSE()
+            //     getData()
+            // }
         })
 
         const resume = async ({ uid, status }) => {
@@ -129,7 +142,7 @@ export default defineComponent({
                 }
             }
         }
-        // stop mission 
+        // 停止任务
         const stop = async ({ uid }) => {
             const res = await stopMission(uid)
             if (res.code === 0) {
@@ -170,7 +183,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .mission-list {
     box-sizing: border-box;
-    height: calc(100% - 80px);
+    height: calc(100% - 120px);
     padding: 16px;
     overflow-y: auto;
     background: #fff;
@@ -194,9 +207,8 @@ export default defineComponent({
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    justify-content: center;
     width: 100%;
-    padding: 16px;
+    padding: 25px 0 16px 20px;
     background: #fff;
     border-top: 1px solid rgb(0 0 0 / 6%);
     transition: all .3s ease;

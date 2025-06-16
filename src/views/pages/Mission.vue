@@ -18,7 +18,7 @@ export default defineComponent({
         const mission = ref(null)
         const store = useStore()
         const refresh = () => {
-            mission.value?.getData()
+            mission.value?.getData(true)
         }
         const clearAllMission = () => {
             mission.value?.clearAllMission()
@@ -36,6 +36,5 @@ export default defineComponent({
 <style lang="scss" scoped>
 .mission-page {
     box-sizing: border-box;
-    padding-bottom: 10px;
 }
 </style>

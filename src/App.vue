@@ -13,6 +13,7 @@
     </n-config-provider>
 </template>
 <script setup>
+
 import { 
     NConfigProvider, 
     NMessageProvider, 
@@ -63,16 +64,16 @@ onUnmounted(() => {
    */
 const themeOverrides = {
     common: {
-        primaryColor: '#b78aff',
-        primaryColorHover: '#a8a4ff', 
-        iconColor: '#b78aff',
+        primaryColor: '#b78affff',
+        primaryColorHover: '#a8a4ffff', 
+        iconColor: '#b78affff',
         pressedColor: '#a8a4ff',
         warningColor: '#cd3f01',
         warningColorHover: '#b41901',
         warningColorPressed: '#cd1d01',
         warningColorSuppl: '#b41901',
-        // 暗色模式下的颜色调整
         primaryColorSuppl: '#b78aff',
+        textColorPressedPrimary: '#a8a4ff',
         infoColor: '#70c0e8',
         successColor: '#63e2b7',
         errorColor: '#e88080',
@@ -85,7 +86,10 @@ const themeOverrides = {
         // 暗色模式下的按钮样式
         textColorGhost: '#b78aff',
         textColorGhostHover: '#a8a4ff',
+        textColorPressed: '#a8a4ff',
+        textColorTextPressed: '#a8a4ff',
         textColorGhostPressed: '#9d95ff',
+        textColorGhostPressedPrimary: '#a8a4ff',
         // 按钮边框优化
         border: '1px solid rgba(0, 0, 0, 0.12)',
         borderHover: '1px solid #b78aff',
@@ -203,6 +207,10 @@ watch(() => store.authed, (newValue) => {
 .n-config-provider {
     width: 100%;
     height: 100%;
+}
+
+:host {
+    --n-text-color-pressed: #a8a4ff !important;
 }
 
 // 亮色模式样式
@@ -569,7 +577,6 @@ watch(() => store.authed, (newValue) => {
 // 按钮样式优化
 .n-button {
     font-weight: 500;
-    border: 1px solid rgb(0 0 0 / 12%);
     box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
     transition: all .2s cubic-bezier(.4, 0, .2, 1);
 

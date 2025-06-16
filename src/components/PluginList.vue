@@ -107,9 +107,8 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    background: #fff;
-    border-radius: 8px;
-    transition: all .3s ease;
+    border-radius: 6px;
+    transition: all .2s ease;
 
     .plugin {
         position: relative;
@@ -117,7 +116,7 @@ export default defineComponent({
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 20px 24px;
+        padding: 16px 20px;
         border-bottom: 1px solid rgb(0 0 0 / 6%);
         transition: all .2s ease;
         animation: fade-in .3s ease-out;
@@ -125,13 +124,12 @@ export default defineComponent({
 
         @for $i from 1 through 10 {
             &:nth-child(#{$i}) {
-                animation-delay: #{($i - 1) * .05}s;
+                animation-delay: #{($i - 1) * .03}s;
             }
         }
 
         &:hover {
             background: rgb(0 0 0 / 2%);
-            box-shadow: 0 2px 8px rgb(0 0 0 / 4%);
             transform: translateY(-1px);
         }
 
@@ -142,14 +140,15 @@ export default defineComponent({
         &-left {
             display: flex;
             flex: 1;
+            gap: 12px;
             align-items: center;
             min-width: 0;
 
             :deep(.n-checkbox) {
-                margin-right: 16px;
+                margin-right: 0;
 
                 .n-checkbox__input {
-                    border-radius: 4px;
+                    border-radius: 3px;
                     transition: all .2s ease;
                 }
             }
@@ -157,12 +156,11 @@ export default defineComponent({
             &-logo {
                 box-sizing: border-box;
                 flex-shrink: 0;
-                width: 48px;
-                height: 48px;
-                margin-right: 16px;
+                width: 36px;
+                height: 36px;
                 overflow: hidden;
-                background: rgb(0 0 0 / 4%);
-                border-radius: 12px;
+                background: rgb(0 0 0 / 3%);
+                border-radius: 8px;
                 transition: all .2s ease;
 
                 &:hover {
@@ -173,7 +171,7 @@ export default defineComponent({
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
-                    border-radius: 12px;
+                    border-radius: 8px;
                 }
             }
 
@@ -182,10 +180,10 @@ export default defineComponent({
                 min-width: 0;
 
                 .plugin-name {
-                    margin-bottom: 4px;
+                    margin-bottom: 2px;
                     overflow: hidden;
-                    font-size: 16px;
-                    font-weight: 600;
+                    font-size: 14px;
+                    font-weight: 500;
                     line-height: 1.4;
                     color: rgb(0 0 0 / 85%);
                     text-overflow: ellipsis;
@@ -194,8 +192,8 @@ export default defineComponent({
 
                 .plugin-desc {
                     overflow: hidden;
-                    font-size: 13px;
-                    line-height: 1.5;
+                    font-size: 12px;
+                    line-height: 1.4;
                     color: rgb(0 0 0 / 45%);
                     text-overflow: ellipsis;
                     white-space: nowrap;
@@ -206,15 +204,15 @@ export default defineComponent({
         &-right {
             display: flex;
             flex-shrink: 0;
-            gap: 16px;
+            gap: 12px;
             align-items: center;
 
             .author {
-                min-width: 80px;
+                min-width: 70px;
 
                 a {
-                    padding: 4px 8px;
-                    font-size: 13px;
+                    padding: 2px 6px;
+                    font-size: 12px;
                     color: rgb(0 0 0 / 45%);
                     text-decoration: none;
                     border-radius: 4px;
@@ -228,17 +226,17 @@ export default defineComponent({
             }
 
             .version {
-                min-width: 60px;
+                min-width: 50px;
                 padding: 2px 6px;
                 font-family: "SF Mono", Monaco, "Cascadia Code", monospace;
-                font-size: 13px;
+                font-size: 12px;
                 color: rgb(0 0 0 / 45%);
-                background: rgb(0 0 0 / 4%);
+                background: rgb(0 0 0 / 3%);
                 border-radius: 4px;
             }
 
             .crt {
-                min-width: 100px;
+                min-width: 90px;
                 font-size: 12px;
                 color: rgb(0 0 0 / 35%);
             }
@@ -259,19 +257,18 @@ export default defineComponent({
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    width: 32px;
-                    height: 32px;
-                    font-size: 16px;
-                    font-weight: 600;
+                    width: 28px;
+                    height: 28px;
+                    font-size: 14px;
+                    font-weight: 500;
                     color: rgb(0 0 0 / 45%);
                     cursor: pointer;
-                    border-radius: 6px;
+                    border-radius: 4px;
                     transition: all .2s ease;
 
                     &:hover {
                         color: rgb(0 0 0 / 65%);
-                        background: rgb(0 0 0 / 6%);
-                        transform: scale(1.1);
+                        background: rgb(0 0 0 / 4%);
                     }
 
                     &:active {
@@ -288,27 +285,22 @@ export default defineComponent({
     .plugin-list {
         .plugin {
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             align-items: flex-start;
-            padding: 16px;
+            padding: 14px;
 
             &-left {
                 width: 100%;
 
-                :deep(.n-checkbox) {
-                    margin-right: 12px;
-                }
-
                 &-logo {
-                    width: 40px;
-                    height: 40px;
-                    margin-right: 12px;
-                    border-radius: 8px;
+                    width: 32px;
+                    height: 32px;
+                    border-radius: 6px;
                 }
 
                 &-baseinfo {
                     .plugin-name {
-                        font-size: 15px;
+                        font-size: 14px;
                         line-height: 1.3;
                         white-space: normal;
                     }
@@ -327,7 +319,7 @@ export default defineComponent({
 
             &-right {
                 flex-wrap: wrap;
-                gap: 8px;
+                gap: 6px;
                 justify-content: space-between;
                 width: 100%;
 
@@ -336,8 +328,8 @@ export default defineComponent({
                     min-width: auto;
 
                     a {
-                        padding: 2px 6px;
-                        font-size: 12px;
+                        padding: 2px 4px;
+                        font-size: 11px;
                     }
                 }
 
@@ -345,7 +337,7 @@ export default defineComponent({
                     order: 2;
                     min-width: auto;
                     padding: 1px 4px;
-                    font-size: 12px;
+                    font-size: 11px;
                 }
 
                 .crt {
@@ -363,49 +355,10 @@ export default defineComponent({
                     order: 5;
 
                     &-btn {
-                        width: 28px;
-                        height: 28px;
-                        font-size: 14px;
+                        width: 24px;
+                        height: 24px;
+                        font-size: 12px;
                     }
-                }
-            }
-        }
-    }
-}
-
-// 平板适配
-@media screen and (min-width: 769px) and (max-width: 1024px) {
-    .plugin-list {
-        .plugin {
-            padding: 18px 20px;
-
-            &-left {
-                &-logo {
-                    width: 44px;
-                    height: 44px;
-                    border-radius: 10px;
-                }
-
-                &-baseinfo {
-                    .plugin-name {
-                        font-size: 15px;
-                    }
-                }
-            }
-
-            &-right {
-                gap: 12px;
-
-                .author {
-                    min-width: 70px;
-                }
-
-                .version {
-                    min-width: 50px;
-                }
-
-                .crt {
-                    min-width: 90px;
                 }
             }
         }
@@ -418,18 +371,17 @@ export default defineComponent({
         background: rgb(255 255 255 / 2%);
 
         .plugin {
-            border-bottom-color: rgb(255 255 255 / 8%);
+            border-bottom-color: rgb(255 255 255 / 6%);
 
             &:hover {
-                background: rgb(255 255 255 / 4%);
-                box-shadow: 0 2px 8px rgb(0 0 0 / 20%);
+                background: rgb(255 255 255 / 3%);
             }
 
             &-left {
                 :deep(.n-checkbox) {
                     .n-checkbox__input {
                         background: rgb(255 255 255 / 4%);
-                        border-color: rgb(255 255 255 / 24%);
+                        border-color: rgb(255 255 255 / 20%);
                     }
 
                     .n-checkbox__input--checked {
@@ -439,7 +391,7 @@ export default defineComponent({
                 }
 
                 &-logo {
-                    background: rgb(255 255 255 / 6%);
+                    background: rgb(255 255 255 / 4%);
                 }
 
                 &-baseinfo {
@@ -460,14 +412,14 @@ export default defineComponent({
 
                         &:hover {
                             color: #b78aff;
-                            background: rgb(183 138 255 / 10%);
+                            background: rgb(183 138 255 / 8%);
                         }
                     }
                 }
 
                 .version {
                     color: rgb(255 255 255 / 45%);
-                    background: rgb(255 255 255 / 6%);
+                    background: rgb(255 255 255 / 4%);
                 }
 
                 .crt {
@@ -476,7 +428,7 @@ export default defineComponent({
 
                 :deep(.n-switch) {
                     .n-switch__rail {
-                        background: rgb(255 255 255 / 16%);
+                        background: rgb(255 255 255 / 12%);
 
                         &--active {
                             background: #b78aff;
@@ -490,7 +442,7 @@ export default defineComponent({
 
                         &:hover {
                             color: rgb(255 255 255 / 65%);
-                            background: rgb(255 255 255 / 8%);
+                            background: rgb(255 255 255 / 6%);
                         }
                     }
                 }
@@ -503,7 +455,7 @@ export default defineComponent({
 @keyframes fade-in {
     from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(8px);
     }
 
     to {

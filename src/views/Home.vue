@@ -204,9 +204,10 @@ export default defineComponent({
         const toggleSlider = () => {
             isClosed.value = !isClosed.value
         }
+
         // 展示菜单名称
         const showMenuName = computed(() => {
-            if (store?.isMobile) return false
+            if (store?.isMobile) return true
             return !isClosed.value
         })
 
@@ -278,6 +279,31 @@ export default defineComponent({
 
             &.min {
                 width: 80px;
+                padding: 0 12px;
+
+                .mission {
+                    padding: 0 4px;
+
+                    h2 {
+                        padding: 24px 0 16px;
+                        text-align: center;
+                    }
+                }
+
+                .status-list,
+                .slider-block {
+                    padding: 0;
+
+                    .status,
+                    .slider-block-item {
+                        justify-content: center;
+                        padding: 10px 0;
+
+                        &-icon {
+                            margin-right: 0;
+                        }
+                    }
+                }
             }
 
             &.max {
@@ -309,6 +335,7 @@ export default defineComponent({
                 position: absolute;
                 top: 50%;
                 right: -16px;
+                z-index: 101;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -345,11 +372,15 @@ export default defineComponent({
 
                 h2 {
                     display: inline-block;
+                    max-width: 100%;
                     padding: 24px 12px 16px;
                     margin: 0;
+                    overflow: hidden;
                     font-size: 16px;
                     font-weight: 600;
                     color: #1a1a1a;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
                     transition: all .3s ease;
                 }
             }
@@ -373,6 +404,7 @@ export default defineComponent({
                     transition: all .2s ease;
 
                     &-icon {
+                        flex-shrink: 0;
                         margin-right: 12px;
                         transition: all .2s ease;
 
@@ -383,9 +415,12 @@ export default defineComponent({
                     }
 
                     &-name {
+                        overflow: hidden;
                         font-size: 14px;
                         font-weight: 500;
                         color: #4a4a4a;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
                         transition: all .2s ease;
                     }
 
@@ -479,7 +514,8 @@ export default defineComponent({
 
                 .arrow {
                     top: 16px;
-                    right: 16px;
+                    right: -20px;
+                    z-index: 101;
                     transform: none;
                 }
 
@@ -488,6 +524,7 @@ export default defineComponent({
                     padding-top: 48px;
 
                     h2 {
+                        max-width: calc(100% - 24px);
                         padding: 16px 12px;
                         font-size: 15px;
                     }

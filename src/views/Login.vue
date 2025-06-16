@@ -1,5 +1,5 @@
 <template>
-    <div class="login">
+    <div class="login" :class="{ 'dark': isDark }">
         <div class="header">
             <div class="login-title">
                 <img class="logo" src="../assets/imgs/logo.webp" alt="logo">
@@ -8,8 +8,8 @@
         </div>
         <div class="login-box">
             <div class="title">
-                <h3>Login</h3>
-                <p>Hi, Welcome back👋</p>
+                <h3>{{ $t('login_title') }}</h3>
+                <p>{{ $t('welcome_back') }}👋</p>
             </div>
             <n-form 
                 ref="formRef" 
@@ -18,6 +18,7 @@
                 :show-label="true"
                 label-placement="top"
                 label-width="auto"
+                class="login-form"
             >
                 <n-form-item path="username" :label="$t('username')">
                     <n-input
@@ -98,6 +99,7 @@ export default defineComponent({
         const message = useMessage()
         // 是否展示提示信息
         const showNotice = ref(false)
+        const isDark = ref(false)
         
         /**
          * @description login
@@ -126,7 +128,14 @@ export default defineComponent({
             window.open('https://ffandown.oimi.space', '_blank')
         }
 
+        // 检测系统主题
+        const checkDarkMode = () => {
+            isDark.value = window.matchMedia('(prefers-color-scheme: dark)').matches
+        }
+        
         onMounted(() => {
+            checkDarkMode()
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', checkDarkMode)
             const xUsername = localStorage.getItem('x-username')
             const xPassword = localStorage.getItem('x-password')
             const remmberPasswordCached = localStorage.getItem('x-remmber') 
@@ -142,6 +151,7 @@ export default defineComponent({
             remmberPassword,
             showNotice,
             goToDocs,
+            isDark,
         }
     },
 })
@@ -152,63 +162,122 @@ export default defineComponent({
     position: relative;
     width: 100vw;
     height: 100vh;
+    background-color: var(--bg-color);
+    transition: all .3s ease;
 
-    // background: url("../assets/imgs/background.webp") no-repeat center center;
-    background-color: #fff;
-    background-size: cover;
+    &.dark {
+        --bg-color: #18181c;
+        --text-color: #fff;
+        --border-color: #333;
+        --box-bg: #24242a;
+        --box-bg-rgb: 36, 36, 42;
+        --input-bg: #2d2d33;
+        --hover-color: #3d3d44;
+    }
+
+    &:not(.dark) {
+        --bg-color: #fff;
+        --text-color: #333;
+        --border-color: #e5e5e5;
+        --box-bg: #fff;
+        --box-bg-rgb: 255, 255, 255;
+        --input-bg: #f5f5f5;
+        --hover-color: #f0f0f0;
+    }
 
     .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 100;
         box-sizing: border-box;
         width: 100%;
-        padding: 15px 30px;
-        border-bottom: 1px solid #eee;
+        padding: 12px 24px;
+        background-color: var(--box-bg);
+        background-color: rgb(var(--box-bg-rgb) .8);
+        border-bottom: 1px solid var(--border-color);
+        transition: all .3s ease;
+        backdrop-filter: blur(10px);
     }
 
     .login-title {
-        // padding: 10px 0;
         box-sizing: border-box;
         display: flex;
         align-items: center;
         justify-content: flex-start;
         width: 100%;
-        font-size: 22px;
-        font-weight: bolder;
+        height: 32px;
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--text-color);
+        transition: all .3s ease;
 
         .logo {
-            width: 40px;
-            height: 40px;
+            width: 32px;
+            height: 32px;
             margin-right: 10px;
+            border-radius: 6px;
+            transition: transform .3s ease;
+
+            &:hover {
+                transform: scale(1.05);
+            }
         }
     }
 
     &-box {
         position: absolute;
-        top: 45%;
+        top: 50%;
         left: 50%;
         z-index: 22;
         box-sizing: border-box;
-        width: 420px;
-        padding: 20px;
-
-        // box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
-        // background-color: rgba(0, 0, 0, .04);
-        border-radius: 12px;
+        width: 440px;
+        padding: 40px;
+        margin-top: 20px;
+        background-color: var(--box-bg);
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgb(0 0 0 / 12%);
+        transition: all .3s ease;
         transform: translate(-50%, -50%);
-        backdrop-filter: blur(6px);
 
         .title {
             display: flex;
             flex-direction: column;
-            margin-bottom: 30px;
+            margin-bottom: 36px;
+            color: var(--text-color);
 
             h3 {
-                padding: 10px 0;
-                font-size: 25px;
+                padding: 0;
+                margin: 0;
+                font-size: 28px;
+                font-weight: 600;
+                transition: all .3s ease;
             }
 
             p {
-                margin-top: 10px;
-                font-size: 14px;
+                margin-top: 12px;
+                font-size: 16px;
+                color: var(--text-color);
+                opacity: .8;
+                transition: all .3s ease;
+            }
+        }
+
+        .login-form {
+            :deep(.n-form-item-label) {
+                font-weight: 500;
+                color: var(--text-color);
+            }
+
+            :deep(.n-input) {
+                background-color: var(--input-bg);
+                border-color: var(--border-color);
+                transition: all .3s ease;
+
+                &:hover,
+                &:focus {
+                    border-color: var(--primary-color);
+                }
             }
         }
 
@@ -218,11 +287,28 @@ export default defineComponent({
             align-items: center;
             justify-content: space-between;
             width: 100%;
-            padding: 0 0 20px;
+            padding: 0 0 24px;
+            color: var(--text-color);
 
             .forget {
                 font-size: 14px;
+                transition: all .3s ease;
+
+                &:hover {
+                    opacity: .8;
+                }
             }
+        }
+
+        .notice {
+            padding: 12px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            color: var(--text-color);
+            text-align: center;
+            background-color: var(--input-bg);
+            border-radius: 8px;
+            transition: all .3s ease;
         }
 
         .footer {
@@ -230,8 +316,22 @@ export default defineComponent({
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px 0;
-            color: #e3e3e3;
+            padding: 24px 0 0;
+            font-size: 14px;
+            color: var(--text-color);
+            opacity: .6;
+            transition: all .3s ease;
+        }
+    }
+}
+
+// 添加响应式支持
+@media screen and (max-width: 768px) {
+    .login {
+        &-box {
+            width: 90%;
+            max-width: 440px;
+            padding: 30px;
         }
     }
 }

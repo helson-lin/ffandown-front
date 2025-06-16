@@ -235,7 +235,10 @@ export default defineComponent({
         }
 
         const createDownloadMission = async () => {
-            const res = await createMission(formInfo.model)
+            const data = { ...formInfo.model }
+            // 检查 header 的内容
+            data.headers = data.headers.filter(i => i.key && i.value)
+            const res = await createMission(data)
             if (res.code === 0) {
                 message.success(i18n.global.t('create_success'))
                 formInfo.model = {

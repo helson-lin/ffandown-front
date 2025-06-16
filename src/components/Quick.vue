@@ -109,16 +109,16 @@ export default defineComponent({
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 24px;
+    padding: 10px 10px 20px;
     background: #fff;
     transition: all .3s ease;
     animation: fade-in .3s ease-out;
 
     &::after {
         position: absolute;
-        right: 24px;
+        right: 20px;
         bottom: 0;
-        left: 24px;
+        left: 20px;
         display: block;
         height: 0;
         content: "";

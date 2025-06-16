@@ -276,38 +276,38 @@ export default defineComponent({
 .mission-card {
     position: relative;
     box-sizing: border-box;
-    padding: 24px;
-    margin-bottom: 24px;
+    padding: 20px;
+    margin-bottom: 16px;
     overflow: hidden;
     background: #fff;
-    border: 1px solid rgb(0 0 0 / 8%);
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgb(0 0 0 / 4%);
-    transition: all .3s ease;
+    border: 1px solid rgb(0 0 0 / 6%);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 2%);
+    transition: all .2s ease;
 
     .badge {
         position: absolute;
-        top: -30px;
-        right: -30px;
+        top: -24px;
+        right: -24px;
         box-sizing: border-box;
         display: flex;
         align-items: flex-end;
         justify-content: center;
-        width: 60px;
-        height: 60px;
-        padding-bottom: 6px;
+        width: 48px;
+        height: 48px;
+        padding-bottom: 4px;
         font-size: 11px;
         font-weight: 500;
         color: white;
         background-color: #666;
-        box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+        box-shadow: 0 1px 2px rgb(0 0 0 / 8%);
         transform: rotate(45deg);
     }
 
     &:hover {
         border-color: $primary-color;
-        box-shadow: 0 4px 12px rgb(0 0 0 / 8%);
-        transform: translateY(-2px);
+        box-shadow: 0 2px 6px rgb(0 0 0 / 4%);
+        transform: translateY(-1px);
     }
 
     .hover {
@@ -321,7 +321,7 @@ export default defineComponent({
 
     &.error {
         background: rgb(255 77 79 / 2%);
-        box-shadow: inset 0 0 0 1px rgb(255 77 79 / 20%);
+        box-shadow: inset 0 0 0 1px rgb(255 77 79 / 15%);
     }
 
     &-top {
@@ -329,13 +329,13 @@ export default defineComponent({
         align-items: flex-start;
         justify-content: space-between;
         width: 100%;
-        margin-bottom: 16px;
+        margin-bottom: 12px;
 
         .mission-name {
             flex: 1;
             margin-right: 16px;
             overflow: hidden;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 500;
             line-height: 1.4;
             color: rgb(0 0 0 / 85%);
@@ -346,20 +346,20 @@ export default defineComponent({
         .tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 6px;
 
             :deep .n-tag {
-                height: 24px;
-                padding: 0 8px;
+                height: 22px;
+                padding: 0 6px;
                 margin: 0;
                 font-size: 12px;
-                line-height: 22px;
-                background: rgb(0 0 0 / 4%);
+                line-height: 20px;
+                background: rgb(0 0 0 / 3%);
                 border: none;
-                border-radius: 6px;
+                border-radius: 4px;
 
                 &:hover {
-                    background: rgb(0 0 0 / 8%);
+                    background: rgb(0 0 0 / 6%);
                 }
             }
         }
@@ -369,13 +369,13 @@ export default defineComponent({
             display: flex;
             gap: 4px;
             align-items: center;
-            padding: 4px;
+            padding: 2px;
             background: rgb(0 0 0 / 2%);
-            border-radius: 8px;
+            border-radius: 6px;
 
             :deep button {
-                width: 28px;
-                height: 28px;
+                width: 26px;
+                height: 26px;
                 margin: 0;
                 transition: all .2s ease;
 
@@ -392,7 +392,7 @@ export default defineComponent({
             }
 
             :deep svg {
-                font-weight: 600;
+                font-weight: 500;
             }
         }
     }
@@ -401,16 +401,16 @@ export default defineComponent({
         box-sizing: border-box;
         display: flex;
         width: 100%;
-        padding: 12px 0;
+        padding: 8px 0;
 
         :deep .n-progress {
             .n-progress-rail {
-                height: 6px;
-                border-radius: 3px;
+                height: 4px;
+                border-radius: 2px;
             }
 
             .n-progress-fill {
-                border-radius: 3px;
+                border-radius: 2px;
             }
         }
     }
@@ -419,17 +419,17 @@ export default defineComponent({
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
-        padding: 16px;
-        margin-top: 16px;
+        padding: 12px;
+        margin-top: 12px;
         background: rgb(0 0 0 / 2%);
-        border-radius: 8px;
+        border-radius: 6px;
 
         &-item {
             display: flex;
             align-items: center;
             width: 100%;
-            padding: 12px 0;
-            border-bottom: 1px solid rgb(0 0 0 / 6%);
+            padding: 8px 0;
+            border-bottom: 1px solid rgb(0 0 0 / 4%);
 
             &:last-child {
                 padding-bottom: 0;
@@ -442,15 +442,15 @@ export default defineComponent({
 
             &-label {
                 width: 80px;
-                margin-right: 24px;
-                font-size: 13px;
+                margin-right: 16px;
+                font-size: 12px;
                 color: rgb(0 0 0 / 45%);
             }
 
             &-value {
                 flex: 1;
                 overflow: hidden;
-                font-size: 13px;
+                font-size: 12px;
                 color: rgb(0 0 0 / 85%);
                 text-overflow: ellipsis;
                 white-space: nowrap;
@@ -461,155 +461,122 @@ export default defineComponent({
 
 @media screen and (max-width: 768px) {
     .mission-card {
-        padding: 16px;
-        margin-bottom: 16px;
-        border-radius: 8px;
+        padding: 14px;
+        margin-bottom: 12px;
+        border-radius: 6px;
 
         .badge {
-            top: -20px;
-            right: -20px;
-            width: 40px;
-            height: 40px;
+            top: -16px;
+            right: -16px;
+            width: 32px;
+            height: 32px;
             font-size: 10px;
         }
 
         .msg {
             max-width: 100%;
             padding: 8px;
-            font-size: 13px;
-            line-height: 1.5;
+            font-size: 12px;
+            line-height: 1.4;
             white-space: normal;
         }
 
         .mission-card-top {
             flex-direction: column;
-            gap: 12px;
-            margin-bottom: 12px;
+            gap: 10px;
+            margin-bottom: 10px;
 
             .mission-name {
                 width: 100%;
                 margin-bottom: 0;
-                font-size: 15px;
+                font-size: 14px;
                 line-height: 1.4;
             }
 
             .btns {
                 flex-wrap: wrap;
-                gap: 8px;
+                gap: 6px;
                 justify-content: space-between;
                 width: 100%;
-                padding: 8px 0;
+                padding: 6px 0;
                 background: none;
 
                 .tags {
-                    gap: 6px;
+                    gap: 4px;
                     justify-content: flex-start;
                     width: 100%;
-                    margin-bottom: 8px;
+                    margin-bottom: 6px;
 
                     :deep .n-tag {
-                        height: 22px;
-                        padding: 0 6px;
+                        height: 20px;
+                        padding: 0 4px;
                         font-size: 11px;
-                        line-height: 20px;
+                        line-height: 18px;
                     }
                 }
 
                 :deep button {
-                    width: 24px;
-                    height: 24px;
+                    width: 22px;
+                    height: 22px;
                 }
             }
         }
 
         .mission-card-bottom {
-            padding: 8px 0;
+            padding: 6px 0;
 
             :deep .n-progress {
                 .n-progress-rail {
-                    height: 4px;
+                    height: 3px;
                 }
             }
         }
 
         .mission-info {
-            padding: 12px;
-            margin-top: 12px;
-            border-radius: 6px;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
 
             &-item {
                 flex-wrap: wrap;
-                padding: 8px 0;
+                padding: 6px 0;
 
                 &-label {
                     margin-right: 0;
-                    margin-bottom: 4px;
-                    font-size: 12px;
-                    color: rgb(0 0 0 / 45%);
+                    margin-bottom: 2px;
+                    font-size: 11px;
                 }
 
                 &-value {
                     padding-left: 0;
-                    font-size: 12px;
+                    font-size: 11px;
                 }
             }
         }
     }
 }
 
-// 添加平板设备的样式
-@media screen and (min-width: 769px) and (max-width: 1024px) {
-    .mission-card {
-        padding: 20px;
-        margin-bottom: 20px;
-
-        .mission-card-top {
-            .mission-name {
-                font-size: 15px;
-            }
-
-            .btns {
-                .tags {
-                    gap: 6px;
-                }
-            }
-        }
-
-        .mission-info {
-            padding: 14px;
-
-            &-item {
-                padding: 10px 0;
-
-                &-label {
-                    width: 75px;
-                }
-            }
-        }
-    }
-}
-
-// 添加暗色模式支持
+// 暗色模式支持
 @media (prefers-color-scheme: dark) {
     .mission-card {
-        background: rgb(255 255 255 / 3%);
-        border-color: rgb(255 255 255 / 8%);
-        box-shadow: 0 2px 8px rgb(0 0 0 / 20%);
+        background: rgb(255 255 255 / 2%);
+        border-color: rgb(255 255 255 / 6%);
+        box-shadow: 0 1px 3px rgb(0 0 0 / 20%);
 
         &:hover {
-            background: rgb(255 255 255 / 4%);
+            background: rgb(255 255 255 / 3%);
             border-color: $primary-color;
-            box-shadow: 0 4px 12px rgb(0 0 0 / 30%);
+            box-shadow: 0 2px 6px rgb(0 0 0 / 30%);
         }
 
         .badge {
             background-color: #4a4a4a;
-            box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
+            box-shadow: 0 1px 2px rgb(0 0 0 / 20%);
         }
 
         &.error {
-            background: rgb(255 77 79 / 5%);
-            box-shadow: inset 0 0 0 1px rgb(255 77 79 / 30%);
+            background: rgb(255 77 79 / 4%);
+            box-shadow: inset 0 0 0 1px rgb(255 77 79 / 25%);
         }
 
         .mission-card-top {
@@ -620,10 +587,10 @@ export default defineComponent({
             .tags {
                 :deep .n-tag {
                     color: rgb(255 255 255 / 85%);
-                    background: rgb(255 255 255 / 6%);
+                    background: rgb(255 255 255 / 4%);
 
                     &:hover {
-                        background: rgb(255 255 255 / 10%);
+                        background: rgb(255 255 255 / 8%);
                     }
 
                     .n-tag__avatar {
@@ -633,11 +600,11 @@ export default defineComponent({
             }
 
             .btns {
-                background: rgb(255 255 255 / 4%);
+                background: rgb(255 255 255 / 3%);
 
                 :deep button {
                     color: rgb(255 255 255 / 65%);
-                    border-color: rgb(255 255 255 / 12%);
+                    border-color: rgb(255 255 255 / 10%);
 
                     &:hover {
                         color: #fff;
@@ -655,7 +622,7 @@ export default defineComponent({
         .mission-card-bottom {
             :deep .n-progress {
                 .n-progress-rail {
-                    background-color: rgb(255 255 255 / 8%);
+                    background-color: rgb(255 255 255 / 6%);
                 }
 
                 .n-progress-fill {
@@ -669,11 +636,11 @@ export default defineComponent({
         }
 
         .mission-info {
-            background: rgb(255 255 255 / 3%);
-            border: 1px solid rgb(255 255 255 / 6%);
+            background: rgb(255 255 255 / 2%);
+            border: 1px solid rgb(255 255 255 / 4%);
 
             &-item {
-                border-bottom-color: rgb(255 255 255 / 6%);
+                border-bottom-color: rgb(255 255 255 / 4%);
 
                 &:last-child {
                     border-bottom: none;
@@ -700,8 +667,8 @@ export default defineComponent({
     :deep(.n-popconfirm) {
         .n-popconfirm__content {
             background-color: #1a1a1a;
-            border: 1px solid rgb(255 255 255 / 8%);
-            box-shadow: 0 4px 12px rgb(0 0 0 / 30%);
+            border: 1px solid rgb(255 255 255 / 6%);
+            box-shadow: 0 2px 6px rgb(0 0 0 / 30%);
         }
 
         .msg {
@@ -710,11 +677,11 @@ export default defineComponent({
 
         .n-button {
             color: rgb(255 255 255 / 85%);
-            background-color: rgb(255 255 255 / 6%);
-            border-color: rgb(255 255 255 / 12%);
+            background-color: rgb(255 255 255 / 4%);
+            border-color: rgb(255 255 255 / 10%);
 
             &:hover {
-                background-color: rgb(255 255 255 / 10%);
+                background-color: rgb(255 255 255 / 8%);
             }
         }
     }
@@ -724,8 +691,8 @@ export default defineComponent({
         .n-tooltip__content {
             color: rgb(255 255 255 / 85%);
             background-color: #1a1a1a;
-            border: 1px solid rgb(255 255 255 / 8%);
-            box-shadow: 0 4px 12px rgb(0 0 0 / 30%);
+            border: 1px solid rgb(255 255 255 / 6%);
+            box-shadow: 0 2px 6px rgb(0 0 0 / 30%);
         }
     }
 }
@@ -739,7 +706,7 @@ export default defineComponent({
                     background: none;
 
                     :deep button {
-                        background: rgb(255 255 255 / 6%);
+                        background: rgb(255 255 255 / 4%);
                     }
                 }
             }

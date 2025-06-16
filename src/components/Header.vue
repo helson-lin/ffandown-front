@@ -2,7 +2,7 @@
     <div class="headers">
         <!-- logo 文本 -->
         <div class="logo">
-            <span class="logo-txt">ffandown</span>
+            <span class="logo-txt">FFMPEG Anime Downloader</span>
         </div>
         <div class="headers-right">
             <div class="user-info">
@@ -116,15 +116,12 @@ export default {
     background: #fff;
     border-bottom: 1px solid rgb(0 0 0 / 6%);
     box-shadow: 0 1px 2px rgb(0 0 0 / 3%);
-    transition: all .3s ease;
-    animation: fade-in .3s ease-out;
 
     .logo {
         display: flex;
-        gap: 12px;
+        gap: 10px;
         align-items: center;
         cursor: pointer;
-        transition: all .2s ease;
 
         &:hover {
             opacity: .8;
@@ -132,29 +129,31 @@ export default {
 
         .logo-txt {
             font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
             color: rgb(0 0 0 / 85%);
             text-transform: none;
-            letter-spacing: -.5px;
+            letter-spacing: -.3px;
+            background: linear-gradient(45deg, #b78aff, #8a63ff);
+            -webkit-background-clip: text;
+            background-clip: text;
             transition: all .2s ease;
+            -webkit-text-fill-color: transparent;
         }
     }
 
     &-right {
         display: flex;
-        gap: 16px;
+        gap: 12px;
         align-items: center;
 
         .user-info {
             :deep(.n-avatar) {
                 cursor: pointer;
                 border: 2px solid transparent;
-                transition: all .2s ease;
 
                 &:hover {
                     border-color: rgb(0 0 0 / 10%);
-                    transform: scale(1.05);
                 }
             }
         }
@@ -164,47 +163,46 @@ export default {
 // 移动端适配
 @media screen and (max-width: 768px) {
     .headers {
-        height: 56px;
-        padding: 0 16px;
+        height: 52px;
+        padding: 0 14px;
 
         .logo {
             .logo-txt {
-                font-size: 18px;
+                font-size: 16px;
             }
         }
 
         &-right {
-            gap: 12px;
+            gap: 10px;
         }
-    }
-}
-
-// 平板适配
-@media screen and (min-width: 769px) and (max-width: 1024px) {
-    .headers {
-        height: 60px;
-        padding: 0 20px;
     }
 }
 
 // 暗色模式支持
 @media (prefers-color-scheme: dark) {
     .headers {
-        background: rgb(255 255 255 / 3%);
-        border-bottom-color: rgb(255 255 255 / 8%);
+        background: rgb(255 255 255 / 2%);
+        border-bottom-color: rgb(255 255 255 / 6%);
         box-shadow: 0 1px 2px rgb(0 0 0 / 20%);
+        backdrop-filter: blur(10px);
 
         .logo {
             .logo-txt {
-                color: rgb(255 255 255 / 90%);
+                background: linear-gradient(45deg, #b78aff, #8a63ff);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
             }
         }
 
         &-right {
             .user-info {
                 :deep(.n-avatar) {
+                    box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
+
                     &:hover {
-                        border-color: rgb(255 255 255 / 10%);
+                        border-color: rgb(255 255 255 / 12%);
+                        box-shadow: 0 4px 8px rgb(0 0 0 / 30%);
                     }
                 }
             }
@@ -214,7 +212,7 @@ export default {
     // 下拉菜单暗色模式样式
     :deep(.n-dropdown-menu) {
         background: rgb(30 30 30 / 95%);
-        border: 1px solid rgb(255 255 255 / 8%);
+        border: 1px solid rgb(255 255 255 / 6%);
         box-shadow: 0 4px 12px rgb(0 0 0 / 30%);
         backdrop-filter: blur(10px);
 
@@ -222,7 +220,7 @@ export default {
             color: rgb(255 255 255 / 85%);
 
             &:hover {
-                background: rgb(255 255 255 / 6%);
+                background: rgb(255 255 255 / 4%);
             }
 
             .n-dropdown-option-icon {
@@ -236,7 +234,7 @@ export default {
 @keyframes fade-in {
     from {
         opacity: 0;
-        transform: translateY(-10px);
+        transform: translateY(-8px);
     }
 
     to {

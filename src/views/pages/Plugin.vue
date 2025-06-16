@@ -230,7 +230,7 @@ export default defineComponent({
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    background: #fff;
+    background-color: #fff;
 
     &-header {
         position: relative;
@@ -243,9 +243,9 @@ export default defineComponent({
 
         &::after {
             position: absolute;
-            right: 10px;
-            bottom: 10px;
-            left: 10px;
+            right: 20px;
+            bottom: 0;
+            left: 20px;
             display: block;
 
             // width: 100%;
@@ -259,7 +259,6 @@ export default defineComponent({
         display: flex;
         flex: 1;
         flex-direction: column;
-        padding: 10px;
 
         .plugin-list {
             flex: 1;
@@ -267,8 +266,22 @@ export default defineComponent({
         }
 
         .pg-box {
-            padding-top: 30px;
+            padding-left: 20px;
         }
+    }
+}
+
+// 暗色模式支持
+@media (prefers-color-scheme: dark) {
+    .plugin {
+        background: rgb(255 255 255 / 2%);
+    }
+}
+
+// 平板适配
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .pg-box {
+        padding: 14px;
     }
 }
 </style>

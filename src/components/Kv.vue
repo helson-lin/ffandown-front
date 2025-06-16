@@ -7,7 +7,7 @@
                     v-model:value="item.key"
                     filterable
                     tag
-                    placeholder="test"
+                    :placeholder="$t('headers_key')"
                     :options="options"
                     class="kv-item-box-k"
                 />
@@ -40,7 +40,7 @@ export default {
             }, 
         })
         const add = () => {
-            list.value.push({ key: '', value: '' })
+            list.value.push({ key: null, value: '' })
         }
         const remove = (index) => {
             list.value.splice(index, 1)
