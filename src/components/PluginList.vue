@@ -426,16 +426,6 @@ export default defineComponent({
                     color: rgb(255 255 255 / 35%);
                 }
 
-                :deep(.n-switch) {
-                    .n-switch__rail {
-                        background: rgb(255 255 255 / 12%);
-
-                        &--active {
-                            background: #b78aff;
-                        }
-                    }
-                }
-
                 .setting {
                     &-btn {
                         color: rgb(255 255 255 / 45%);

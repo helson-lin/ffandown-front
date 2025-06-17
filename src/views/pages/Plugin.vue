@@ -252,6 +252,12 @@ export default defineComponent({
             border-bottom: 1px solid rgb(0 0 0 / 6%);
             transition: all .3s ease;
         }
+
+        .n-button {
+            height: 36px;
+            padding: 0 16px;
+            border-radius: 6px;
+        }
     }
 
     &-content {
