@@ -34,14 +34,18 @@ jobs:
       - name: Npm build
         run: npm run build
 
+      - name: Extract version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+
       - name: Zip
-        run: zip -r ffandown-frontend.zip dist
+        run: zip -r ffandown-frontend-${{ env.VERSION }}.zip dist
 
       - name: release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: "ffandown-frontend.zip"
+          files: "ffandown-frontend-${{ env.VERSION }}.zip"
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
