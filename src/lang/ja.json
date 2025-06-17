@@ -87,6 +87,8 @@
     "first_login": "初回ログイン時のアカウントがデフォルトアカウントです。ユーザー名とパスワードを覚えておいてください。",
     "current_version": "現在のフロントエンドバージョン",
     "latest_version": "最新のフロントエンドバージョン",
+    "frontend_version": "フロントエンド",
+    "backend_version": "バックエンド",
     "system_settings": "システム設定",
     "plugin": "プラグイン設定",
     "timemark": "時間",
@@ -121,5 +123,6 @@
     "reset_password": "パスワードをリセット",
     "reset_password_success": "パスワードのリセットに成功しました",
     "logout": "ログアウト",
-    "refresh_success": "更新成功"
+    "refresh_success": "更新成功",
+    "not_available": "利用不可"
 } 

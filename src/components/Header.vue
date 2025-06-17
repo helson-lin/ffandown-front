@@ -3,6 +3,20 @@
         <!-- logo 文本 -->
         <div class="logo">
             <span class="logo-txt">FFMPEG Anime Downloader</span>
+            <div class="version-info">
+                <div class="version-item">
+                    <span class="version-label">{{ $t('frontend_version') }}</span>
+                    <span class="version-value frontend">{{ version.current }}</span>
+                </div>
+                <div class="version-divider"></div>
+                <div class="version-item">
+                    <span class="version-label">{{ $t('backend_version') }}</span>
+                    <span class="version-value backend">{{ version.backendVersion || $t('not_available') }}</span>
+                </div>
+                <div v-if="version.update" class="update-indicator">
+                    <span class="update-dot"></span>
+                </div>
+            </div>
         </div>
         <div class="headers-right">
             <div class="user-info">
@@ -35,6 +49,17 @@ import ResetPassword from './ResetPassword.vue'
 export default {
     components: {
         ResetPassword,
+    },
+    props: {
+        version: {
+            type: Object,
+            default: () => ({
+                version: '', // 最新前端版本
+                current: '', // 当前版本
+                update: false, // 是否需要更新
+                backendVersion: '', // 后端版本
+            }),
+        },
     },
     setup() {
         const router = useRouter()
@@ -140,6 +165,70 @@ export default {
             transition: all .2s ease;
             -webkit-text-fill-color: transparent;
         }
+
+        .version-info {
+            position: relative;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            padding: 4px 8px;
+            font-size: 11px;
+            color: rgb(0 0 0 / 60%);
+            background: rgb(0 0 0 / 1%);
+            border: 1px solid rgb(0 0 0 / 3%);
+            border-radius: 12px;
+            transition: all .2s ease;
+
+            &:hover {
+                background: rgb(0 0 0 / 2%);
+                border-color: rgb(0 0 0 / 4%);
+            }
+
+            .version-item {
+                display: flex;
+                gap: 3px;
+                align-items: center;
+                font-family: "SF Mono", Monaco, "Cascadia Code", monospace;
+                font-size: 10px;
+                font-weight: 500;
+
+                .version-label {
+                    font-size: 9px;
+                    color: rgb(0 0 0 / 45%);
+                }
+
+                .version-value {
+                    font-weight: 600;
+                    color: rgb(0 0 0 / 65%);
+
+                    &.frontend,
+                    &.backend {
+                        color: inherit;
+                    }
+                }
+            }
+
+            .version-divider {
+                width: 1px;
+                height: 12px;
+                background: rgb(0 0 0 / 6%);
+            }
+
+            .update-indicator {
+                position: absolute;
+                top: -1px;
+                right: -1px;
+
+                .update-dot {
+                    display: block;
+                    width: 6px;
+                    height: 6px;
+                    background: #f59e0b;
+                    border-radius: 50%;
+                    box-shadow: 0 0 0 1px #fff;
+                }
+            }
+        }
     }
 
     &-right {
@@ -193,6 +282,43 @@ export default {
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
             }
+
+            .version-info {
+                color: rgb(255 255 255 / 55%);
+                background: rgb(255 255 255 / 2%);
+                border-color: rgb(255 255 255 / 4%);
+
+                &:hover {
+                    background: rgb(255 255 255 / 3%);
+                    border-color: rgb(255 255 255 / 6%);
+                }
+
+                .version-item {
+                    .version-label {
+                        color: rgb(255 255 255 / 40%);
+                    }
+
+                    .version-value {
+                        color: rgb(255 255 255 / 60%);
+
+                        &.frontend,
+                        &.backend {
+                            color: inherit;
+                        }
+                    }
+                }
+
+                .version-divider {
+                    background: rgb(255 255 255 / 8%);
+                }
+
+                .update-indicator {
+                    .update-dot {
+                        background: #fbbf24;
+                        box-shadow: 0 0 0 1px rgb(15 23 42);
+                    }
+                }
+            }
         }
 
         &-right {
@@ -230,16 +356,55 @@ export default {
     }
 }
 
+// 移动端版本信息适配
+@media screen and (max-width: 768px) {
+    .headers {
+        .logo {
+            gap: 6px;
+
+            .logo-txt {
+                font-size: 15px;
+            }
+
+            .version-info {
+                gap: 6px;
+                padding: 3px 6px;
+                font-size: 10px;
+                border-radius: 10px;
+
+                .version-item {
+                    gap: 2px;
+                    font-size: 9px;
+
+                    .version-label {
+                        font-size: 8px;
+                    }
+                }
+
+                .version-divider {
+                    height: 10px;
+                }
+
+                .update-indicator {
+                    .update-dot {
+                        width: 5px;
+                        height: 5px;
+                    }
+                }
+            }
+        }
+    }
+}
+
 // 动画效果
-@keyframes fade-in {
-    from {
-        opacity: 0;
-        transform: translateY(-8px);
+@keyframes pulse-glow {
+    0%,
+    100% {
+        opacity: 1;
     }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    50% {
+        opacity: .7;
     }
 }
 

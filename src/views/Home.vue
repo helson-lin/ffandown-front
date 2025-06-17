@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <Header />
+        <Header :version="versionInfo" />
         <div class="controller-panel">
             <div :class="['panel-left', isClosed ? 'min' : 'max']">
                 <div class="mission">
@@ -182,6 +182,7 @@ export default defineComponent({
             // 设置是否为当前页面
             router.push({ path })
         }
+        // 获取系统版本信息
         const getVersionInfo = async () => {
             const res = await getSystemVersion()
             if (res.code === 0) {
