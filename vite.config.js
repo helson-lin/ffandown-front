@@ -25,6 +25,14 @@ export default defineConfig({
     ],
     build: {
         sourcemap: false, // 打开sourceMap 定位问题
+        rollupOptions: {
+            external: ['@icon-park/vue-next'],
+            output: {
+                globals: {
+                    '@icon-park/vue-next': 'IconPark',
+                },
+            },
+        },
     },
     server: {
         host: true,
