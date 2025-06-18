@@ -6,7 +6,7 @@
             <div class="version-info">
                 <div class="version-item">
                     <span class="version-label">{{ $t('frontend_version') }}</span>
-                    <span class="version-value frontend">{{ version.current }}</span>
+                    <span class="version-value frontend">{{ version.current || $t('not_available') }}</span>
                 </div>
                 <div class="version-divider"></div>
                 <div class="version-item">

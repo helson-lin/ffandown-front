@@ -27,11 +27,19 @@ export default defineConfig({
         sourcemap: false, // 打开sourceMap 定位问题
         rollupOptions: {
             output: {
-                manualChunks: {
-                    'icon-park': ['@icon-park/vue-next'],
+                manualChunks(id) {
+                    if (id.includes('node_modules')) {
+                        if (id.includes('@icon-park')) {
+                            return 'icon-park'
+                        }
+                        return 'vendor'
+                    }
                 },
             },
         },
+    },
+    optimizeDeps: {
+        include: ['@icon-park/vue-next'],
     },
     server: {
         host: true,

@@ -124,5 +124,5 @@
     "reset_password_success": "重置密码成功",
     "logout": "退出登录",
     "refresh_success": "刷新成功",
-    "not_available": "不可用"
+    "not_available": "无数据"
 }
