@@ -1,3 +1,0 @@
-window.CONFIG = {
-    BASEURL: '/api/',
-}

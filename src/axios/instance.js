@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useStore } from '../store'
 
-const baseURL = window.CONFIG?.BASEURL || ''
+const baseURL = process.env.NODE_ENV === 'development' ? '/api/' : ''
 
 const instance = axios.create({
     baseURL,

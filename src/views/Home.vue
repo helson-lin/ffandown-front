@@ -211,9 +211,17 @@ export default defineComponent({
             if (store?.isMobile) return true
             return !isClosed.value
         })
+        
+        // 设置默认是否展开侧边栏菜单
+        const setSliderStatus = () => {
+            if (store?.isMobile) {
+                isClosed.value = true
+            }
+        }
 
         onMounted(() => {
             getVersionInfo()
+            setSliderStatus()
         })
         return {
             changeStatusTab,

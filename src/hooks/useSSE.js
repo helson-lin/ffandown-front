@@ -7,7 +7,7 @@ export function useSSE(url, handlers) {
     let eventSource = null
 
     const initSSE = (params) => {
-        const BASEURL = window.CONFIG?.BASEURL
+        const BASEURL = process.env.NODE_ENV === 'development' ? '/api/' : ''
         const listUrl = new URL(window.origin + BASEURL + url)
         Object.entries(params).forEach(([key, value]) => {
             listUrl.searchParams.append(key, value)
