@@ -208,14 +208,14 @@
 </template>
 <script>
 import { defineComponent, ref } from 'vue'
-import { useThemeVars, useMessage, NTooltip, NPopconfirm, NCollapseTransition } from 'naive-ui'
+import { useThemeVars, useMessage } from 'naive-ui'
 import { changeColor } from 'seemly'
 import { Close, LinkTwo, ShuffleOne, Pause, Forbid, PlayOne } from '@icon-park/vue-next'
 import { copyToClipboard } from '@/utils/index.js'
 import i18n from '@/lang'
 
 export default defineComponent({
-    components: { NTooltip, NPopconfirm, NCollapseTransition },
+    components: {},
     props: {
         mission: {
             type: Object,

@@ -67,7 +67,7 @@
     </div>
 </template>
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, defineComponent } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useMessage } from 'naive-ui'
 import { useStore } from '../store'

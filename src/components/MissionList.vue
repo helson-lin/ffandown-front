@@ -19,13 +19,13 @@
 import { defineComponent, toRefs, reactive, onUnmounted, computed, watch } from 'vue'
 import MissionCard from './MissionCard.vue'
 import { deleteMission, resumeMission, stopMission, getDownloadList } from '../api/index'
-import { useMessage, useDialog, NPagination } from 'naive-ui'
+import { useMessage, useDialog } from 'naive-ui'
 import Blank from './Blank.vue'
 import i18n from '@/lang'
 import { useSSE } from '../hooks/useSSE'
 
 export default defineComponent({
-    components: { MissionCard, Blank, NPagination },
+    components: { MissionCard, Blank },
     props: {
         status: {
             type: String,

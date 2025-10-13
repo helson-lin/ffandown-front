@@ -112,7 +112,7 @@
     </div>
 </template>
 <script>
-import { defineComponent, ref, onMounted } from 'vue'
+import { defineComponent, ref, onMounted, computed } from 'vue'
 import { PlayOne, PauseOne, Box, SettingConfig, Refresh, ArrowLeft, ArrowRight, PlugOne } from '@icon-park/vue-next'
 import { useDialog, useMessage } from 'naive-ui'
 import MissionList from '../components/MissionList.vue'

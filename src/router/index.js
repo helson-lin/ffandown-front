@@ -1,23 +1,21 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import Mission from '../views/pages/Mission.vue'
-import Plugin from '../views/pages/Plugin.vue'
-import Layout from '../views/Home.vue'
 
+// 使用路由懒加载，提高首屏加载速度
 const routes = [
     {
         path: '/',
         name: 'home',
-        component: Layout,
+        component: () => import('../views/Home.vue'),
         children: [
             {
                 path: '/mission',
                 name: 'Mission',
-                component: Mission,
+                component: () => import('../views/pages/Mission.vue'),
             },
             {
                 path: '/plugins',
                 name: 'Plugin',
-                component: Plugin,
+                component: () => import('../views/pages/Plugin.vue'),
             },
             {
                 path: '/',

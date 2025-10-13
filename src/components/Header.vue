@@ -9,7 +9,7 @@
                 <n-dropdown :options="options" @select="handleSelect">
                     <n-avatar 
                         round 
-                        :src="logo"
+                        :src="avatar"
                         :style="{
                             background: '#fff'
                         }"
@@ -29,7 +29,7 @@ import { Key, Logout } from '@icon-park/vue-next'
 import { useRouter } from 'vue-router'
 import i18n from '../lang/index'
 import { h } from 'vue'
-import logo from '../assets/imgs/logo.webp'
+import avatar from '../assets/imgs/avatar.svg'
 import ResetPassword from './ResetPassword.vue'
 
 export default {
@@ -95,7 +95,7 @@ export default {
             handleSelect,
             logout,
             showResetPassword,
-            logo,
+            avatar,
             options,
             username,
         }

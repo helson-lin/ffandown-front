@@ -43,6 +43,8 @@
     "useragent": "ユーザーエージェント",
     "useragent_placeholder": "カスタムUser-Agent",
     "useragent_notice": "未入力の場合は、Win10 64bit Chromeブラウザがデフォルトで設定されます",
+    "only_transcode_notice": "ダウンロードのみ、ダウンロードしません。(m3u8リンクのみ有効)",
+    "only_transcode": "ダウンロードのみ",
     "refresh": "更新",
     "clear": "クリア",
     "setting": "設定",
@@ -121,5 +123,5 @@
     "reset_password": "パスワードをリセット",
     "reset_password_success": "パスワードのリセットに成功しました",
     "logout": "ログアウト",
-    "refresh_success": "更新成功"
+    "refresh_success": "更新に成功しました"
 } 

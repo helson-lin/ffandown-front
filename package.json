@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:analyze": "vite build && open dist/stats.html",
     "preview": "vite preview",
     "lint": "eslint --ext .vue,.js,.ts",
     "lintStaged": "lint-staged",
@@ -14,6 +15,7 @@
   },
   "dependencies": {
     "@icon-park/vue": "^1.4.2",
+    "@icon-park/vue-next": "^1.4.2",
     "@typescript-eslint/eslint-plugin": "^5.1.0",
     "@typescript-eslint/parser": "^5.1.0",
     "axios": "^0.27.2",
@@ -48,6 +50,9 @@
     "lint-staged": "^13.0.3",
     "naive-ui": "^2.41.1",
     "postcss": "^8.4.18",
+    "rollup-plugin-visualizer": "^6.0.4",
+    "terser": "^5.44.0",
+    "unplugin-vue-components": "^29.1.0",
     "vfonts": "^0.0.3",
     "vite": "^2.9.9",
     "vite-plugin-eslint": "^1.8.1",

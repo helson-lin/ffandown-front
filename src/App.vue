@@ -14,10 +14,9 @@
 </template>
 <script setup>
 
+// Naive UI 组件 (NConfigProvider, NMessageProvider, NDialogProvider) 
+// 会由 unplugin-vue-components 自动导入，无需手动 import
 import { 
-    NConfigProvider, 
-    NMessageProvider, 
-    NDialogProvider, 
     zhCN, 
     dateZhCN, 
     enUS, 
@@ -230,7 +229,7 @@ watch(() => store.authed, (newValue) => {
 
 .n-button .n-button__state-border {
     color: #b78aff !important;
-    border: 1px solid #efefef !important;
+    border: none !important;
 }
 
 // 暗色模式样式

@@ -38,6 +38,8 @@
     "useragent": "Useragent",
     "useragent_placeholder": "Custom useragent",
     "useragent_notice": "If you do not fill in, it will be automatically filled in. If you are unsure, do not fill in",
+    "only_transcode": "Only transcode",
+    "only_transcode_notice": "Only transcode, do not download.(Only valid for m3u8 links)",
     "download_dir_placeholder": "Default relative address (/media/)",
     "filename_notice": "When downloading in bulk, there is no need to fill in",
     "preset_notice": "This parameter affects encoding efficiency, video quality, and download speed. Very slow, slow speed, low compression ratio, and best quality, Ultrafast has the fastest compression rate, high quality, and the worst quality",

@@ -86,7 +86,7 @@ import { AddOne, DeleteOne, DownOne } from '@icon-park/vue-next'
 import { getAllPlugins, batchDelete, batchStatus } from '../../api'
 import NewPlugin from '../../components/NewPlugin.vue'
 import PluginList from '../../components/PluginList.vue'
-import { useMessage, NPagination } from 'naive-ui'
+import { useMessage } from 'naive-ui'
 import i18n from '../../lang/index'
 
 export default defineComponent({
@@ -94,7 +94,6 @@ export default defineComponent({
         AddOne,
         DownOne,
         NewPlugin,
-        NPagination,
         PluginList,
         DeleteOne,
     },

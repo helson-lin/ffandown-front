@@ -100,6 +100,18 @@
                     {{ $t('useragent_notice') }}
                 </div>
             </n-form-item>
+            <!-- 只转码 -->
+            <n-form-item
+                path="onlyTranscode"
+                :label="$t('only_transcode')"
+                label-width="90px"
+                class="warp"
+            >
+                <n-switch v-model:value="model.onlyTranscode" checked-value="1" unchecked-value="0" />
+                <div class="notice">
+                    {{ $t('only_transcode_notice') }}
+                </div>
+            </n-form-item>
             <!-- 自定义请求头 -->
             <n-form-item 
                 path="headers" 
@@ -208,12 +220,20 @@ export default defineComponent({
                         required: false,
                     },
                 ],
+                onlyTranscode: [
+                    {
+                        trigger: ['blur', 'change'],
+                        type: 'string',
+                        required: false,
+                    },
+                ],
             },
             model: {
                 url: '',
                 preset: '',
                 outputformat: '',
                 dir: '',
+                onlyTranscode: '0',
                 useragent: '',
                 // 自定义请求头
                 headers: [],
@@ -246,6 +266,7 @@ export default defineComponent({
                     dir: '',
                     preset: systemConfig.value.preset || '',
                     outputformat: systemConfig.value.outputformat || '',
+                    onlyTranscode: '0',
                     useragent: '',
                     headers: [],
                 }
@@ -271,6 +292,7 @@ export default defineComponent({
                 dir: '',
                 useragent: '',
                 headers: [],
+                onlyTranscode: '0',
             }
         }
         return {
