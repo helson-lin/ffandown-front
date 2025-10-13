@@ -105,7 +105,7 @@
                     <span>  {{ $t('delete') }}</span>
                 </n-tooltip>
                 <!-- resume mission -->
-                <!-- <n-tooltip
+                <n-tooltip
                     v-if="mission.status === '4'"
                     :show-arrow="false"
                     placement="top"
@@ -123,7 +123,7 @@
                         </n-button>
                     </template>
                     <span>{{ $t('resume_download') }}</span>
-                </n-tooltip> -->
+                </n-tooltip>
                 <!-- pause mission -->
                 <!-- <n-tooltip
                     v-if="mission.status === '1'"
